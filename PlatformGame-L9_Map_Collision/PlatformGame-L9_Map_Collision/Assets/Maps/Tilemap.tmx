@@ -46,7 +46,7 @@
    </wangset>
   </wangsets>
  </tileset>
- <layer id="1" name="Nivel 1" width="24" height="18" locked="1">
+ <layer id="1" name="Nivel 1" width="24" height="18" visible="0" locked="1">
   <data>
    <tile gid="45"/>
    <tile/>
