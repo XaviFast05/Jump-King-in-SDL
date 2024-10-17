@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Log.h"
 #include "Physics.h"
+#include "Map.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -60,27 +61,6 @@ bool Player::Update(float dt)
 		velocity.x = 0.2 * dt;
 	}
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_1))
-	{
-		currentLevel = 1;
-	}	
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_2))
-	{
-		currentLevel = 2;
-	}
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_3))
-	{
-		currentLevel = 3;
-	}
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_4))
-	{
-		currentLevel = 4;
-	}
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_5))
-	{
-		currentLevel = 5;
-	}
-	
 	//Jump
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isJumping == false) {
 		// Apply an initial upward force

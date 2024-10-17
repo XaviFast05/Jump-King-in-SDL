@@ -32,12 +32,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void changeLevel(int level);
+
 private:
-	SDL_Texture* fondo1;
-	SDL_Texture* fondo2;
-	SDL_Texture* fondo3;
-	SDL_Texture* fondo4;
-	SDL_Texture* fondo5;
+	SDL_Texture* bg;
 
 	//L03: TODO 3b: Declare a Player attribute
 	Player* player;

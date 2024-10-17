@@ -12,14 +12,11 @@
 #include "Map.h"
 #include "Item.h"
 
+
 Scene::Scene() : Module()
 {
 	name = "scene";
-	fondo1 = nullptr;
-	fondo2 = nullptr;
-	fondo3 = nullptr;
-	fondo4 = nullptr;
-	fondo5 = nullptr;
+	bg = nullptr;
 }
 
 // Destructor
@@ -45,13 +42,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	//L06 TODO 3: Call the function to load the map. 
-	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx");
-
-	fondo1 = Engine::GetInstance().textures.get()->Load("Assets/Textures/fondo1.png");
-	fondo2 = Engine::GetInstance().textures.get()->Load("Assets/Textures/fondo2.png");
-	fondo3 = Engine::GetInstance().textures.get()->Load("Assets/Textures/fondo3.png");
-	fondo4 = Engine::GetInstance().textures.get()->Load("Assets/Textures/fondo4.png");
-	fondo5 = Engine::GetInstance().textures.get()->Load("Assets/Textures/fondo5.png");
+	changeLevel(1);
 
 	return true;
 }
@@ -80,36 +71,17 @@ bool Scene::Update(float dt)
 	//if(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	//	Engine::GetInstance().render.get()->camera.x += ceil(camSpeed * dt);
 
-	int windowW, windowH;
-	Engine::GetInstance().window.get()->GetWindowSize(windowW, windowH);
+	Engine::GetInstance().render.get()->DrawTexture(bg, 0, 0);
 
-	int texW, texH;
-
-	switch (player->currentLevel)
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and player->currentLevel < 5)
 	{
-	case 1:
-		Engine::GetInstance().textures.get()->GetSize(fondo1, texW, texH);
-		Engine::GetInstance().render.get()->DrawTexture(fondo1, 0, 0);
-		break;
-	case 2:
-		Engine::GetInstance().textures.get()->GetSize(fondo2, texW, texH);
-		Engine::GetInstance().render.get()->DrawTexture(fondo2, 0, 0);
-		break;
-	case 3:
-		Engine::GetInstance().textures.get()->GetSize(fondo3, texW, texH);
-		Engine::GetInstance().render.get()->DrawTexture(fondo3, 0, 0);
-		break;
-	case 4:
-		Engine::GetInstance().textures.get()->GetSize(fondo4, texW, texH);
-		Engine::GetInstance().render.get()->DrawTexture(fondo4, 0, 0);
-		break;
-	case 5:
-		Engine::GetInstance().textures.get()->GetSize(fondo5, texW, texH);
-		Engine::GetInstance().render.get()->DrawTexture(fondo5, 0, 0);
-		break;
-	default:
-		break;
+		changeLevel(player->currentLevel + 1);
 	}
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN and player->currentLevel > 1)
+	{
+		changeLevel(player->currentLevel - 1);
+	}
+
 	return true;
 }
 
@@ -129,11 +101,22 @@ bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
-	SDL_DestroyTexture(fondo1);
-	SDL_DestroyTexture(fondo2);
-	SDL_DestroyTexture(fondo3);
-	SDL_DestroyTexture(fondo4);
-	SDL_DestroyTexture(fondo5);
+	SDL_DestroyTexture(bg);
 
 	return true;
+}
+
+void Scene::changeLevel(int level)
+{
+	player->currentLevel = level;
+	int windowW, windowH;
+	Engine::GetInstance().window.get()->GetWindowSize(windowW, windowH);
+
+	int texW, texH;
+	std::string fileName = "Assets/Textures/fondo" + std::to_string(level) + ".png";
+
+	bg = Engine::GetInstance().textures.get()->Load(fileName.c_str());
+	Engine::GetInstance().textures.get()->GetSize(bg, texW, texH);
+
+	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", level);
 }

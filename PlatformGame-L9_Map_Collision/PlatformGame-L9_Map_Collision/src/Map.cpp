@@ -106,7 +106,7 @@ bool Map::CleanUp()
 }
 
 // Load new map
-bool Map::Load(std::string path, std::string fileName)
+bool Map::Load(std::string path, std::string fileName, int layer)
 {
     bool ret = false;
 
@@ -154,28 +154,6 @@ bool Map::Load(std::string path, std::string fileName)
 
 			mapData.tilesets.push_back(tileSet);
 		}
-        player = (Player*)Engine::GetInstance().entityManager->CreateEntity(EntityType::PLAYER);
-        int currentLayer = 0;
-        switch (player->currentLevel)
-        {
-        case 1:
-            currentLayer = 1;
-            break;
-        case 2:
-            currentLayer = 2;
-            break;
-        case 3:
-            currentLayer = 3;
-            break;
-        case 4:
-            currentLayer = 4;
-            break;
-        case 5:
-            currentLayer = 5;
-            break;
-        default:
-            break;
-        }
 
         // L07: TODO 3: Iterate all layers in the TMX and load each of them
         for (pugi::xml_node layerNode = mapFileXML.child("map").child("layer"); layerNode != NULL; layerNode = layerNode.next_sibling("layer")) 
@@ -184,7 +162,7 @@ bool Map::Load(std::string path, std::string fileName)
             // L07: TODO 4: Implement the load of a single layer 
             //Load the attributes and saved in a new MapLayer
             MapLayer* mapLayer = new MapLayer();
-            if (currentLayer == layerNode.attribute("id").as_int())
+            if (layer == layerNode.attribute("id").as_int())
             {
                 mapLayer->id = layerNode.attribute("id").as_int();
                 mapLayer->name = layerNode.attribute("name").as_string();
