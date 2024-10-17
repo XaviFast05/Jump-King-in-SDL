@@ -253,7 +253,27 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
     bool ret = true;
 
+    for (pugi::xml_node propertieNode = node.child("properties").child("property"); propertieNode; propertieNode = propertieNode.next_sibling("property"))
+    {
+        Properties::Property* p = new Properties::Property();
+        p->name = propertieNode.attribute("name").as_string();
+        p->value = propertieNode.attribute("value").as_bool(); // (!!) I'm assuming that all values are bool !!
+
+        properties.propertyList.push_back(p);
+    }
+
     return ret;
 }
 
+
+Properties::Property* Properties::GetProperty(const char* name)
+{
+    for (const auto& property : propertyList) {
+        if (property->name == name) {
+            return property;
+        }
+    }
+
+    return nullptr;
+}
 

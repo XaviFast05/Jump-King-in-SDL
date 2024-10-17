@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="24" height="18" tilewidth="20" tileheight="20" infinite="0" nextlayerid="7" nextobjectid="1">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="24" height="18" tilewidth="20" tileheight="20" infinite="0" nextlayerid="7" nextobjectid="1">
+ <properties>
+  <property name="Draw" type="bool" value="true"/>
+ </properties>
  <tileset firstgid="1" name="Tileset" tilewidth="20" tileheight="20" tilecount="54" columns="6">
   <image source="Tileset.png" width="120" height="180"/>
   <wangsets>
@@ -47,7 +50,10 @@
   </wangsets>
  </tileset>
  <tileset firstgid="55" source="Conjunto de Colisiones.tsx"/>
- <layer id="1" name="Nivel 1" width="24" height="18" locked="1">
+ <layer id="1" name="Nivel 1" width="24" height="18" visible="0" locked="1">
+  <properties>
+   <property name="Draw" type="bool" value="false"/>
+  </properties>
   <data>
    <tile gid="45"/>
    <tile/>
@@ -483,7 +489,10 @@
    <tile gid="44"/>
   </data>
  </layer>
- <layer id="6" name="Colissions 1" width="24" height="18">
+ <layer id="6" name="Colissions 1" width="24" height="18" visible="0">
+  <properties>
+   <property name="Draw" type="bool" value="false"/>
+  </properties>
   <data>
    <tile gid="55"/>
    <tile/>
@@ -919,7 +928,10 @@
    <tile gid="55"/>
   </data>
  </layer>
- <layer id="2" name="Nivel 2" width="24" height="18" visible="0">
+ <layer id="2" name="Nivel 2" width="24" height="18">
+  <properties>
+   <property name="Draw" type="bool" value="false"/>
+  </properties>
   <data>
    <tile gid="26"/>
    <tile/>
@@ -1257,7 +1269,7 @@
    <tile/>
    <tile/>
    <tile gid="25"/>
-   <tile gid="45"/>
+   <tile gid="26"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1281,7 +1293,7 @@
    <tile/>
    <tile/>
    <tile gid="25"/>
-   <tile gid="26"/>
+   <tile gid="45"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1356,6 +1368,9 @@
   </data>
  </layer>
  <layer id="3" name="Nivel 3" width="24" height="18" visible="0">
+  <properties>
+   <property name="Draw" type="bool" value="false"/>
+  </properties>
   <data>
    <tile gid="26"/>
    <tile/>
@@ -1792,6 +1807,9 @@
   </data>
  </layer>
  <layer id="4" name="Nivel 4" width="24" height="18" visible="0">
+  <properties>
+   <property name="Draw" type="bool" value="false"/>
+  </properties>
   <data>
    <tile gid="26"/>
    <tile/>
@@ -2228,6 +2246,9 @@
   </data>
  </layer>
  <layer id="5" name="Nivel 5" width="24" height="18" visible="0">
+  <properties>
+   <property name="Draw" type="bool" value="false"/>
+  </properties>
   <data>
    <tile gid="12"/>
    <tile/>
