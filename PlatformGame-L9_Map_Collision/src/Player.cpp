@@ -27,6 +27,8 @@ bool Player::Awake() {
 
 bool Player::Start() {
 
+	position = Vector2D(200, 300);
+
 	//L03: TODO 2: Initialize Player parameters
 	texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/player1.png");
 
