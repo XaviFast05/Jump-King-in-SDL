@@ -73,6 +73,15 @@ bool Map::Update(float dt)
         }
     }
 
+    if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and currentColision < 5)
+    {
+        changeColision(currentColision + 1);
+    }
+    if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN and currentColision > 1)
+    {
+        changeColision(currentColision - 1);
+    }
+
     return ret;
 }
 
@@ -184,21 +193,19 @@ bool Map::Load(std::string path, std::string fileName, int layer)
                     mapLayer->tiles.push_back(tileNode.attribute("gid").as_int());
                 }
                 mapData.layers.push_back(mapLayer);
-                break;
+              
             }
         }
 
         // L08 TODO 3: Create colliders
         // L08 TODO 7: Assign collider type
         // Later you can create a function here to load and create the colliders from the map
-        PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(224 + 128, 544 + 32, 256, 64, STATIC);
-        c1->ctype = ColliderType::PLATFORM;
 
-        PhysBody* c2 = Engine::GetInstance().physics.get()->CreateRectangle(352 + 64, 384 + 32, 128, 64, STATIC);
-        c2->ctype = ColliderType::PLATFORM;
+        changeColision(1);
 
-        PhysBody* c3 = Engine::GetInstance().physics.get()->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
-        c3->ctype = ColliderType::PLATFORM;
+
+        
+        
 
         ret = true;
 
@@ -235,6 +242,40 @@ bool Map::Load(std::string path, std::string fileName, int layer)
 
     mapLoaded = ret;
     return ret;
+}
+
+void Map::changeColision(int colision)
+{
+    currentColision = colision;
+
+    if (colision == 1)
+    {
+        
+        PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(160 + 80, 60 + 32, 160, 60, STATIC);
+        c1->ctype = ColliderType::PLATFORM;
+
+        PhysBody* c2 = Engine::GetInstance().physics.get()->CreateRectangle(460 + 12, 0 + 46, 20, 360, STATIC);
+        c2->ctype = ColliderType::PLATFORM;
+
+        PhysBody* c3 = Engine::GetInstance().physics.get()->CreateRectangle(380 + 42, 220 + 70, 80, 136, STATIC);
+        c3->ctype = ColliderType::PLATFORM;
+
+        PhysBody* c4 = Engine::GetInstance().physics.get()->CreateRectangle(96 + 143, 340 + 12, 285, 20, STATIC);
+        c4->ctype = ColliderType::PLATFORM;
+
+        PhysBody* c5 = Engine::GetInstance().physics.get()->CreateRectangle(78 - 20, 220 + 70, 80, 136, STATIC);
+        c5->ctype = ColliderType::PLATFORM;
+
+        PhysBody* c6 = Engine::GetInstance().physics.get()->CreateRectangle(0 + 8, 0 + 120, 20, 360, STATIC);
+        c6->ctype = ColliderType::PLATFORM;
+        
+    }
+    else if (colision == 2)
+    {
+        
+        PhysBody* c7 = Engine::GetInstance().physics.get()->CreateRectangle(50 + 8, 50 + 120, 20, 360, STATIC);
+        c7->ctype = ColliderType::PLATFORM;
+    }
 }
 
 // L07: TODO 8: Create a method that translates x,y coordinates from map positions to world positions

@@ -124,9 +124,12 @@ public:
     // L09: TODO 6: Load a group of properties 
     bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
+    void changeColision(int colision);
+
 public: 
     std::string mapFileName;
     std::string mapPath;
+    int currentColision = 1;
 
 private:
     bool mapLoaded;
