@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="24" height="18" tilewidth="20" tileheight="20" infinite="0" nextlayerid="8" nextobjectid="10">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="24" height="18" tilewidth="20" tileheight="20" infinite="0" nextlayerid="8" nextobjectid="10">
  <properties>
   <property name="Draw" type="bool" value="true"/>
  </properties>
@@ -489,7 +489,7 @@
    <tile gid="44"/>
   </data>
  </layer>
- <layer id="6" name="Colissions 1" width="24" height="18">
+ <layer id="-1" name="Colissions 1" width="24" height="18">
   <properties>
    <property name="Draw" type="bool" value="false"/>
   </properties>
@@ -782,10 +782,10 @@
    <tile gid="55"/>
    <tile gid="55"/>
    <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="55"/>
    <tile/>
    <tile/>
@@ -801,15 +801,15 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
    <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="55"/>
    <tile/>
    <tile/>
@@ -826,14 +826,14 @@
    <tile/>
    <tile/>
    <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="55"/>
    <tile/>
    <tile/>
@@ -849,15 +849,15 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
    <tile gid="55"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="55"/>
    <tile/>
    <tile/>
@@ -873,15 +873,15 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
    <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="55"/>
    <tile/>
    <tile/>
@@ -898,18 +898,14 @@
    <tile/>
    <tile/>
    <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
-   <tile gid="55"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="55"/>
    <tile gid="55"/>
    <tile gid="55"/>
@@ -926,9 +922,13 @@
    <tile gid="55"/>
    <tile gid="55"/>
    <tile gid="55"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
   </data>
  </layer>
- <objectgroup id="7" name="Capa de Objetos 1">
+ <objectgroup id="7" name="Capa de Objetos 1" visible="0">
   <object id="2" x="160.667" y="60.6667" width="159.333" height="59.3333"/>
   <object id="3" x="460" y="0.666667" width="20.6667" height="360"/>
   <object id="4" x="380.667" y="220.667" width="80.6667" height="22.6667"/>

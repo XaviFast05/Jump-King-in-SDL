@@ -68,18 +68,37 @@ bool Map::Update(float dt)
                             Engine::GetInstance().render->DrawTexture(tileSet->texture, mapCoord.getX(), mapCoord.getY(), &tileRect);
                         }
                     }
+                    else if (gid == 55)
+                    {
+                        int x = 0;
+                        if (gid == 55) x++;
+                        TileSet* tileSet = GetTilesetFromTileId(gid);
+                        if (tileSet != nullptr) {
+                            //Get the Rect from the tileSetTexture;
+                            SDL_Rect tileRect = tileSet->GetRect(gid);
+                            //Get the screen coordinates from the tile coordinates
+                            Vector2D mapCoord = MapToWorld(i, j);
+                            //Draw the texture
+                            Engine::GetInstance().render->DrawTexture(tileSet->texture, mapCoord.getX(), mapCoord.getY(), &tileRect);
+                            for (int i = 0; i <= x; i++)
+                            {
+                                PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(mapCoord.getX(), mapCoord.getY(), 20, 20, STATIC);
+                                c1->ctype = ColliderType::PLATFORM;
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 
-    if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and currentColision < 5)
-    {
-        changeColision(currentColision + 1);
-    }
-    if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN and currentColision > 1)
+    if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and currentColision > -5)
     {
         changeColision(currentColision - 1);
+    }
+    if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN and currentColision < -1)
+    {
+        changeColision(currentColision + 1);
     }
 
     return ret;
@@ -201,11 +220,7 @@ bool Map::Load(std::string path, std::string fileName, int layer)
         // L08 TODO 7: Assign collider type
         // Later you can create a function here to load and create the colliders from the map
 
-        changeColision(1);
-
-
-        
-        
+        changeColision(-1);
 
         ret = true;
 
@@ -248,10 +263,10 @@ void Map::changeColision(int colision)
 {
     currentColision = colision;
 
-    if (colision == 1)
+    if (colision == -1)
     {
-        
-        PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(160 + 80, 60 + 32, 160, 60, STATIC);
+
+        /*PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(160 + 80, 60 + 32, 160, 60, STATIC);
         c1->ctype = ColliderType::PLATFORM;
 
         PhysBody* c2 = Engine::GetInstance().physics.get()->CreateRectangle(460 + 12, 0 + 46, 20, 360, STATIC);
@@ -267,10 +282,10 @@ void Map::changeColision(int colision)
         c5->ctype = ColliderType::PLATFORM;
 
         PhysBody* c6 = Engine::GetInstance().physics.get()->CreateRectangle(0 + 8, 0 + 120, 20, 360, STATIC);
-        c6->ctype = ColliderType::PLATFORM;
+        c6->ctype = ColliderType::PLATFORM;*/
         
     }
-    else if (colision == 2)
+    else if (colision == -2)
     {
         
         PhysBody* c7 = Engine::GetInstance().physics.get()->CreateRectangle(50 + 8, 50 + 120, 20, 360, STATIC);

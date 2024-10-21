@@ -108,6 +108,7 @@ bool Scene::CleanUp()
 
 void Scene::changeLevel(int level)
 {
+
 	player->currentLevel = level;
 	int windowW, windowH;
 	Engine::GetInstance().window.get()->GetWindowSize(windowW, windowH);
