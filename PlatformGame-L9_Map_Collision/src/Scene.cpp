@@ -36,7 +36,7 @@ bool Scene::Awake()
 	//L08 Create a new item using the entity manager and set the position to (200, 672) to test
 	Item* item = (Item*) Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
 	item->position = Vector2D(200, 672);
-	player->position = Vector2D(200, 300);
+	player->position = Vector2D(0, 0);
 	return ret;
 }
 
@@ -110,7 +110,6 @@ bool Scene::CleanUp()
 
 void Scene::changeLevel(int level)
 {
-
 	player->currentLevel = level;
 	int windowW, windowH;
 	Engine::GetInstance().window.get()->GetWindowSize(windowW, windowH);

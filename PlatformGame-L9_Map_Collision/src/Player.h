@@ -52,4 +52,7 @@ public:
 	Animation idle;
 
 	int currentLevel = 1;
+	int maxLevel = 5;
+
+	void ascend(bool upDown);
 };

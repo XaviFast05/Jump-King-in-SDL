@@ -27,7 +27,7 @@ bool Player::Awake() {
 
 bool Player::Start() {
 
-	position = Vector2D(200, 300);
+	position = Vector2D(0, 0);
 
 	//L03: TODO 2: Initialize Player parameters
 	texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("texture").as_string());
@@ -61,6 +61,7 @@ bool Player::Update(float dt)
 {
 	// L08 TODO 5: Add physics to the player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, pbody->body->GetLinearVelocity().y);
+	//LOG("%i, %i", position.getX(), position.getY());
 
 	// Move left
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -79,6 +80,17 @@ bool Player::Update(float dt)
 		isJumping = true;
 	}
 
+	//if (position.getY() < 0)
+	//{
+	//	Engine::GetInstance().scene.get()->changeLevel(currentLevel + 1);
+	//	position.setY(100);
+	//}
+
+	//if (position.getY() == 300)
+	//{
+	//	Engine::GetInstance().scene.get()->changeLevel(currentLevel - 1);
+	//}
+
 	// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
 	if(isJumping == true)
 	{
@@ -91,6 +103,16 @@ bool Player::Update(float dt)
 	b2Transform pbodyPos = pbody->body->GetTransform();
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
+
+	if (position.getY() < 0 and currentLevel != maxLevel)
+	{
+		ascend(true);
+	}
+
+	if (position.getY() > 360 and currentLevel != 1)
+	{
+		ascend(false);
+	}
 
 	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
 	currentAnimation->Update();
@@ -140,5 +162,23 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		break;
 	default:
 		break;
+	}
+}
+
+void Player::ascend(bool upDown)
+{
+	b2Transform pbodyPos = pbody->body->GetTransform();
+
+	if (upDown)
+	{
+		position.setY(350);
+		Engine::GetInstance().scene.get()->changeLevel(currentLevel + 1);
+		pbody->body->SetTransform(b2Vec2(PIXEL_TO_METERS(position.getX()), PIXEL_TO_METERS(position.getY())), 0);
+	}
+	else
+	{
+		position.setY(10);
+		Engine::GetInstance().scene.get()->changeLevel(currentLevel - 1);
+		pbody->body->SetTransform(b2Vec2(PIXEL_TO_METERS(position.getX()), PIXEL_TO_METERS(position.getY())), 0);
 	}
 }
