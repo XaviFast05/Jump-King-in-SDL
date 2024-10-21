@@ -266,7 +266,7 @@ void Map::changeColision(int colision)
     if (colision == -1)
     {
 
-        /*PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(160 + 80, 60 + 32, 160, 60, STATIC);
+        PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(160 + 80, 60 + 32, 160, 60, STATIC);
         c1->ctype = ColliderType::PLATFORM;
 
         PhysBody* c2 = Engine::GetInstance().physics.get()->CreateRectangle(460 + 12, 0 + 46, 20, 360, STATIC);
@@ -282,7 +282,7 @@ void Map::changeColision(int colision)
         c5->ctype = ColliderType::PLATFORM;
 
         PhysBody* c6 = Engine::GetInstance().physics.get()->CreateRectangle(0 + 8, 0 + 120, 20, 360, STATIC);
-        c6->ctype = ColliderType::PLATFORM;*/
+        c6->ctype = ColliderType::PLATFORM;
         
     }
     else if (colision == -2)
