@@ -237,7 +237,7 @@ bool Map::Load(std::string path, std::string fileName, int layer)
                     }
                 }
             }
-            Engine::CLEAN;
+            
         }
 
 
