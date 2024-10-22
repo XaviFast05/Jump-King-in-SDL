@@ -70,21 +70,20 @@ bool Map::Update(float dt)
                     }
                     else if (gid == 55)
                     {
-                        int x = 0;
-                        if (gid == 55) x++;
+                    
                         TileSet* tileSet = GetTilesetFromTileId(gid);
                         if (tileSet != nullptr) {
                             //Get the Rect from the tileSetTexture;
                             SDL_Rect tileRect = tileSet->GetRect(gid);
                             //Get the screen coordinates from the tile coordinates
                             Vector2D mapCoord = MapToWorld(i, j);
-                            //Draw the texture
-                            Engine::GetInstance().render->DrawTexture(tileSet->texture, mapCoord.getX(), mapCoord.getY(), &tileRect);
-                            for (int i = 0; i <= x; i++)
-                            {
-                                PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(mapCoord.getX(), mapCoord.getY(), 20, 20, STATIC);
-                                c1->ctype = ColliderType::PLATFORM;
-                            }
+                           
+                           
+
+
+                            PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(mapCoord.getX(), mapCoord.getY(), 20, 20, STATIC);
+                            c1->ctype = ColliderType::PLATFORM;
+
                         }
                     }
                 }
