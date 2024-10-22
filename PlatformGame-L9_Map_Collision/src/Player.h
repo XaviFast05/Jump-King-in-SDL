@@ -43,4 +43,11 @@ public:
 	bool isJumping = false; // Flag to check if the player is currently jumping
 
 	int currentLevel = 1;
+<<<<<<< Updated upstream
+=======
+	int currentColision = -1;
+	int maxLevel = 5;
+
+	void ascend(bool upDown);
+>>>>>>> Stashed changes
 };

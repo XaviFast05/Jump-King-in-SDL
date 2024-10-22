@@ -131,4 +131,25 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	default:
 		break;
 	}
+<<<<<<< Updated upstream
+=======
+}
+
+void Player::ascend(bool upDown)
+{
+	b2Transform pbodyPos = pbody->body->GetTransform();
+
+	if (upDown)
+	{
+		position.setY(350);
+		Engine::GetInstance().scene.get()->changeLevel(currentLevel + 1, currentColision - 1);
+		pbody->body->SetTransform(b2Vec2(PIXEL_TO_METERS(position.getX()), PIXEL_TO_METERS(position.getY())), 0);
+	}
+	else
+	{
+		position.setY(10);
+		Engine::GetInstance().scene.get()->changeLevel(currentLevel - 1, currentColision + 1);
+		pbody->body->SetTransform(b2Vec2(PIXEL_TO_METERS(position.getX()), PIXEL_TO_METERS(position.getY())), 0);
+	}
+>>>>>>> Stashed changes
 }

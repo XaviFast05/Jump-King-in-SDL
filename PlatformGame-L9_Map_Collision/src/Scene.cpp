@@ -42,7 +42,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	//L06 TODO 3: Call the function to load the map. 
-	changeLevel(1);
+	changeLevel(1, -1);
 
 	return true;
 }
@@ -75,11 +75,11 @@ bool Scene::Update(float dt)
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and player->currentLevel < 5)
 	{
-		changeLevel(player->currentLevel + 1);
+		changeLevel(player->currentLevel + 1, player->currentColision - 1);
 	}
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN and player->currentLevel > 1)
 	{
-		changeLevel(player->currentLevel - 1);
+		changeLevel(player->currentLevel - 1, player->currentColision + 1);
 	}
 
 	return true;
@@ -106,9 +106,10 @@ bool Scene::CleanUp()
 	return true;
 }
 
-void Scene::changeLevel(int level)
+void Scene::changeLevel(int level, int colision)
 {
 	player->currentLevel = level;
+	player->currentColision = colision;
 	int windowW, windowH;
 	Engine::GetInstance().window.get()->GetWindowSize(windowW, windowH);
 
@@ -119,4 +120,5 @@ void Scene::changeLevel(int level)
 	Engine::GetInstance().textures.get()->GetSize(bg, texW, texH);
 
 	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", level);
+	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", colision);
 }

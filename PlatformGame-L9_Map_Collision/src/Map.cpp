@@ -68,11 +68,40 @@ bool Map::Update(float dt)
                             Engine::GetInstance().render->DrawTexture(tileSet->texture, mapCoord.getX(), mapCoord.getY(), &tileRect);
                         }
                     }
+<<<<<<< Updated upstream
+=======
+                    else if (gid == 55)
+                    {
+                        TileSet* tileSet = GetTilesetFromTileId(gid);
+                            //Get the Rect from the tileSetTexture;
+                         
+                            //Get the screen coordinates from the tile coordinates
+                            Vector2D mapCoord = MapToWorld(i, j);
+                            //Draw the texture
+                          
+                            PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(mapCoord.getX(), mapCoord.getY(), 20, 20, STATIC);
+                            c1->ctype = ColliderType::PLATFORM;
+                           
+                        
+                    }
+>>>>>>> Stashed changes
                 }
             }
         }
     }
 
+<<<<<<< Updated upstream
+=======
+   /* if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and currentColision > -5)
+    {
+        changeColision(currentColision - 1);
+    }
+    if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN and currentColision < -1)
+    {
+        changeColision(currentColision + 1);
+    }*/
+
+>>>>>>> Stashed changes
     return ret;
 }
 
@@ -194,11 +223,15 @@ bool Map::Load(std::string path, std::string fileName, int layer)
         PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(224 + 128, 544 + 32, 256, 64, STATIC);
         c1->ctype = ColliderType::PLATFORM;
 
+<<<<<<< Updated upstream
         PhysBody* c2 = Engine::GetInstance().physics.get()->CreateRectangle(352 + 64, 384 + 32, 128, 64, STATIC);
         c2->ctype = ColliderType::PLATFORM;
 
         PhysBody* c3 = Engine::GetInstance().physics.get()->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
         c3->ctype = ColliderType::PLATFORM;
+=======
+     
+>>>>>>> Stashed changes
 
         ret = true;
 
@@ -237,6 +270,46 @@ bool Map::Load(std::string path, std::string fileName, int layer)
     return ret;
 }
 
+<<<<<<< Updated upstream
+=======
+void Map::changeColision(int colision)
+{
+    //currentColision = colision;
+  /*  int windowW, windowH;
+    Engine::GetInstance().window.get()->GetWindowSize(windowW, windowH);*/
+
+    /*Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", colision);*/
+   /* if (colision == -1)
+    {
+
+        PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(160 + 80, 60 + 32, 160, 60, STATIC);
+        c1->ctype = ColliderType::PLATFORM;
+
+        PhysBody* c2 = Engine::GetInstance().physics.get()->CreateRectangle(460 + 12, 0 + 46, 20, 360, STATIC);
+        c2->ctype = ColliderType::PLATFORM;
+
+        PhysBody* c3 = Engine::GetInstance().physics.get()->CreateRectangle(380 + 42, 220 + 70, 80, 136, STATIC);
+        c3->ctype = ColliderType::PLATFORM;
+
+        PhysBody* c4 = Engine::GetInstance().physics.get()->CreateRectangle(96 + 143, 340 + 12, 285, 20, STATIC);
+        c4->ctype = ColliderType::PLATFORM;
+
+        PhysBody* c5 = Engine::GetInstance().physics.get()->CreateRectangle(78 - 20, 220 + 70, 80, 136, STATIC);
+        c5->ctype = ColliderType::PLATFORM;
+
+        PhysBody* c6 = Engine::GetInstance().physics.get()->CreateRectangle(0 + 8, 0 + 120, 20, 360, STATIC);
+        c6->ctype = ColliderType::PLATFORM;
+        
+    }
+    else if (colision == -2)
+    {
+        
+        PhysBody* c7 = Engine::GetInstance().physics.get()->CreateRectangle(50 + 8, 50 + 120, 20, 360, STATIC);
+        c7->ctype = ColliderType::PLATFORM;
+    }*/
+}
+
+>>>>>>> Stashed changes
 // L07: TODO 8: Create a method that translates x,y coordinates from map positions to world positions
 Vector2D Map::MapToWorld(int x, int y) const
 {

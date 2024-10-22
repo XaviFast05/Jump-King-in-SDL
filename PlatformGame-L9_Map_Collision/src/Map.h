@@ -127,6 +127,10 @@ public:
 public: 
     std::string mapFileName;
     std::string mapPath;
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
 
 private:
     bool mapLoaded;
