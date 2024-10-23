@@ -50,6 +50,8 @@ public:
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
 	Animation idle;
+	Animation move;
+	Animation jump;
 
 	int currentLevel = 1;
 	int maxLevel = 5;
