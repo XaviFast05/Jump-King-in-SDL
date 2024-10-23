@@ -40,7 +40,8 @@ bool Player::Start() {
 	//Load animations
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	move.LoadAnimations(parameters.child("animations").child("move"));
-	jump.LoadAnimations(parameters.child("animations").child("jump"));
+	jumping.LoadAnimations(parameters.child("animations").child("jumping"));
+	falling.LoadAnimations(parameters.child("animations").child("falling"));
 	currentAnimation = &idle;
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
@@ -90,7 +91,7 @@ bool Player::Update(float dt)
 	}
 
 	if (isJumping == true) {
-		currentAnimation = &jump;
+		currentAnimation = &jumping;
 	}
 
 	//Jump
@@ -115,6 +116,15 @@ bool Player::Update(float dt)
 	if(isJumping == true)
 	{
 		velocity.y = pbody->body->GetLinearVelocity().y;
+	}
+
+	if (velocity.y < -1)
+	{
+		isFalling = true;
+	}
+
+	if (isFalling == true) {
+		currentAnimation = &falling;
 	}
 
 	// Apply the velocity to the player

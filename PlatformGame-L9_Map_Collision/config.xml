@@ -30,10 +30,12 @@
 						<frame x="64" y="0" w="32" h="32"/>
 						<frame x="96" y="0" w="32" h="32"/>
 					</move>
-					<jump loop="false" speed="0.2">
+					<jumping loop="true" speed="0.2">
+						<frame x="32" y="32" w="32" h="32"/>
+					</jumping>
+					<falling loop="true" speed="0.2">
 						<frame x="64" y="32" w="32" h="32"/>
-						<frame x="128" y="32" w="32" h="32"/>
-					</jump>
+					</falling>
 				</animations>
 			</player>
 		</entities>

@@ -46,12 +46,14 @@ public:
 	PhysBody* pbody;
 	float jumpForce = 2.5f; // The force to apply when jumping
 	bool isJumping = false; // Flag to check if the player is currently jumping
+	bool isFalling = false;
 
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
 	Animation idle;
 	Animation move;
-	Animation jump;
+	Animation jumping;
+	Animation falling;
 
 	int currentLevel = 1;
 	int maxLevel = 5;
