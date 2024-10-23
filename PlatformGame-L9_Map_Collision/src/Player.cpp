@@ -56,7 +56,8 @@ bool Player::Start() {
 
 	//initialize audio effect
 	pickCoinFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
-
+	jumpFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_jump.wav");
+	landFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_land.wav");
 	return true;
 }
 
@@ -66,9 +67,12 @@ bool Player::Update(float dt)
 	b2Vec2 velocity = b2Vec2(0, pbody->body->GetLinearVelocity().y);
 	//LOG("%i, %i", position.getX(), position.getY());
 
-	if (velocity.x == 0)
+	
+
+	if (velocity.x == 0 )
 	{
 		currentAnimation = &idle;
+		
 	}
 
 	// Move left
@@ -92,6 +96,7 @@ bool Player::Update(float dt)
 
 	if (isJumping == true) {
 		currentAnimation = &jumping;
+		x = 0;
 	}
 
 	//Jump
@@ -99,6 +104,7 @@ bool Player::Update(float dt)
 		// Apply an initial upward force
 		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 		isJumping = true;
+		Engine::GetInstance().audio.get()->PlayFx(jumpFxId);
 	}
 
 	//if (position.getY() < 0)
@@ -118,13 +124,26 @@ bool Player::Update(float dt)
 		velocity.y = pbody->body->GetLinearVelocity().y;
 	}
 
-	if (velocity.y < -1)
+	if (x == 0 && currentAnimation == &idle)
+	{
+		Engine::GetInstance().audio.get()->PlayFx(landFxId);
+		x = 1;
+	}
+
+	if (x == 0 && currentAnimation == &move)
+	{
+		Engine::GetInstance().audio.get()->PlayFx(landFxId);
+		x = 1;
+	}
+
+	if (velocity.y > 1)
 	{
 		isFalling = true;
 	}
 
 	if (isFalling == true) {
 		currentAnimation = &falling;
+
 	}
 
 	// Apply the velocity to the player
@@ -164,6 +183,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision PLATFORM");
 		//reset the jump flag when touching the ground
 		isJumping = false;
+		isFalling = false;
+		
 		break;
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
