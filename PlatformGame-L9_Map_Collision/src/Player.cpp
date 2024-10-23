@@ -40,6 +40,7 @@ bool Player::Start() {
 	//Load animations
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	move.LoadAnimations(parameters.child("animations").child("move"));
+	jump.LoadAnimations(parameters.child("animations").child("jump"));
 	currentAnimation = &idle;
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
@@ -64,15 +65,32 @@ bool Player::Update(float dt)
 	b2Vec2 velocity = b2Vec2(0, pbody->body->GetLinearVelocity().y);
 	//LOG("%i, %i", position.getX(), position.getY());
 
+	if (velocity.x == 0)
+	{
+		currentAnimation = &idle;
+	}
+
 	// Move left
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		velocity.x = -0.2 * dt;
-		currentAnimation = &move;
+		if (isJumping != true)
+		{
+			currentAnimation = &move;
+		}
+		
 	}
 
 	// Move right
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		velocity.x = 0.2 * dt;
+		if (isJumping != true)
+		{
+			currentAnimation = &move;
+		}
+	}
+
+	if (isJumping == true) {
+		currentAnimation = &jump;
 	}
 
 	//Jump
