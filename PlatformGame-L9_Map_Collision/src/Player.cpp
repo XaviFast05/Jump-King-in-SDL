@@ -78,7 +78,7 @@ bool Player::Update(float dt)
 	// Move left
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		velocity.x = -0.2 * dt;
-		if (isJumping != true)
+		if (currentAnimation != &jumping)
 		{
 			currentAnimation = &move;
 		}
@@ -88,7 +88,7 @@ bool Player::Update(float dt)
 	// Move right
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		velocity.x = 0.2 * dt;
-		if (isJumping != true)
+		if (currentAnimation != &jumping)
 		{
 			currentAnimation = &move;
 		}
@@ -96,7 +96,7 @@ bool Player::Update(float dt)
 
 	if (isJumping == true) {
 		currentAnimation = &jumping;
-		x = 0;
+		
 	}
 
 	//Jump
@@ -124,13 +124,13 @@ bool Player::Update(float dt)
 		velocity.y = pbody->body->GetLinearVelocity().y;
 	}
 
-	if (x == 0 && currentAnimation == &idle)
+	if (x == 0 && currentAnimation == &idle && isFalling != true)
 	{
 		Engine::GetInstance().audio.get()->PlayFx(landFxId);
 		x = 1;
 	}
 
-	if (x == 0 && currentAnimation == &move)
+	if (x == 0 && currentAnimation == &move && isFalling != true)
 	{
 		Engine::GetInstance().audio.get()->PlayFx(landFxId);
 		x = 1;
@@ -143,7 +143,7 @@ bool Player::Update(float dt)
 
 	if (isFalling == true) {
 		currentAnimation = &falling;
-
+		x = 0;
 	}
 
 	// Apply the velocity to the player
