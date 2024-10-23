@@ -143,6 +143,8 @@ bool Map::CleanUp()
 // Load new map
 bool Map::Load(std::string path, std::string fileName, int layer)
 {
+    PhysBody* c1 = nullptr;
+
     bool ret = false;
 
     // Assigns the name of the map file and the path
@@ -218,7 +220,7 @@ bool Map::Load(std::string path, std::string fileName, int layer)
         // L08 TODO 7: Assign collider type
         // Later you can create a function here to load and create the colliders from the map
         for (const auto& mapLayer : mapData.layers) {
-            PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(0, 0, 20, 20, STATIC);;
+            c1 = Engine::GetInstance().physics.get()->CreateRectangle(0, 0, 20, 20, STATIC);;
             
             //L09 TODO 7: Check if the property Draw exist get the value, if it's true draw the lawyer
             for (int i = 0; i < mapData.width; i++) {
@@ -272,6 +274,13 @@ bool Map::Load(std::string path, std::string fileName, int layer)
 
         if (mapFileXML) mapFileXML.reset();
 
+    }
+    maps.push_back(c1);
+
+    if (maps.size() != 1)
+    {
+        Engine::GetInstance().physics.get()->DestroyBody(maps[0]);
+        maps[0] = maps[maps.size() - 1];
     }
 
     mapLoaded = ret;

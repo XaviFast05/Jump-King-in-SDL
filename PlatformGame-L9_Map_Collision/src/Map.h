@@ -131,6 +131,8 @@ public:
     std::string mapPath;
     int currentColision = 1;
 
+    std::vector <PhysBody*> maps;
+
 private:
     bool mapLoaded;
     // L06: DONE 1: Declare a variable data of the struct MapData

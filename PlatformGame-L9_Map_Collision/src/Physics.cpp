@@ -441,3 +441,8 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 
 	return ret;
 }
+
+void Physics::DestroyBody(PhysBody* pbody)
+{
+	world->DestroyBody(pbody->body);
+}
