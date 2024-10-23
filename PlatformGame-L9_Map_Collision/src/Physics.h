@@ -37,7 +37,8 @@ public:
 	PhysBody() : listener(NULL), body(NULL), ctype(ColliderType::UNKNOWN)
 	{}
 
-	~PhysBody() {}
+	~PhysBody() 
+	{}
 
 	void GetPosition(int& x, int& y) const;
 	float GetRotation() const;

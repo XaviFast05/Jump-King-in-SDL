@@ -143,8 +143,6 @@ bool Map::CleanUp()
 // Load new map
 bool Map::Load(std::string path, std::string fileName, int layer)
 {
-    PhysBody* c1 = nullptr;
-
     bool ret = false;
 
     // Assigns the name of the map file and the path
@@ -219,10 +217,11 @@ bool Map::Load(std::string path, std::string fileName, int layer)
         // L08 TODO 3: Create colliders
         // L08 TODO 7: Assign collider type
         // Later you can create a function here to load and create the colliders from the map
-        for (const auto& mapLayer : mapData.layers) {
-            c1 = Engine::GetInstance().physics.get()->CreateRectangle(0, 0, 20, 20, STATIC);;
+        for (const auto& mapLayer : mapData.layers) 
+        {
+            PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangle(10, 10, 20, 20, STATIC);
             
-            //L09 TODO 7: Check if the property Draw exist get the value, if it's true draw the lawyer
+            ////L09 TODO 7: Check if the property Draw exist get the value, if it's true draw the lawyer
             for (int i = 0; i < mapData.width; i++) {
                 for (int j = 0; j < mapData.height; j++) {
 
@@ -234,14 +233,13 @@ bool Map::Load(std::string path, std::string fileName, int layer)
                     if (gid != 0)
                     {
                         Vector2D mapCoord = MapToWorld(i, j);
-                        c1 = Engine::GetInstance().physics.get()->CreateRectangle(mapCoord.getX() + 10, mapCoord.getY() + 10, 20, 20, STATIC);
-                        c1->ctype = ColliderType::PLATFORM;
+                        c = Engine::GetInstance().physics.get()->CreateRectangle(mapCoord.getX() + 10, mapCoord.getY() + 10, 20, 20, STATIC);
+                        c->ctype = ColliderType::PLATFORM;
                     }
                 }
             }
-            
+            maps.push_back(c);
         }
-
 
         ret = true;
 
@@ -275,8 +273,6 @@ bool Map::Load(std::string path, std::string fileName, int layer)
         if (mapFileXML) mapFileXML.reset();
 
     }
-    maps.push_back(c1);
-
     if (maps.size() != 1)
     {
         Engine::GetInstance().physics.get()->DestroyBody(maps[0]);
