@@ -62,7 +62,7 @@ public:
 	Animation jumping;
 	Animation falling;
 
-	SDL_RendererFlip hflip = SDL_FLIP_HORIZONTAL;
+	SDL_RendererFlip hflip = SDL_FLIP_NONE;
 
 	int currentLevel = 1;
 	int maxLevel = 5;
