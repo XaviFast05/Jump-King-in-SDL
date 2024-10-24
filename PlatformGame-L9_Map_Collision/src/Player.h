@@ -51,6 +51,9 @@ public:
 	float jumpForce = 2.5f; // The force to apply when jumping
 	bool isJumping = false; // Flag to check if the player is currently jumping
 	bool isFalling = false;
+	bool flipSprite = false;
+	bool running = false;
+	bool debug_;
 
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
@@ -59,7 +62,7 @@ public:
 	Animation jumping;
 	Animation falling;
 
-
+	SDL_RendererFlip hflip = SDL_FLIP_HORIZONTAL;
 
 	int currentLevel = 1;
 	int maxLevel = 5;

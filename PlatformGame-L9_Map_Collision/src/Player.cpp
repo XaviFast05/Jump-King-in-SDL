@@ -12,6 +12,7 @@
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name = "Player";
+	debug_ = false;
 }
 
 Player::~Player() {
@@ -53,7 +54,7 @@ bool Player::Start() {
 
 	// L08 TODO 7: Assign collider type
 	pbody->ctype = ColliderType::PLAYER;
-
+	
 	//initialize audio effect
 	pickCoinFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 	jumpFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_jump.wav");
@@ -67,85 +68,119 @@ bool Player::Update(float dt)
 	b2Vec2 velocity = b2Vec2(0, pbody->body->GetLinearVelocity().y);
 	//LOG("%i, %i", position.getX(), position.getY());
 
-	
-
-	if (velocity.x == 0 )
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		currentAnimation = &idle;
-		
+		debug_ = !debug_;
 	}
-
-	// Move left
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		velocity.x = -0.2 * dt;
-		if (currentAnimation != &jumping)
-		{
-			currentAnimation = &move;
-		}
-		
-	}
-
-	// Move right
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		velocity.x = 0.2 * dt;
-		if (currentAnimation != &jumping)
-		{
-			currentAnimation = &move;
-		}
-	}
-
-	if (isJumping == true) {
-		currentAnimation = &jumping;
-		
-	}
-
-	//Jump
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isJumping == false && isFalling == false) {
-		// Apply an initial upward force
-		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-		isJumping = true;
-		Engine::GetInstance().audio.get()->PlayFx(jumpFxId);
-	}
-
-	//if (position.getY() < 0)
-	//{
-	//	Engine::GetInstance().scene.get()->changeLevel(currentLevel + 1);
-	//	position.setY(100);
-	//}
-
-	//if (position.getY() == 300)
-	//{
-	//	Engine::GetInstance().scene.get()->changeLevel(currentLevel - 1);
-	//}
-
-	// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
-	if(isJumping == true)
+	
+	if (debug_)
 	{
 		velocity.y = pbody->body->GetLinearVelocity().y;
+
+		if (velocity.y < 0)
+		{
+			velocity.y = 0;
+		}
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			velocity.y = -0.4 * dt;
+		}
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			velocity.y = 0.4 * dt;
+		}
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			velocity.x = -0.4 * dt;
+		}
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			velocity.x = 0.4 * dt;
+		}
 	}
 
-	if (x == 0 && currentAnimation == &idle && isFalling != true)
+	if (!debug_)
 	{
-		Engine::GetInstance().audio.get()->PlayFx(landFxId);
-		x = 1;
-	}
 
-	if (x == 0 && currentAnimation == &move && isFalling != true)
-	{
-		Engine::GetInstance().audio.get()->PlayFx(landFxId);
-		x = 1;
-	}
+		if (velocity.x == 0)
+		{
+			currentAnimation = &idle;
+			running = false;
+		}
 
-	if (velocity.y > 1)
-	{
-		isFalling = true;
-	}
+		// Move left
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			flipSprite = true;
+			velocity.x = -0.2 * dt;
+			running = true;
+			if (flipSprite == true && hflip == SDL_FLIP_NONE) {
+				hflip = SDL_FLIP_HORIZONTAL;
+			}
+		}
 
-	if (isFalling == true) {
-		currentAnimation = &falling;
-		x = 0;
-	}
+		// Move right
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			flipSprite = false;
+			velocity.x = 0.2 * dt;
+			running = true;
+			if (flipSprite == false && hflip == SDL_FLIP_HORIZONTAL) {
+				hflip = SDL_FLIP_NONE;
+			}
+		}
 
+		if (isJumping == true) {
+			currentAnimation = &jumping;
+		}
+
+		if (running == true && currentAnimation != &jumping)
+		{
+			currentAnimation = &move;
+		}
+
+		//Jump
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isJumping == false && isFalling == false) {
+			// Apply an initial upward force
+			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+			isJumping = true;
+			Engine::GetInstance().audio.get()->PlayFx(jumpFxId);
+		}
+
+		//if (position.getY() < 0)
+		//{
+		//	Engine::GetInstance().scene.get()->changeLevel(currentLevel + 1);
+		//	position.setY(100);
+		//}
+
+		//if (position.getY() == 300)
+		//{
+		//	Engine::GetInstance().scene.get()->changeLevel(currentLevel - 1);
+		//}
+
+		// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
+		if (isJumping == true)
+		{
+			velocity.y = pbody->body->GetLinearVelocity().y;
+		}
+
+		if (x == 0 && currentAnimation == &idle && isFalling != true)
+		{
+			Engine::GetInstance().audio.get()->PlayFx(landFxId);
+			x = 1;
+		}
+
+		if (x == 0 && currentAnimation == &move && isFalling != true)
+		{
+			Engine::GetInstance().audio.get()->PlayFx(landFxId);
+			x = 1;
+		}
+
+		if (velocity.y > 1)
+		{
+			isFalling = true;
+		}
+
+		if (isFalling == true) {
+			currentAnimation = &falling;
+			x = 0;
+		}
+	}
 	// Apply the velocity to the player
 	pbody->body->SetLinearVelocity(velocity);
 
@@ -163,7 +198,7 @@ bool Player::Update(float dt)
 		ascend(false);
 	}
 
-	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
+	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame(), hflip);
 	currentAnimation->Update();
 	return true;
 }
