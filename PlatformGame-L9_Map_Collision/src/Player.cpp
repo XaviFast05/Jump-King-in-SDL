@@ -153,12 +153,12 @@ bool Player::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 
-	if (position.getY() < 0 and currentLevel != maxLevel)
+	if (position.getY() < -20 and currentLevel != maxLevel)
 	{
 		ascend(true);
 	}
 
-	if (position.getY() > 360 and currentLevel != 1)
+	if (position.getY() > 370 and currentLevel != 1)
 	{
 		ascend(false);
 	}
@@ -223,13 +223,13 @@ void Player::ascend(bool upDown)
 	if (upDown)
 	{
 		position.setY(350);
-		Engine::GetInstance().scene.get()->changeLevel(currentLevel + 1);
+		Engine::GetInstance().scene.get()->changeLevel(currentLevel + 1, currentLevel);
 		pbody->body->SetTransform(b2Vec2(PIXEL_TO_METERS(position.getX()), PIXEL_TO_METERS(position.getY())), 0);
 	}
 	else
 	{
 		position.setY(10);
-		Engine::GetInstance().scene.get()->changeLevel(currentLevel - 1);
+		Engine::GetInstance().scene.get()->changeLevel(currentLevel - 1, currentLevel);
 		pbody->body->SetTransform(b2Vec2(PIXEL_TO_METERS(position.getX()), PIXEL_TO_METERS(position.getY())), 0);
 	}
 }

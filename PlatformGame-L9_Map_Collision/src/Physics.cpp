@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Window.h"
 #include "box2D/box2d.h"
+#include "Map.h"
 
 Physics::Physics() : Module()
 {
@@ -314,13 +315,16 @@ bool Physics::PostUpdate()
 				}
 				break;
 				}
-
 			}
 		}
 	}
 
-
 	return ret;
+}
+
+PhysBody::~PhysBody()
+{
+	//Engine::GetInstance().physics.get()->DestroyBody(this);
 }
 
 // Called before quitting

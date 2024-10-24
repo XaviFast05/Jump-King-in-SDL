@@ -190,6 +190,7 @@ bool Map::Load(std::string path, std::string fileName, int layer)
 			mapData.tilesets.push_back(tileSet);
 		}
 
+        mapData.layers.clear();
         // L07: TODO 3: Iterate all layers in the TMX and load each of them
         for (pugi::xml_node layerNode = mapFileXML.child("map").child("layer"); layerNode != NULL; layerNode = layerNode.next_sibling("layer")) 
         {
@@ -210,35 +211,47 @@ bool Map::Load(std::string path, std::string fileName, int layer)
                     mapLayer->tiles.push_back(tileNode.attribute("gid").as_int());
                 }
                 mapData.layers.push_back(mapLayer);
-              
             }
         }
 
+        std::vector <PhysBody*> map;
         // L08 TODO 3: Create colliders
         // L08 TODO 7: Assign collider type
         // Later you can create a function here to load and create the colliders from the map
         for (const auto& mapLayer : mapData.layers) 
         {
-            PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangle(10, 10, 20, 20, STATIC);
-            
+            LOG("PEO");
             ////L09 TODO 7: Check if the property Draw exist get the value, if it's true draw the lawyer
             for (int i = 0; i < mapData.width; i++) {
                 for (int j = 0; j < mapData.height; j++) {
 
                     // L07 TODO 9: Complete the draw function
-
                     //Get the gid from tile
 
                     int gid = mapLayer->Get(i, j);
                     if (gid != 0)
                     {
+                        LOG("%i, %i", maps.size(), map.size());
+
                         Vector2D mapCoord = MapToWorld(i, j);
-                        c = Engine::GetInstance().physics.get()->CreateRectangle(mapCoord.getX() + 10, mapCoord.getY() + 10, 20, 20, STATIC);
-                        c->ctype = ColliderType::PLATFORM;
+                        PhysBody* a = Engine::GetInstance().physics.get()->CreateRectangle(mapCoord.getX() + 10, mapCoord.getY() + 10, 20, 20, STATIC);
+                        a->ctype = ColliderType::PLATFORM;
+                        map.push_back(a);
                     }
                 }
             }
-            maps.push_back(c);
+        }
+
+        maps.push_back(map);
+        LOG("%i, %i", maps.size(), map.size());
+        map.clear();
+
+        if (maps.size() >= 2)
+        {
+            for (int i = 0; i < maps[maps.size() - 2].size() - 1; i++)
+            {
+                Engine::GetInstance().physics.get()->DestroyBody(maps[maps.size() - 2][i]);
+            }
         }
 
         ret = true;
@@ -273,11 +286,6 @@ bool Map::Load(std::string path, std::string fileName, int layer)
         if (mapFileXML) mapFileXML.reset();
 
     }
-    if (maps.size() != 1)
-    {
-        Engine::GetInstance().physics.get()->DestroyBody(maps[0]);
-        maps[0] = maps[maps.size() - 1];
-    }
 
     mapLoaded = ret;
     return ret;
@@ -311,7 +319,6 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 
     return ret;
 }
-
 
 Properties::Property* Properties::GetProperty(const char* name)
 {

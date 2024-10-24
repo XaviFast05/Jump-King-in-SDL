@@ -32,7 +32,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void changeLevel(int level);
+	void changeLevel(int level, int previousLevel);
 
 private:
 	SDL_Texture* bg;

@@ -130,7 +130,7 @@ public:
     std::string mapPath;
     int currentColision = 1;
 
-    std::vector <PhysBody*> maps;
+    std::vector <std::vector <PhysBody*>> maps;
 
 private:
     bool mapLoaded;
