@@ -25,6 +25,7 @@ Engine::Engine() {
     frameTime = PerfTimer();
     lastSecFrameTime = PerfTimer();
     frames = 0;
+    debugEngine = false;
 
     // L4: TODO 1: Add the EntityManager Module to the Engine
     
@@ -124,6 +125,21 @@ bool Engine::Start() {
 
 // Called each loop iteration
 bool Engine::Update() {
+
+    if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+    {
+        debugEngine = !debugEngine;
+    }
+
+    if (debugEngine)
+    {
+        maxFrameDuration = 32;
+    }
+
+    if (!debugEngine)
+    {
+        maxFrameDuration = 16;
+    }
 
     bool ret = true;
     PrepareUpdate();
