@@ -112,11 +112,6 @@ bool Scene::CleanUp()
 
 void Scene::changeLevel(int level, int previousLevel)
 {
-	//for (int i = 0; i < Engine::GetInstance().map.get()->maps[Engine::GetInstance().map.get()->maps.size() - 1].size() - 1; i++)
-	//{
-	//	Engine::GetInstance().physics.get()->DestroyBody(Engine::GetInstance().map.get()->maps[Engine::GetInstance().map.get()->maps.size() - 1][i]);
-	//}
-
 	player->currentLevel = level;
 
 	int windowW, windowH;
