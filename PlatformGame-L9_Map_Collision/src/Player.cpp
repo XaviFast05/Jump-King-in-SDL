@@ -83,16 +83,16 @@ bool Player::Update(float dt)
 		}
 
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			velocity.y = -0.4 * dt;
+			velocity.y = -0.4 * 16;
 		}
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			velocity.y = 0.4 * dt;
+			velocity.y = 0.4 * 16;
 		}
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			velocity.x = -0.4 * dt;
+			velocity.x = -0.4 * 16;
 		}
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			velocity.x = 0.4 * dt;
+			velocity.x = 0.4 * 16;
 		}
 	}
 
@@ -108,7 +108,7 @@ bool Player::Update(float dt)
 		// Move left
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			flipSprite = true;
-			velocity.x = -0.2 * dt;
+			velocity.x = -0.2 * 16;
 			running = true;
 			if (flipSprite == true && hflip == SDL_FLIP_NONE) {
 				hflip = SDL_FLIP_HORIZONTAL;
@@ -118,7 +118,7 @@ bool Player::Update(float dt)
 		// Move right
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			flipSprite = false;
-			velocity.x = 0.2 * dt;
+			velocity.x = 0.2 * 16;
 			running = true;
 			if (flipSprite == false && hflip == SDL_FLIP_HORIZONTAL) {
 				hflip = SDL_FLIP_NONE;
