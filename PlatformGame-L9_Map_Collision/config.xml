@@ -36,6 +36,9 @@
 					<falling loop="true" speed="0.2">
 						<frame x="64" y="32" w="32" h="32"/>
 					</falling>
+					<splatted loop="false" speed="0.2">
+						<frame x="96" y="32" w="32" h="32"/>
+					</splatted>
 				</animations>
 			</player>
 		</entities>

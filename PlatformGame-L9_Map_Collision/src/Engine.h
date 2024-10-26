@@ -6,6 +6,7 @@
 #include "Timer.h"
 #include "PerfTimer.h"
 #include "pugixml.hpp"
+#include "Animation.h"
 
 // Modules
 class Window;
@@ -120,6 +121,7 @@ private:
 	float averageFps = 0.0f;
 	int secondsSinceStartup = 0;
 	bool debugEngine;
+	Animation* anim;
 
 	//Maximun frame duration in miliseconds.
 	int maxFrameDuration = 16;

@@ -41,6 +41,7 @@ bool Player::Start()
 	move.LoadAnimations(parameters.child("animations").child("move"));
 	jumping.LoadAnimations(parameters.child("animations").child("jumping"));
 	falling.LoadAnimations(parameters.child("animations").child("falling"));
+	splatted.LoadAnimations(parameters.child("animations").child("splatted"));
 	currentAnimation = &idle;
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
@@ -61,6 +62,7 @@ bool Player::Start()
 	pickCoinFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 	jumpFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_jump.wav");
 	landFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_land.wav");
+	splatFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_splat.wav");
 	return true;
 }
 
@@ -100,7 +102,7 @@ bool Player::Update(float dt)
 	if (!debug_)
 	{
 
-		if (velocity.x == 0)
+		if (velocity.x == 0 && currentAnimation != &splatted)
 		{
 			currentAnimation = &idle;
 			running = false;
@@ -109,6 +111,7 @@ bool Player::Update(float dt)
 		// Move left
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			flipSprite = true;
+			isSplatted = false;
 			velocity.x = -0.2 * 16;
 			running = true;
 			if (flipSprite == true && hflip == SDL_FLIP_NONE) {
@@ -119,6 +122,7 @@ bool Player::Update(float dt)
 		// Move right
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			flipSprite = false;
+			isSplatted = false;
 			velocity.x = 0.2 * 16;
 			running = true;
 			if (flipSprite == false && hflip == SDL_FLIP_HORIZONTAL) {
@@ -139,7 +143,7 @@ bool Player::Update(float dt)
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isJumping == false && isFalling == false) {
 			// Apply an initial upward force
 			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-
+			isSplatted = false;
 			isJumping = true;
 			Engine::GetInstance().audio.get()->PlayFx(jumpFxId);
 		}
@@ -169,6 +173,11 @@ bool Player::Update(float dt)
 		if (isFalling == true) {
 			currentAnimation = &falling;
 			x = 0;
+		}
+
+		if (isSplatted == true)
+		{
+			currentAnimation = &splatted;
 		}
 	}
 	// Apply the velocity to the player
@@ -217,7 +226,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		//reset the jump flag when touching the ground
 		if (levelsFallen >= 2)
 		{
-			LOG("HOLA");
+			LOG("ESTAMPADO");
+			isSplatted = true;
+			Engine::GetInstance().audio.get()->PlayFx(splatFxId);
 		}
 		levelsFallen = 0;
 		isJumping = false;

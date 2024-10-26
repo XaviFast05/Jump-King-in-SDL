@@ -43,6 +43,7 @@ public:
 	int pickCoinFxId;
 	int jumpFxId;
 	int landFxId;
+	int splatFxId;
 	// For landFxId
 	int x = 0;
 
@@ -54,6 +55,7 @@ public:
 	bool isFalling = false;
 	bool flipSprite = false;
 	bool running = false;
+	bool isSplatted = false;
 	bool debug_;
 
 	pugi::xml_node parameters;
@@ -62,6 +64,7 @@ public:
 	Animation move;
 	Animation jumping;
 	Animation falling;
+	Animation splatted;
 
 	SDL_RendererFlip hflip = SDL_FLIP_NONE;
 

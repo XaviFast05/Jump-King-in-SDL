@@ -2,7 +2,7 @@
 
 #include "SDL2/SDL_Rect.h"
 #include "pugixml.hpp"
-#define MAX_FRAMES 400
+#define MAX_FRAMES 1000
 
 class Animation {
 
@@ -17,6 +17,7 @@ public:
 	float currentFrame = 0.0f;
 	int totalFrames = 0;
 	int pingpongDirection = 1;
+	bool debugAnim;
 
 
 public:
