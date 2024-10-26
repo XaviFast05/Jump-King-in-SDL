@@ -45,12 +45,13 @@ bool Player::Start()
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
 
+	//pbodyBody = Engine::GetInstance().physics.get()->CreateRectangleSensor((int)position.getX(), (int)position.getY(), 10, 10, bodyType::DYNAMIC);
 	pbodyBody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 7, bodyType::DYNAMIC);
 	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX(), (int)position.getY() + 10, 5, 5, bodyType::DYNAMIC);
 
 	// L08 TODO 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
-	pbody->listener = this;
 	pbodyBody->listener = this;
+	pbody->listener = this;
 
 	// L08 TODO 7: Assign collider type
 	pbodyBody->ctype = ColliderType::PLAYER;
@@ -67,7 +68,6 @@ bool Player::Update(float dt)
 {
 	// L08 TODO 5: Add physics to the player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, pbody->body->GetLinearVelocity().y);
-	//LOG("%i, %i", position.getX(), position.getY());
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
@@ -209,11 +209,17 @@ bool Player::CleanUp()
 
 // L08 TODO 6: Define OnCollision function for the player. 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
+	physA->ctype;
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
 		//reset the jump flag when touching the ground
+		if (levelsFallen >= 2)
+		{
+			LOG("HOLA");
+		}
+		levelsFallen = 0;
 		isJumping = false;
 		isFalling = false;
 		
@@ -261,6 +267,7 @@ void Player::ascend(bool upDown)
 	}
 	else
 	{
+		levelsFallen++;
 		position.setY(10);
 		Engine::GetInstance().scene.get()->changeLevel(currentLevel - 1, currentLevel);
 		pbody->body->SetTransform(b2Vec2(currentX, PIXEL_TO_METERS(position.getY())), 0);

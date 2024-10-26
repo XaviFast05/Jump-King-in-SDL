@@ -69,4 +69,5 @@ public:
 	int maxLevel = 5;
 
 	void ascend(bool upDown);
+	int levelsFallen = 0;
 };
