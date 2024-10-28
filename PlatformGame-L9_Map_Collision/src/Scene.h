@@ -36,6 +36,8 @@ public:
 
 private:
 	SDL_Texture* bg;
+	bool CTVisible = false;
+	SDL_Texture* CTtexture = nullptr;
 
 	//L03: TODO 3b: Declare a Player attribute
 	Player* player;

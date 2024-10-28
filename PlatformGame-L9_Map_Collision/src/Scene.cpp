@@ -46,6 +46,8 @@ bool Scene::Start()
 {
 	//L06 TODO 3: Call the function to load the map. 
 	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", 1);
+
+	CTtexture = Engine::GetInstance().textures->Load("Assets/Textures/CONTROLS.png");
 	changeLevel(1, 1);
 
 	return true;
@@ -86,6 +88,11 @@ bool Scene::Update(float dt)
 		changeLevel(player->currentLevel - 1, player->currentLevel);
 	}
 
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	{
+		CTVisible = !CTVisible;
+	}
+
 	return true;
 }
 
@@ -97,6 +104,17 @@ bool Scene::PostUpdate()
 	if(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
+	if (CTVisible && CTtexture != nullptr)
+	{
+		int WT, HG;
+		Engine::GetInstance().textures->GetSize(CTtexture, WT, HG);
+		int windowWT, windowHG;
+		Engine::GetInstance().window->GetWindowSize(windowWT, windowHG);
+
+		SDL_Rect Juan = { windowWT - WT - 100, 0, WT * 1.5, HG * 1.5f };
+		SDL_RenderCopy(Engine::GetInstance().render->renderer, CTtexture, nullptr, &Juan);
+	}
+
 	return ret;
 }
 
@@ -106,6 +124,11 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 
 	SDL_DestroyTexture(bg);
+	if (CTtexture != nullptr)
+	{
+		Engine::GetInstance().textures->UnLoad(CTtexture);
+		CTtexture = nullptr;
+	}
 
 	return true;
 }
