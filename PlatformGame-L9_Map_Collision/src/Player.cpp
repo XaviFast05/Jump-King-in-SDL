@@ -73,6 +73,7 @@ bool Player::Update(float dt)
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		debug_ = !debug_;
+		levelsFallen = 0;
 	}
 	
 	if (debug_)
