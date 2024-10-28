@@ -108,6 +108,12 @@ bool Player::Update(float dt)
 			running = false;
 		}
 
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		{
+			currentAnimation = &splatted;
+			Engine::GetInstance().audio.get()->PlayFx(splatFxId);
+		}
+
 		// Move left
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			flipSprite = true;
