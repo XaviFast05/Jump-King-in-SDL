@@ -107,10 +107,13 @@ bool Player::Update(float dt)
 			running = false;
 		}
 
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F4) == KEY_DOWN and (isJumping != true or isFalling != true))
 		{
-			currentAnimation = &splatted;
-			Engine::GetInstance().audio.get()->PlayFx(splatFxId);
+			if (isJumping == false)
+			{
+				currentAnimation = &splatted;
+				Engine::GetInstance().audio.get()->PlayFx(splatFxId);
+			}
 		}
 
 		// Move left
