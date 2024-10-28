@@ -40,7 +40,6 @@ public:
 	int texW, texH;
 
 	//Audio fx
-	int pickCoinFxId;
 	int jumpFxId;
 	int landFxId;
 	int splatFxId;
