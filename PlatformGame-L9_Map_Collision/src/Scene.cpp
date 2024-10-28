@@ -104,7 +104,6 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
-
 	SDL_DestroyTexture(bg);
 
 	return true;

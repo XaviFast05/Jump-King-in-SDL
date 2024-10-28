@@ -46,16 +46,15 @@ bool Player::Start()
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
 
-	//pbodyBody = Engine::GetInstance().physics.get()->CreateRectangleSensor((int)position.getX(), (int)position.getY(), 10, 10, bodyType::DYNAMIC);
-	pbodyBody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 7, bodyType::DYNAMIC);
-	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX(), (int)position.getY() + 10, 5, 5, bodyType::DYNAMIC);
+	pbodyBody = Engine::GetInstance().physics.get()->CreateRectangleSensor((int)position.getX(), (int)position.getY(), 10, 10, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 10, bodyType::DYNAMIC);
 
 	// L08 TODO 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbodyBody->listener = this;
 	pbody->listener = this;
 
 	// L08 TODO 7: Assign collider type
-	pbodyBody->ctype = ColliderType::PLAYER;
+	pbodyBody->ctype = ColliderType::PLAYERSENSOR;
 	pbody->ctype = ColliderType::PLAYER;
 
 	//initialize audio effect
@@ -140,12 +139,13 @@ bool Player::Update(float dt)
 		}
 
 		//Jump
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isJumping == false && isFalling == false) {
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN and not isJumping and not isFalling) 
+		{
 			// Apply an initial upward force
-			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+ 			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 			isSplatted = false;
-			isJumping = true;
 			Engine::GetInstance().audio.get()->PlayFx(jumpFxId);
+			isJumping = true;
 		}
 
 		if (isJumping == true)
@@ -188,7 +188,7 @@ bool Player::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 
 	float y = METERS_TO_PIXELS(pbodyPos.p.y) - texH - 0.5 / 2;
-	position.setY(y + 6);
+	position.setY(y + 12);
 
 	if (position.getY() < -20 and currentLevel != maxLevel)
 	{
@@ -203,7 +203,7 @@ bool Player::Update(float dt)
 	Engine::GetInstance().render.get()->DrawTexture(texture, (float)position.getX(), (float)position.getY(), &currentAnimation->GetCurrentFrame(), hflip);
 	currentAnimation->Update();
 
-	b2Vec2 pos = b2Vec2(PIXEL_TO_METERS(position.getX()) + 0.3, PIXEL_TO_METERS(position.getY()) + 0.25);
+	b2Vec2 pos = b2Vec2(PIXEL_TO_METERS(position.getX()) + 0.3, PIXEL_TO_METERS(position.getY()) + 0.52);
 	pbodyBody->body->SetTransform(pos, 0);
 
 	return true;
@@ -218,11 +218,8 @@ bool Player::CleanUp()
 
 // L08 TODO 6: Define OnCollision function for the player. 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
-	physA->ctype;
-	switch (physB->ctype)
+	if (physA->ctype == ColliderType::PLAYERSENSOR and physB->ctype == ColliderType::PLATFORM and isJumping and isFalling)
 	{
-	case ColliderType::PLATFORM:
-		LOG("Collision PLATFORM");
 		//reset the jump flag when touching the ground
 		if (levelsFallen >= 2)
 		{
@@ -232,17 +229,37 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		levelsFallen = 0;
 		isJumping = false;
+	    isFalling = false;
+	}
+
+	if (physA->ctype == ColliderType::PLAYERSENSOR and physB->ctype == ColliderType::PLATFORM and not isJumping and isFalling)
+	{
 		isFalling = false;
-		
-		break;
-	case ColliderType::ITEM:
-		LOG("Collision ITEM");
-		break;
-	case ColliderType::UNKNOWN:
-		LOG("Collision UNKNOWN");
-		break;
-	default:
-		break;
+		if (levelsFallen >= 2)
+		{
+			LOG("ESTAMPADO");
+			isSplatted = true;
+			Engine::GetInstance().audio.get()->PlayFx(splatFxId);
+		}
+		levelsFallen = 0;
+	}
+
+	else if (physA->ctype != ColliderType::PLAYERSENSOR)
+	{
+		switch (physB->ctype)
+		{
+		case ColliderType::PLATFORM:
+			LOG("Collision PLATFORM");
+			break;
+		case ColliderType::ITEM:
+			LOG("Collision ITEM");
+			break;
+		case ColliderType::UNKNOWN:
+			LOG("Collision UNKNOWN");
+			break;
+		default:
+			break;
+		}
 	}
 }
 
