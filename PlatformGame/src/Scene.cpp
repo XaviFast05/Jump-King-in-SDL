@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Item.h"
+#include "Enemy.h"
 #include "Physics.h"
 
 
@@ -38,6 +39,15 @@ bool Scene::Awake()
 	Item* item = (Item*) Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
 	item->position = Vector2D(200, 672);
 	player->position = Vector2D(0, 0);
+
+	// Create a enemy using the entity manager 
+	for (pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy"); enemyNode; enemyNode = enemyNode.next_sibling("enemy"))
+	{
+		Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ENEMY);
+		enemy->SetParameters(enemyNode);
+		enemyList.push_back(enemy);
+	}
+
 	return ret;
 }
 
@@ -64,18 +74,6 @@ bool Scene::Update(float dt)
 {
 	//L03 TODO 3: Make the camera movement independent of framerate
 	float camSpeed = 1;
-
-	//if(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	//	Engine::GetInstance().render.get()->camera.y -= ceil(camSpeed * dt);
-
-	//if(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	//	Engine::GetInstance().render.get()->camera.y += ceil(camSpeed * dt);
-
-	//if(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	//	Engine::GetInstance().render.get()->camera.x -= ceil(camSpeed * dt);
-
-	//if(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	//	Engine::GetInstance().render.get()->camera.x += ceil(camSpeed * dt);
 
 	Engine::GetInstance().render.get()->DrawTexture(bg, 0, 0);
 
