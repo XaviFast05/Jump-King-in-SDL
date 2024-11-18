@@ -67,37 +67,10 @@ bool Map::Update(float dt)
                             Engine::GetInstance().render->DrawTexture(tileSet->texture, mapCoord.getX(), mapCoord.getY(), &tileRect);
                         }
                     }
-                    //else if (gid == 55)
-                    //{
-                    //
-                    //    TileSet* tileSet = GetTilesetFromTileId(gid);
-                    //    if (tileSet != nullptr) {
-                    //        //Get the Rect from the tileSetTexture;
-                    //        SDL_Rect tileRect = tileSet->GetRect(gid);
-                    //        //Get the screen coordinates from the tile coordinates
-                    //        Vector2D mapCoord = MapToWorld(i, j);
-                    //       
-                    //       
-
-
-                    //        PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(mapCoord.getX(), mapCoord.getY(), 20, 20, STATIC);
-                    //        c1->ctype = ColliderType::PLATFORM;
-
-                    //    }
-                    //}
                 }
             }
         }
     }
-
-    /*if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and currentColision > -5)
-    {
-        changeColision(currentColision - 1);
-    }
-    if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN and currentColision < -1)
-    {
-        changeColision(currentColision + 1);
-    }*/
 
     return ret;
 }
@@ -303,6 +276,25 @@ Vector2D Map::MapToWorld(int x, int y) const
     return ret;
 }
 
+Vector2D Map::WorldToMap(int x, int y) {
+
+    Vector2D ret(0, 0);
+
+    if (mapData.orientation == MapOrientation::ORTOGRAPHIC) {
+        ret.setX(x / mapData.tileWidth);
+        ret.setY(y / mapData.tileHeight);
+    }
+
+    if (mapData.orientation == MapOrientation::ISOMETRIC) {
+        float half_width = mapData.tileWidth / 2;
+        float half_height = mapData.tileHeight / 2;
+        ret.setX(int((x / half_width + y / half_height) / 2));
+        ret.setY(int((y / half_height - (x / half_width)) / 2));
+    }
+
+    return ret;
+}
+
 // L09: TODO 6: Load a group of properties from a node and fill a list with it
 bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
@@ -318,6 +310,17 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
     }
 
     return ret;
+}
+
+MapLayer* Map::GetNavigationLayer() {
+    for (const auto& layer : mapData.layers) {
+        if (layer->properties.GetProperty("Navigation") != NULL &&
+            layer->properties.GetProperty("Navigation")->value) {
+            return layer;
+        }
+    }
+
+    return nullptr;
 }
 
 Properties::Property* Properties::GetProperty(const char* name)

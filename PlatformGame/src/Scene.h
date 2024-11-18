@@ -34,9 +34,20 @@ public:
 
 	void changeLevel(int level, int previousLevel);
 
+	// Return the player position
+	Vector2D GetPlayerPosition();
+
+public:
+	// Get tilePosDebug value
+	std::string GetTilePosDebug() {
+		return tilePosDebug;
+
+	}
+
 private:
 	SDL_Texture* bg;
 	bool CTVisible = false;
+	std::string tilePosDebug = "[0,0]";
 	SDL_Texture* CTtexture = nullptr;
 
 	//L03: TODO 3b: Declare a Player attribute

@@ -52,3 +52,34 @@ std::ostream& operator<<(std::ostream& os, const Vector2D& vec) {
     os << "(" << vec.x << ", " << vec.y << ")";
     return os;
 }
+
+bool Vector2D::operator==(const Vector2D& other) const {
+    return x == other.x && y == other.y;
+}
+
+bool Vector2D::operator!=(const Vector2D& other) const {
+    return x != other.x || y != other.y;
+}
+
+bool Vector2D::operator<(const Vector2D& other) const {
+    if (x != other.x) {
+        return x < other.x;
+    }
+    return y < other.y;
+}
+
+//Calculate distances
+float Vector2D::distanceManhattan(const Vector2D& other) const
+{
+    return std::abs(x - other.getX()) + std::abs(y - other.getY());
+}
+
+float Vector2D::distanceEuclidia(const Vector2D& other) const
+{
+    return std::sqrt(std::pow(x - other.x, 2) + std::pow(y - other.y, 2));
+}
+
+float Vector2D::distanceSquared(const Vector2D& other) const
+{
+    return pow(x - other.x, 2) + std::pow(y - other.y, 2);
+}

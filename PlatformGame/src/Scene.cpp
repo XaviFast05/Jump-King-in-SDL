@@ -147,3 +147,9 @@ void Scene::changeLevel(int level, int previousLevel)
 
 	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", level);
 }
+
+// Return the player position
+Vector2D Scene::GetPlayerPosition()
+{
+	return player->GetPosition();
+}
