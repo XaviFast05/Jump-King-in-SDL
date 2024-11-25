@@ -39,6 +39,11 @@ public:
 	// Return the player position
 	Vector2D GetPlayerPosition();
 
+	//L15 TODO 1: Implement the Load function
+	void LoadState();
+	//L15 TODO 2: Implement the Save function
+	void SaveState();
+
 public:
 	// Get tilePosDebug value
 	std::string GetTilePosDebug() {
@@ -51,8 +56,10 @@ private:
 	bool CTVisible = false;
 	std::string tilePosDebug = "[0,0]";
 	SDL_Texture* CTtexture = nullptr;
+	bool once = false;
 
 	//L03: TODO 3b: Declare a Player attribute
 	Player* player;
+	Enemy* enemy;
 	std::vector<Enemy*> enemyList;
 };

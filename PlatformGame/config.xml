@@ -1,70 +1,63 @@
-<!-- Config file for the engine -->
+<?xml version="1.0"?>
 <config>
-  <engine>
-    <title>Jump King</title>
-    <maxFrameDuration value="16"/>
-  </engine>
-
-  <render>
-    <vsync value="false"/>
-  </render>
-
-  <window>
-    <resolution width="960" height="720" scale="2"/>
-    <fullscreen value="false"/>
-    <borderless value="false"/>
-    <resizable value="false"/>
-    <fullscreen_window value="false"/>
-  </window>
-
+	<engine>
+		<title>Jump King</title>
+		<maxFrameDuration value="16" />
+	</engine>
+	<render>
+		<vsync value="false" />
+	</render>
+	<window>
+		<resolution width="960" height="720" scale="2" />
+		<fullscreen value="false" />
+		<borderless value="false" />
+		<resizable value="false" />
+		<fullscreen_window value="false" />
+	</window>
 	<scene>
-		<map path="Assets/Maps/" name="MapTemplate.tmx"/>
+		<map path="Assets/Maps/" name="MapTemplate.tmx" />
 		<entities>
-			<player x="200" y="300" w="32" h ="32" texture="Assets/Textures/player/JumpKingSpriteSheet.png">
+			<player x="74" y="165" w="300" h="32" texture="Assets/Textures/player/JumpKingSpriteSheet.png">
 				<animations>
-					<idle loop="true" speed ="0.05">
-						<frame x="32" y="64" w="32" h="32"/>
-						<frame x="64" y="64" w="32" h="32"/>
-						<frame x="96" y="64" w="32" h="32"/>
-						<frame x="64" y="64" w="32" h="32"/>
+					<idle loop="true" speed="0.05">
+						<frame x="32" y="64" w="32" h="32" />
+						<frame x="64" y="64" w="32" h="32" />
+						<frame x="96" y="64" w="32" h="32" />
+						<frame x="64" y="64" w="32" h="32" />
 					</idle>
 					<move loop="true" speed="0.2">
-						<frame x="32" y="0" w="32" h="32"/>
-						<frame x="64" y="0" w="32" h="32"/>
-						<frame x="96" y="0" w="32" h="32"/>
+						<frame x="32" y="0" w="32" h="32" />
+						<frame x="64" y="0" w="32" h="32" />
+						<frame x="96" y="0" w="32" h="32" />
 					</move>
 					<jumping loop="true" speed="0.2">
-						<frame x="32" y="32" w="32" h="32"/>
+						<frame x="32" y="32" w="32" h="32" />
 					</jumping>
 					<falling loop="true" speed="0.2">
-						<frame x="64" y="32" w="32" h="32"/>
+						<frame x="64" y="32" w="32" h="32" />
 					</falling>
 					<splatted loop="false" speed="0.2">
-						<frame x="96" y="32" w="32" h="32"/>
+						<frame x="96" y="32" w="32" h="32" />
 					</splatted>
 				</animations>
 			</player>
-
 			<enemies>
-				<enemy name="badguy" x="200" y="25" w="32" h="32" texture="Assets/Textures/enemy/raven_idle.png" gravity="false">
+				<enemy name="badguy" x="200" y="300" w="32" h="32" texture="Assets/Textures/enemy/raven_idle.png" gravity="false">
 					<animations>
-						<idle loop="true" speed ="0.05">
-							<frame x="0" y="0" w="32" h="32"/>
-							<frame x="32" y="0" w="32" h="32"/>
-							<frame x="0" y="0" w="32" h="32"/>
-							<frame x="32" y="0" w="32" h="32"/>
-							<frame x="0" y="0" w="32" h="32"/>
-							<frame x="32" y="0" w="32" h="32"/>
-							<frame x="0" y="0" w="32" h="32"/>
-							<frame x="64" y="0" w="32" h="32"/>
-							<frame x="96" y="0" w="32" h="32"/>
+						<idle loop="true" speed="0.05">
+							<frame x="0" y="0" w="32" h="32" />
+							<frame x="32" y="0" w="32" h="32" />
+							<frame x="0" y="0" w="32" h="32" />
+							<frame x="32" y="0" w="32" h="32" />
+							<frame x="0" y="0" w="32" h="32" />
+							<frame x="32" y="0" w="32" h="32" />
+							<frame x="0" y="0" w="32" h="32" />
+							<frame x="64" y="0" w="32" h="32" />
+							<frame x="96" y="0" w="32" h="32" />
 						</idle>
 					</animations>
 				</enemy>
 			</enemies>
-			
 		</entities>
 	</scene>
-	
-	
 </config>
