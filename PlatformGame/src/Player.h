@@ -71,7 +71,11 @@ public:
 
 	SDL_RendererFlip hflip = SDL_FLIP_NONE;
 
-	int currentLevel = 1;
+	pugi::xml_document loadFile;
+	pugi::xml_parse_result result = loadFile.load_file("config.xml");
+
+	int currentLevel = loadFile.child("config").child("scene").child("entities").child("player").attribute("level").as_int();
+
 	int maxLevel = 5;
 
 	void ascend(bool upDown);

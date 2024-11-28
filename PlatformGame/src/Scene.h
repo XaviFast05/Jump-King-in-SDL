@@ -34,7 +34,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void changeLevel(int level, int previousLevel);
+	void changeLevel(int level);
 
 	// Return the player position
 	Vector2D GetPlayerPosition();
@@ -43,6 +43,8 @@ public:
 	void LoadState();
 	//L15 TODO 2: Implement the Save function
 	void SaveState();
+	//Reset to original position
+	void SpawnPoint();
 
 public:
 	// Get tilePosDebug value

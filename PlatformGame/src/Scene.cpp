@@ -58,8 +58,18 @@ bool Scene::Start()
 	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", 1);
 
 	CTtexture = Engine::GetInstance().textures->Load("Assets/Textures/CONTROLS.png");
-	changeLevel(1, 1);
 
+	pugi::xml_document loadFile;
+	pugi::xml_parse_result result = loadFile.load_file("config.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load file. Pugi error: %s", result.description());
+	}
+
+	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
+
+	changeLevel(sceneNode.child("entities").child("player").attribute("level").as_int());
 	return true;
 }
 
@@ -79,11 +89,11 @@ bool Scene::Update(float dt)
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and player->currentLevel < 5)
 	{
-		changeLevel(player->currentLevel + 1, player->currentLevel);
+		changeLevel(player->currentLevel + 1);
 	}
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN and player->currentLevel > 1)
 	{
-		changeLevel(player->currentLevel - 1, player->currentLevel);
+		changeLevel(player->currentLevel - 1);
 	}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
@@ -104,6 +114,12 @@ bool Scene::PostUpdate()
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		LoadState();
+
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	{
+		SpawnPoint();
+		SaveState();
+	}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		SaveState();
@@ -162,12 +178,13 @@ void Scene::LoadState() {
 	Vector2D playerPos = Vector2D(sceneNode.child("entities").child("player").attribute("x").as_int(),
 		sceneNode.child("entities").child("player").attribute("y").as_int());
 	player->SetPosition(playerPos);
+	player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, 0), true);
 
+	changeLevel(sceneNode.child("entities").child("player").attribute("level").as_int());
 	//enemies
 	//Vector2D enemyPos = Vector2D(sceneNode.child("entities").child("enemy").attribute("x").as_int(),
 		//sceneNode.child("entities").child("enemy").attribute("y").as_int());
 	//enemy->SetPosition(enemyPos);
-
 }
 
 // L15 TODO 2: Implement the Save function
@@ -189,6 +206,7 @@ void Scene::SaveState() {
 	//Player position
 	sceneNode.child("entities").child("player").attribute("x").set_value(player->GetPosition().getX());
 	sceneNode.child("entities").child("player").attribute("y").set_value(player->GetPosition().getY());
+	sceneNode.child("entities").child("player").attribute("level").set_value(player->currentLevel);
 
 	//enemies
 	//sceneNode.child("entities").child("enemy").attribute("x").set_value(enemy->GetPosition().getX());
@@ -198,7 +216,29 @@ void Scene::SaveState() {
 	loadFile.save_file("config.xml");
 }
 
-void Scene::changeLevel(int level, int previousLevel)
+void Scene::SpawnPoint()
+{
+	Vector2D playerPos = Vector2D(251, 329);
+	player->SetPosition(playerPos);
+
+	pugi::xml_document loadFile;
+	pugi::xml_parse_result result = loadFile.load_file("config.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load file. Pugi error: %s", result.description());
+		return;
+	}
+
+	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
+
+	sceneNode.child("entities").child("player").attribute("level").set_value(1);
+	loadFile.save_file("config.xml");
+
+	changeLevel(1);
+}
+
+void Scene::changeLevel(int level)
 {
 	player->currentLevel = level;
 

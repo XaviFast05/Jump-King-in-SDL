@@ -299,21 +299,21 @@ void Player::ascend(bool upDown)
 	if (upDown)
 	{
 		position.setY(350);
-		Engine::GetInstance().scene.get()->changeLevel(currentLevel + 1, currentLevel);
+		Engine::GetInstance().scene.get()->changeLevel(currentLevel + 1);
 		pbody->body->SetTransform(b2Vec2(currentX, PIXEL_TO_METERS(position.getY())), 0);
 	}
 	else
 	{
 		levelsFallen++;
 		position.setY(10);
-		Engine::GetInstance().scene.get()->changeLevel(currentLevel - 1, currentLevel);
+		Engine::GetInstance().scene.get()->changeLevel(currentLevel - 1);
 		pbody->body->SetTransform(b2Vec2(currentX, PIXEL_TO_METERS(position.getY())), 0);
 	}
 }
 
 void Player::SetPosition(Vector2D pos) {
-	pos.setX(pos.getX() + texW / 2);
-	pos.setY(pos.getY() + texH / 2);
+	pos.setX(pos.getX());
+	pos.setY(pos.getY());
 	b2Vec2 bodyPos = b2Vec2(PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()));
 	pbody->body->SetTransform(bodyPos, 0);
 }
