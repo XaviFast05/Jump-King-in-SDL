@@ -164,8 +164,8 @@ void Scene::LoadState() {
 	player->SetPosition(playerPos);
 
 	//enemies
-	Vector2D enemyPos = Vector2D(sceneNode.child("entities").child("enemy").attribute("x").as_int(),
-		sceneNode.child("entities").child("enemy").attribute("y").as_int());
+	//Vector2D enemyPos = Vector2D(sceneNode.child("entities").child("enemy").attribute("x").as_int(),
+		//sceneNode.child("entities").child("enemy").attribute("y").as_int());
 	//enemy->SetPosition(enemyPos);
 
 }

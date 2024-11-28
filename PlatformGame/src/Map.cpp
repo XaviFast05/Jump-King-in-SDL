@@ -193,7 +193,7 @@ bool Map::Load(std::string path, std::string fileName, int layer)
         // Later you can create a function here to load and create the colliders from the map
         for (const auto& mapLayer : mapData.layers) 
         {
-            LOG("PEO");
+            
             ////L09 TODO 7: Check if the property Draw exist get the value, if it's true draw the lawyer
             for (int i = 0; i < mapData.width; i++) {
                 for (int j = 0; j < mapData.height; j++) {
@@ -311,7 +311,7 @@ MapLayer* Map::GetNavigationLayer() {
         }
     }
 
-    return nullptr;
+    return mapData.layers.front();
 }
 
 Properties::Property* Properties::GetProperty(const char* name)

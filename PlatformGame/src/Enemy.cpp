@@ -11,7 +11,7 @@
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
-
+	map = Engine::GetInstance().map.get();
 }
 
 Enemy::~Enemy() {
@@ -53,6 +53,8 @@ bool Enemy::Start() {
 
 bool Enemy::Update(float dt)
 {
+	pathfinding->layerNav = map->GetNavigationLayer();
+
 	// Pathfinding testing inputs
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 		Vector2D pos = GetPosition();
@@ -104,6 +106,7 @@ bool Enemy::Update(float dt)
 		Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
 		pathfinding->PropagateAStar(SQUARED);
 	}
+
 
 	// L08 TODO 4: Add a physics to an item - update the position of the object from the physics.  
 	b2Transform pbodyPos = pbody->body->GetTransform();
