@@ -34,7 +34,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void changeLevel(int level);
+	void changeLevel(int level, bool upordown);
 
 	// Return the player position
 	Vector2D GetPlayerPosition();

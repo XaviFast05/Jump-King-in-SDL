@@ -331,7 +331,6 @@ bool Physics::PostUpdate()
 
 PhysBody::~PhysBody()
 {
-	//Engine::GetInstance().physics.get()->DestroyBody(this);
 }
 
 // Called before quitting
@@ -352,7 +351,7 @@ void Physics::BeginContact(b2Contact* contact)
 	PhysBody* physA = (PhysBody*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 	PhysBody* physB = (PhysBody*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 
-	if (physA && physA->listener != NULL) {
+	if (physA && physA->listener != NULL && !IsPendingToDelete(physA)) {
 		if (physB) // Ensure physB is also valid
 		{
 			physA->listener->OnCollision(physA, physB);
@@ -367,26 +366,42 @@ void Physics::BeginContact(b2Contact* contact)
 	}
 }
 
-// Callback function to collisions with Box2D
 void Physics::EndContact(b2Contact* contact)
 {
 	// Call the OnCollision listener function to bodies A and B, passing as inputs our custom PhysBody classes
 	PhysBody* physA = (PhysBody*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 	PhysBody* physB = (PhysBody*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 
-	if (physA && physA->listener != NULL) {
-		if (physB) // Ensure physB is also valid
-		{
-			physA->listener->OnCollisionEnd(physA, physB);
+	if (physA && physA->listener != NULL && !IsPendingToDelete(physA)) {
+			if (physB) // Ensure physB is also valid
+			{
+				physA->listener->OnCollisionEnd(physA, physB);
+			}
+	}
+
+	if (physB && physB->listener != NULL && !IsPendingToDelete(physB)) {
+			if (physA) // Ensure physA is also valid
+			{
+					physB->listener->OnCollisionEnd(physB, physA);
+			}
+	}
+}
+
+void Physics::DeletePhysBody(PhysBody* physBody) {
+
+	bodiesToDelete.push_back(physBody);
+}
+
+bool Physics::IsPendingToDelete(PhysBody* physBody) {
+	bool pendingToDelete = false;
+	for (PhysBody* _physBody : bodiesToDelete) {
+		if (_physBody == physBody) {
+			pendingToDelete = true;
+			break;
 		}
 	}
 
-	if (physB && physB->listener != NULL) {
-		if (physA) // Ensure physA is also valid
-		{
-			physB->listener->OnCollisionEnd(physB, physA);
-		}
-	}
+	return pendingToDelete;
 }
 
 //--------------- PhysBody
@@ -453,7 +468,7 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 	return ret;
 }
 
-void Physics::DestroyBody(PhysBody* pbody)
+void Physics::DeleteBody(PhysBody* pbody)
 {
 	world->DestroyBody(pbody->body);
 }

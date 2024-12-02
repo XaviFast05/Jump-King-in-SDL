@@ -141,7 +141,6 @@ bool Map::Load(std::string path, std::string fileName, int layer)
         mapData.tileHeight = mapFileXML.child("map").attribute("tileheight").as_int();
 
         // L06: TODO 4: Implement the LoadTileSet function to load the tileset properties
-       
         //Iterate the Tileset
         for(pugi::xml_node tilesetNode = mapFileXML.child("map").child("tileset"); tilesetNode!=NULL; tilesetNode = tilesetNode.next_sibling("tileset"))
 		{
@@ -216,14 +215,13 @@ bool Map::Load(std::string path, std::string fileName, int layer)
         }
 
         maps.push_back(map);
-        LOG("%i, %i", maps.size(), map.size());
         map.clear();
 
         if (maps.size() >= 2)
         {
             for (int i = 0; i < maps[maps.size() - 2].size() - 1; i++)
             {
-                Engine::GetInstance().physics.get()->DestroyBody(maps[maps.size() - 2][i]);
+                Engine::GetInstance().physics.get()->DeleteBody(maps[maps.size() - 2][i]);
             }
         }
 

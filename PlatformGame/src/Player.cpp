@@ -200,6 +200,8 @@ bool Player::Update(float dt)
 	float y = METERS_TO_PIXELS(pbodyPos.p.y) - texH - 0.5 / 2;
 	position.setY(y + 12);
 
+	printf("%f", position.getY());
+
 	if (position.getY() < -20 and currentLevel != maxLevel)
 	{
 		ascend(true);
@@ -265,9 +267,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision ITEM");
 			break;
 		case ColliderType::UNKNOWN:
-			LOG("Collision UNKNOWN");
-			break;
-		default:
 			break;
 		}
 	}
@@ -284,9 +283,6 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		LOG("End Collision ITEM");
 		break;
 	case ColliderType::UNKNOWN:
-		LOG("End Collision UNKNOWN");
-		break;
-	default:
 		break;
 	}
 }
@@ -299,14 +295,14 @@ void Player::ascend(bool upDown)
 	if (upDown)
 	{
 		position.setY(350);
-		Engine::GetInstance().scene.get()->changeLevel(currentLevel + 1);
+		Engine::GetInstance().scene.get()->changeLevel(currentLevel + 1, true);
 		pbody->body->SetTransform(b2Vec2(currentX, PIXEL_TO_METERS(position.getY())), 0);
 	}
 	else
 	{
 		levelsFallen++;
 		position.setY(10);
-		Engine::GetInstance().scene.get()->changeLevel(currentLevel - 1);
+		Engine::GetInstance().scene.get()->changeLevel(currentLevel - 1, false);
 		pbody->body->SetTransform(b2Vec2(currentX, PIXEL_TO_METERS(position.getY())), 0);
 	}
 }

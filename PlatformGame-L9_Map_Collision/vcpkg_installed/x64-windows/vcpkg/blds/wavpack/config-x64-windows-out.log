@@ -1,0 +1,228 @@
+[1/2] "C:/Users/israp/AppData/Local/vcpkg/downloads/tools/cmake-3.29.2-windows/cmake-3.29.2-windows-i386/bin/cmake.exe" -E chdir "../../x64-windows-dbg" "C:/Users/israp/AppData/Local/vcpkg/downloads/tools/cmake-3.29.2-windows/cmake-3.29.2-windows-i386/bin/cmake.exe" "C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/blds/wavpack/src/5.6.0-d46202430d.clean" "-G" "Ninja" "-DCMAKE_BUILD_TYPE=Debug" "-DCMAKE_INSTALL_PREFIX=C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/wavpack_x64-windows/debug" "-DFETCHCONTENT_FULLY_DISCONNECTED=ON" "-DWAVPACK_INSTALL_DOCS=OFF" "-DWAVPACK_BUILD_PROGRAMS=OFF" "-DWAVPACK_BUILD_COOLEDIT_PLUGIN=OFF" "-DWAVPACK_BUILD_WINAMP_PLUGIN=OFF" "-DBUILD_TESTING=OFF" "-DWAVPACK_BUILD_DOCS=OFF" "-DWAVPACK_ENABLE_LIBCRYPTO=OFF" "-DCMAKE_MAKE_PROGRAM=C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" "-DBUILD_SHARED_LIBS=ON" "-DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=C:/Program Files/Microsoft Visual Studio/2022/Community/VC/vcpkg/scripts/toolchains/windows.cmake" "-DVCPKG_TARGET_TRIPLET=x64-windows" "-DVCPKG_SET_CHARSET_FLAG=ON" "-DVCPKG_PLATFORM_TOOLSET=v143" "-DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON" "-DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON" "-DCMAKE_FIND_PACKAGE_NO_SYSTEM_PACKAGE_REGISTRY=ON" "-DCMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP=TRUE" "-DCMAKE_VERBOSE_MAKEFILE=ON" "-DVCPKG_APPLOCAL_DEPS=OFF" "-DCMAKE_TOOLCHAIN_FILE=C:/Program Files/Microsoft Visual Studio/2022/Community/VC/vcpkg/scripts/buildsystems/vcpkg.cmake" "-DCMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION=ON" "-DVCPKG_CXX_FLAGS=" "-DVCPKG_CXX_FLAGS_RELEASE=" "-DVCPKG_CXX_FLAGS_DEBUG=" "-DVCPKG_C_FLAGS=" "-DVCPKG_C_FLAGS_RELEASE=" "-DVCPKG_C_FLAGS_DEBUG=" "-DVCPKG_CRT_LINKAGE=dynamic" "-DVCPKG_LINKER_FLAGS=" "-DVCPKG_LINKER_FLAGS_RELEASE=" "-DVCPKG_LINKER_FLAGS_DEBUG=" "-DVCPKG_TARGET_ARCHITECTURE=x64" "-DCMAKE_INSTALL_LIBDIR:STRING=lib" "-DCMAKE_INSTALL_BINDIR:STRING=bin" "-D_VCPKG_ROOT_DIR=C:/Program Files/Microsoft Visual Studio/2022/Community/VC/vcpkg/" "-D_VCPKG_INSTALLED_DIR=C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/" "-DVCPKG_MANIFEST_INSTALL=OFF"
+CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- The C compiler identification is MSVC 19.41.34123.0
+-- The CXX compiler identification is MSVC 19.41.34123.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Looking for a ASM compiler
+-- Looking for a ASM compiler - C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/cl.exe
+-- The ASM compiler identification is MSVC
+-- Found assembler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/cl.exe
+-- The ASM_MASM compiler identification is MSVC
+-- Found assembler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/ml64.exe
+-- Could NOT find OpenSSL, try to set the path to OpenSSL root folder in the system variable OPENSSL_ROOT_DIR (missing: OPENSSL_CRYPTO_LIBRARY OPENSSL_INCLUDE_DIR) 
+-- Looking for cos in m
+-- Looking for cos in m - not found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Found Threads: TRUE
+-- Could NOT find Iconv (missing: Iconv_LIBRARY Iconv_INCLUDE_DIR) 
+-- Could NOT find LibXslt (missing: LIBXSLT_LIBRARIES LIBXSLT_INCLUDE_DIR) 
+-- Could NOT find OpenSSL, try to set the path to OpenSSL root folder in the system variable OPENSSL_ROOT_DIR (missing: OPENSSL_CRYPTO_LIBRARY OPENSSL_INCLUDE_DIR) 
+-- Performing Test HAVE___BUILTIN_CLZ
+-- Performing Test HAVE___BUILTIN_CLZ - Failed
+-- Checking large files support...
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Checking size of off_t without any definitions:
+-- Check size of off_t
+-- Check size of off_t - done
+-- Checking of off_t without any definitions: 4
+-- Checking size of off_t with _FILE_OFFSET_BITS=64:
+-- Check size of off_t
+-- Check size of off_t - done
+-- Checking size of off_t with _FILE_OFFSET_BITS=64: 4
+-- Checking size of off_t with _LARGE_FILES:
+-- Check size of off_t
+-- Check size of off_t - done
+-- Checking size of off_t with _LARGE_FILES: 4
+-- Checking size of off_t with _LARGEFILE_SOURCE:
+-- Check size of off_t
+-- Check size of off_t - done
+-- Checking size of off_t with _LARGEFILE_SOURCE: 4
+Result of checking large files support: not supported
+-- Looking for fseeko
+-- Looking for fseeko - not found
+-- The following features have been enabled:
+
+ * BUILD_SHARED_LIBS, Build shared library.
+ * WAVPACK_ENABLE_DSD, Enable support for WavPack DSD files.
+ * WAVPACK_INSTALL_CMAKE_MODULE, Generate and install CMake package configuration module.
+ * WAVPACK_ENABLE_ASM, Enable assembly optimizations.
+ * WAVPACK_INSTALL_PKGCONFIG_MODULE, Generate and install wavpack.pc.
+
+-- The following OPTIONAL packages have been found:
+
+ * Threads, Threads library
+   Required to build tests.
+
+-- The following features have been disabled:
+
+ * BUILD_TESTING, Build tests.
+ * WAVPACK_ENABLE_LEGACY, Decode legacy (< 4.0) WavPack files.
+ * WAVPACK_ENABLE_LIBCRYPTO, Use OpenSSL::Crypto library.
+ * WAVPACK_BUILD_PROGRAMS, Build programs.
+ * WAVPACK_BUILD_COOLEDIT_PLUGIN, Build CoolEdit plugin.
+ * WAVPACK_BUILD_WINAMP_PLUGIN, Build WinAmp plugin.
+ * WAVPACK_BUILD_DOCS, Build documentation.
+ * WAVPACK_INSTALL_DOCS, Install documentation.
+
+-- The following OPTIONAL packages have not been found:
+
+ * LibXslt, XSLT C library developed for the GNOME project.
+   Required to generate documentation.
+
+-- The following RECOMMENDED packages have not been found:
+
+ * Iconv, converts from one character encoding to another through Unicode conversion 
+   Required to build programs.
+ * OpenSSL, TLS/SSL and crypto library
+   Can be used to build wavpack library.
+
+-- Configuring done (19.6s)
+-- Generating done (0.0s)
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    FETCHCONTENT_FULLY_DISCONNECTED
+    _VCPKG_ROOT_DIR
+
+
+-- Build files have been written to: C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/blds/wavpack/x64-windows-dbg
+[2/2] "C:/Users/israp/AppData/Local/vcpkg/downloads/tools/cmake-3.29.2-windows/cmake-3.29.2-windows-i386/bin/cmake.exe" -E chdir ".." "C:/Users/israp/AppData/Local/vcpkg/downloads/tools/cmake-3.29.2-windows/cmake-3.29.2-windows-i386/bin/cmake.exe" "C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/blds/wavpack/src/5.6.0-d46202430d.clean" "-G" "Ninja" "-DCMAKE_BUILD_TYPE=Release" "-DCMAKE_INSTALL_PREFIX=C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/wavpack_x64-windows" "-DFETCHCONTENT_FULLY_DISCONNECTED=ON" "-DWAVPACK_INSTALL_DOCS=OFF" "-DWAVPACK_BUILD_PROGRAMS=OFF" "-DWAVPACK_BUILD_COOLEDIT_PLUGIN=OFF" "-DWAVPACK_BUILD_WINAMP_PLUGIN=OFF" "-DBUILD_TESTING=OFF" "-DWAVPACK_BUILD_DOCS=OFF" "-DWAVPACK_ENABLE_LIBCRYPTO=OFF" "-DCMAKE_MAKE_PROGRAM=C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" "-DBUILD_SHARED_LIBS=ON" "-DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=C:/Program Files/Microsoft Visual Studio/2022/Community/VC/vcpkg/scripts/toolchains/windows.cmake" "-DVCPKG_TARGET_TRIPLET=x64-windows" "-DVCPKG_SET_CHARSET_FLAG=ON" "-DVCPKG_PLATFORM_TOOLSET=v143" "-DCMAKE_EXPORT_NO_PACKAGE_REGISTRY=ON" "-DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=ON" "-DCMAKE_FIND_PACKAGE_NO_SYSTEM_PACKAGE_REGISTRY=ON" "-DCMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP=TRUE" "-DCMAKE_VERBOSE_MAKEFILE=ON" "-DVCPKG_APPLOCAL_DEPS=OFF" "-DCMAKE_TOOLCHAIN_FILE=C:/Program Files/Microsoft Visual Studio/2022/Community/VC/vcpkg/scripts/buildsystems/vcpkg.cmake" "-DCMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION=ON" "-DVCPKG_CXX_FLAGS=" "-DVCPKG_CXX_FLAGS_RELEASE=" "-DVCPKG_CXX_FLAGS_DEBUG=" "-DVCPKG_C_FLAGS=" "-DVCPKG_C_FLAGS_RELEASE=" "-DVCPKG_C_FLAGS_DEBUG=" "-DVCPKG_CRT_LINKAGE=dynamic" "-DVCPKG_LINKER_FLAGS=" "-DVCPKG_LINKER_FLAGS_RELEASE=" "-DVCPKG_LINKER_FLAGS_DEBUG=" "-DVCPKG_TARGET_ARCHITECTURE=x64" "-DCMAKE_INSTALL_LIBDIR:STRING=lib" "-DCMAKE_INSTALL_BINDIR:STRING=bin" "-D_VCPKG_ROOT_DIR=C:/Program Files/Microsoft Visual Studio/2022/Community/VC/vcpkg/" "-D_VCPKG_INSTALLED_DIR=C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/" "-DVCPKG_MANIFEST_INSTALL=OFF"
+CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- The C compiler identification is MSVC 19.41.34123.0
+-- The CXX compiler identification is MSVC 19.41.34123.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Looking for a ASM compiler
+-- Looking for a ASM compiler - C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/cl.exe
+-- The ASM compiler identification is MSVC
+-- Found assembler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/cl.exe
+-- The ASM_MASM compiler identification is MSVC
+-- Found assembler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.41.34120/bin/Hostx64/x64/ml64.exe
+-- Could NOT find OpenSSL, try to set the path to OpenSSL root folder in the system variable OPENSSL_ROOT_DIR (missing: OPENSSL_CRYPTO_LIBRARY OPENSSL_INCLUDE_DIR) 
+-- Looking for cos in m
+-- Looking for cos in m - not found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Found Threads: TRUE
+-- Could NOT find Iconv (missing: Iconv_LIBRARY Iconv_INCLUDE_DIR) 
+-- Could NOT find LibXslt (missing: LIBXSLT_LIBRARIES LIBXSLT_INCLUDE_DIR) 
+-- Could NOT find OpenSSL, try to set the path to OpenSSL root folder in the system variable OPENSSL_ROOT_DIR (missing: OPENSSL_CRYPTO_LIBRARY OPENSSL_INCLUDE_DIR) 
+-- Performing Test HAVE___BUILTIN_CLZ
+-- Performing Test HAVE___BUILTIN_CLZ - Failed
+-- Checking large files support...
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Checking size of off_t without any definitions:
+-- Check size of off_t
+-- Check size of off_t - done
+-- Checking of off_t without any definitions: 4
+-- Checking size of off_t with _FILE_OFFSET_BITS=64:
+-- Check size of off_t
+-- Check size of off_t - done
+-- Checking size of off_t with _FILE_OFFSET_BITS=64: 4
+-- Checking size of off_t with _LARGE_FILES:
+-- Check size of off_t
+-- Check size of off_t - done
+-- Checking size of off_t with _LARGE_FILES: 4
+-- Checking size of off_t with _LARGEFILE_SOURCE:
+-- Check size of off_t
+-- Check size of off_t - done
+-- Checking size of off_t with _LARGEFILE_SOURCE: 4
+Result of checking large files support: not supported
+-- Looking for fseeko
+-- Looking for fseeko - not found
+-- The following features have been enabled:
+
+ * BUILD_SHARED_LIBS, Build shared library.
+ * WAVPACK_ENABLE_DSD, Enable support for WavPack DSD files.
+ * WAVPACK_INSTALL_CMAKE_MODULE, Generate and install CMake package configuration module.
+ * WAVPACK_ENABLE_ASM, Enable assembly optimizations.
+ * WAVPACK_INSTALL_PKGCONFIG_MODULE, Generate and install wavpack.pc.
+
+-- The following OPTIONAL packages have been found:
+
+ * Threads, Threads library
+   Required to build tests.
+
+-- The following features have been disabled:
+
+ * BUILD_TESTING, Build tests.
+ * WAVPACK_ENABLE_LEGACY, Decode legacy (< 4.0) WavPack files.
+ * WAVPACK_ENABLE_LIBCRYPTO, Use OpenSSL::Crypto library.
+ * WAVPACK_BUILD_PROGRAMS, Build programs.
+ * WAVPACK_BUILD_COOLEDIT_PLUGIN, Build CoolEdit plugin.
+ * WAVPACK_BUILD_WINAMP_PLUGIN, Build WinAmp plugin.
+ * WAVPACK_BUILD_DOCS, Build documentation.
+ * WAVPACK_INSTALL_DOCS, Install documentation.
+
+-- The following OPTIONAL packages have not been found:
+
+ * LibXslt, XSLT C library developed for the GNOME project.
+   Required to generate documentation.
+
+-- The following RECOMMENDED packages have not been found:
+
+ * Iconv, converts from one character encoding to another through Unicode conversion 
+   Required to build programs.
+ * OpenSSL, TLS/SSL and crypto library
+   Can be used to build wavpack library.
+
+-- Configuring done (19.6s)
+-- Generating done (0.0s)
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    FETCHCONTENT_FULLY_DISCONNECTED
+    _VCPKG_ROOT_DIR
+
+
+-- Build files have been written to: C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/blds/wavpack/x64-windows-rel

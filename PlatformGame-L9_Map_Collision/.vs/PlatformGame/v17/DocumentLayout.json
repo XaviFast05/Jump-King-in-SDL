@@ -1,0 +1,431 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Physics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Physics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\sdl2\\src\\ase-2.30.0-3ceee4a14f.clean\\src\\dynapi\\SDL_dynapi_procs.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:vcpkg_installed\\x64-windows\\vcpkg\\blds\\sdl2\\src\\ase-2.30.0-3ceee4a14f.clean\\src\\dynapi\\SDL_dynapi_procs.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Entity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Entity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Physics.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Physics.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\PlatformGame.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\PlatformGame.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\sdl2\\src\\ase-2.30.0-3ceee4a14f.clean\\src\\render\\SDL_render.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:vcpkg_installed\\x64-windows\\vcpkg\\blds\\sdl2\\src\\ase-2.30.0-3ceee4a14f.clean\\src\\render\\SDL_render.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Engine.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Engine.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Scene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Scene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Scene.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Scene.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vector||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\src\\dynamics\\b2_world.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\src\\dynamics\\b2_world.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Engine.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Engine.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Input.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Input.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\include\\box2d\\b2_world.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\include\\box2d\\b2_world.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\src\\common\\b2_block_allocator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\src\\common\\b2_block_allocator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\config.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:config.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Window.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Window.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Input.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Input.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Item.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A9C663A5-00A3-466D-94BE-BC98BC72EFFE}|PlatformGame.vcxproj|solutionrelative:src\\Item.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\x64-windows\\include\\box2d\\b2_shape.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:vcpkg_installed\\x64-windows\\x64-windows\\include\\box2d\\b2_shape.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 12,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SDL_dynapi_procs.h",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\sdl2\\src\\ase-2.30.0-3ceee4a14f.clean\\src\\dynapi\\SDL_dynapi_procs.h",
+              "RelativeDocumentMoniker": "vcpkg_installed\\x64-windows\\vcpkg\\blds\\sdl2\\src\\ase-2.30.0-3ceee4a14f.clean\\src\\dynapi\\SDL_dynapi_procs.h",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\sdl2\\src\\ase-2.30.0-3ceee4a14f.clean\\src\\dynapi\\SDL_dynapi_procs.h",
+              "RelativeToolTip": "vcpkg_installed\\x64-windows\\vcpkg\\blds\\sdl2\\src\\ase-2.30.0-3ceee4a14f.clean\\src\\dynapi\\SDL_dynapi_procs.h",
+              "ViewState": "AgIAAGkBAAAAAAAAAAAtwHwBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-10-26T15:16:49.726Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PlatformGame.cpp",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\PlatformGame.cpp",
+              "RelativeDocumentMoniker": "src\\PlatformGame.cpp",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\PlatformGame.cpp",
+              "RelativeToolTip": "src\\PlatformGame.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-26T14:34:40.758Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Scene.h",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Scene.h",
+              "RelativeDocumentMoniker": "src\\Scene.h",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Scene.h",
+              "RelativeToolTip": "src\\Scene.h",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAqwCIAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-10-24T18:06:44.867Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Engine.h",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Engine.h",
+              "RelativeDocumentMoniker": "src\\Engine.h",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Engine.h",
+              "RelativeToolTip": "src\\Engine.h",
+              "ViewState": "AgIAAD8AAAAAAAAAAIBJwEIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-10-21T18:57:11.277Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Window.cpp",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Window.cpp",
+              "RelativeDocumentMoniker": "src\\Window.cpp",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Window.cpp",
+              "RelativeToolTip": "src\\Window.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-21T18:40:39.025Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Engine.cpp",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Engine.cpp",
+              "RelativeDocumentMoniker": "src\\Engine.cpp",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Engine.cpp",
+              "RelativeToolTip": "src\\Engine.cpp",
+              "ViewState": "AgIAACoAAAAAAAAAAAAtwEAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-21T18:40:34.835Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "config.xml",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\config.xml",
+              "RelativeDocumentMoniker": "config.xml",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\config.xml",
+              "RelativeToolTip": "config.xml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2024-10-21T18:40:32.579Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Physics.h",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Physics.h",
+              "RelativeDocumentMoniker": "src\\Physics.h",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Physics.h",
+              "RelativeToolTip": "src\\Physics.h",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAqwFgAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-10-21T18:27:25.768Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Physics.cpp",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Physics.cpp",
+              "RelativeDocumentMoniker": "src\\Physics.cpp",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Physics.cpp",
+              "RelativeToolTip": "src\\Physics.cpp",
+              "ViewState": "AgIAAFMBAAAAAAAAAAAawG8BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-21T18:27:19.115Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Map.h",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Map.h",
+              "RelativeDocumentMoniker": "src\\Map.h",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Map.h",
+              "RelativeToolTip": "src\\Map.h",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAqwIQAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-10-21T18:27:16.066Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Map.cpp",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Map.cpp",
+              "RelativeDocumentMoniker": "src\\Map.cpp",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Map.cpp",
+              "RelativeToolTip": "src\\Map.cpp",
+              "ViewState": "AgIAAOAAAAAAAAAAAIBJwP0AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-21T18:27:11.288Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Player.cpp",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Player.cpp",
+              "RelativeDocumentMoniker": "src\\Player.cpp",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Player.cpp",
+              "RelativeToolTip": "src\\Player.cpp",
+              "ViewState": "AgIAAM4AAAAAAAAAAAAAANsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-21T18:09:25.831Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Scene.cpp",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Scene.cpp",
+              "RelativeDocumentMoniker": "src\\Scene.cpp",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Scene.cpp",
+              "RelativeToolTip": "src\\Scene.cpp",
+              "ViewState": "AgIAAF0AAAAAAAAAAIBJwHIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-21T18:18:13.908Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "vector",
+              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vector",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vector",
+              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vector",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vector",
+              "ViewState": "AgIAAEwHAAAAAAAAAAAtwF8HAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-10-24T14:30:32.234Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Input.h",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Input.h",
+              "RelativeDocumentMoniker": "src\\Input.h",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Input.h",
+              "RelativeToolTip": "src\\Input.h",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAtwDIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-10-21T18:27:02.051Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SDL_render.c",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\sdl2\\src\\ase-2.30.0-3ceee4a14f.clean\\src\\render\\SDL_render.c",
+              "RelativeDocumentMoniker": "vcpkg_installed\\x64-windows\\vcpkg\\blds\\sdl2\\src\\ase-2.30.0-3ceee4a14f.clean\\src\\render\\SDL_render.c",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\sdl2\\src\\ase-2.30.0-3ceee4a14f.clean\\src\\render\\SDL_render.c",
+              "RelativeToolTip": "vcpkg_installed\\x64-windows\\vcpkg\\blds\\sdl2\\src\\ase-2.30.0-3ceee4a14f.clean\\src\\render\\SDL_render.c",
+              "ViewState": "AgIAAJkQAAAAAAAAAAAtwKwQAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-10-24T14:43:09.942Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "b2_world.h",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\include\\box2d\\b2_world.h",
+              "RelativeDocumentMoniker": "vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\include\\box2d\\b2_world.h",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\include\\box2d\\b2_world.h",
+              "RelativeToolTip": "vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\include\\box2d\\b2_world.h",
+              "ViewState": "AgIAACwBAAAAAAAAAAAtwEABAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-10-24T14:24:22.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "b2_world.cpp",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\src\\dynamics\\b2_world.cpp",
+              "RelativeDocumentMoniker": "vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\src\\dynamics\\b2_world.cpp",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\src\\dynamics\\b2_world.cpp",
+              "RelativeToolTip": "vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\src\\dynamics\\b2_world.cpp",
+              "ViewState": "AgIAAL4AAAAAAAAAAAAtwNkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-24T14:17:46.255Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Player.h",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Player.h",
+              "RelativeDocumentMoniker": "src\\Player.h",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Player.h",
+              "RelativeToolTip": "src\\Player.h",
+              "ViewState": "AgIAADUAAAAAAAAAAAAAAEcAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-10-21T18:57:14.083Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "b2_shape.h",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\x64-windows\\include\\box2d\\b2_shape.h",
+              "RelativeDocumentMoniker": "vcpkg_installed\\x64-windows\\x64-windows\\include\\box2d\\b2_shape.h",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\x64-windows\\include\\box2d\\b2_shape.h",
+              "RelativeToolTip": "vcpkg_installed\\x64-windows\\x64-windows\\include\\box2d\\b2_shape.h",
+              "ViewState": "AgIAACkAAAAAAAAAAAAtwDwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-10-24T14:39:00.3Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "b2_block_allocator.cpp",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\src\\common\\b2_block_allocator.cpp",
+              "RelativeDocumentMoniker": "vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\src\\common\\b2_block_allocator.cpp",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\src\\common\\b2_block_allocator.cpp",
+              "RelativeToolTip": "vcpkg_installed\\x64-windows\\vcpkg\\blds\\box2d\\src\\64c16f51bc-7b27809cb5.clean\\src\\common\\b2_block_allocator.cpp",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAWwIIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-24T15:11:21.961Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Item.cpp",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Item.cpp",
+              "RelativeDocumentMoniker": "src\\Item.cpp",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Item.cpp",
+              "RelativeToolTip": "src\\Item.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-21T18:27:04.24Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Entity.h",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Entity.h",
+              "RelativeDocumentMoniker": "src\\Entity.h",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Entity.h",
+              "RelativeToolTip": "src\\Entity.h",
+              "ViewState": "AgIAACgAAAAAAAAAAAAawDoAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-10-21T18:26:59.316Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Input.cpp",
+              "DocumentMoniker": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Input.cpp",
+              "RelativeDocumentMoniker": "src\\Input.cpp",
+              "ToolTip": "C:\\Users\\israp\\OneDrive\\Documentos\\GitHub\\Platformer-Game\\PlatformGame-L9_Map_Collision\\src\\Input.cpp",
+              "RelativeToolTip": "src\\Input.cpp",
+              "ViewState": "AgIAAGwAAAAAAAAAAAAQwIMAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-21T18:27:01.145Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

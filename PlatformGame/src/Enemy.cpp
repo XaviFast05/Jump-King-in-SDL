@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Physics.h"
 #include "Map.h"
+#include "EntityManager.h"
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
@@ -24,22 +25,27 @@ bool Enemy::Awake() {
 
 bool Enemy::Start() {
 
-	//initilize textures
-	texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("texture").as_string());
 	position.setX(parameters.attribute("x").as_int());
 	position.setY(parameters.attribute("y").as_int());
+
+	if (!hasStarted)
+	{
+		//Add a physics to an item - initialize the physics body
+		pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, 10, bodyType::DYNAMIC);
+	}
+	//initilize textures
+	texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("texture").as_string());
+
 	texW = parameters.attribute("w").as_int();
 	texH = parameters.attribute("h").as_int();
 
 	//Load animations
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	currentAnimation = &idle;
-	
-	//Add a physics to an item - initialize the physics body
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, 10, bodyType::DYNAMIC);
-
 	//Assign collider type
 	pbody->ctype = ColliderType::ENEMY;
+
+	pbody->listener = this;
 
 	// Set the gravity of the body
 	if (!parameters.attribute("gravity").as_bool()) pbody->body->SetGravityScale(0);
@@ -47,13 +53,13 @@ bool Enemy::Start() {
 	// Initialize pathfinding
 	pathfinding = new Pathfinding();
 	ResetPath();
-
+	hasStarted = true;
 	return true;
 }
 
 bool Enemy::Update(float dt)
 {
-	pathfinding->layerNav = map->GetNavigationLayer();
+ 	//pathfinding->layerNav = map->GetNavigationLayer();
 
 	//Reset and propagate the pathfanding to follow the player
 	Vector2D enemyPos = GetPosition();
@@ -163,6 +169,13 @@ bool Enemy::Update(float dt)
 
 bool Enemy::CleanUp()
 {
+	Engine::GetInstance().physics.get()->DeletePhysBody(pbody);
+	return true;
+}
+
+bool Enemy::DeleteBody()
+{
+	Engine::GetInstance().physics.get()->DeleteBody(pbody);
 	return true;
 }
 
@@ -183,4 +196,24 @@ void Enemy::ResetPath() {
 	Vector2D pos = GetPosition();
 	Vector2D tilePos = Engine::GetInstance().map.get()->WorldToMap(pos.getX(), pos.getY());
 	pathfinding->ResetPath(tilePos);
+}
+
+void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
+	switch (physB->ctype)
+	{
+	case ColliderType::PLAYER:
+		LOG("Collided with player - DESTROY");
+		Engine::GetInstance().entityManager.get()->DestroyEntity(this);
+		break;
+	}
+}
+
+void Enemy::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
+{
+	switch (physB->ctype)
+	{
+	case ColliderType::PLAYER:
+		LOG("Collision player");
+		break;
+	}
 }

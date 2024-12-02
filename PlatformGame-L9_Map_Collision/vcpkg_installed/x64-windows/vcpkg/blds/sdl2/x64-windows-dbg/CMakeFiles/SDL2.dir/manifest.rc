@@ -1,0 +1,2 @@
+#pragma code_page(65001)
+2 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/blds/sdl2/x64-windows-dbg/CMakeFiles/SDL2.dir/embed.manifest"

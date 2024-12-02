@@ -40,6 +40,11 @@ public:
 		return true;
 	}
 
+	virtual bool DeleteBody()
+	{
+		return true;
+	}
+
 	void Enable()
 	{
 		if (!active)

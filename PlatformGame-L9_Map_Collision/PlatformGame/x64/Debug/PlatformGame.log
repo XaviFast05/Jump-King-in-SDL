@@ -1,0 +1,66 @@
+﻿  Engine.cpp
+  EntityManager.cpp
+  Item.cpp
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Item.cpp(42,47): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Item.cpp(43,47): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+  Map.cpp
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Map.cpp(67,119): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Map.cpp(67,102): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Map.cpp(237,130): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Map.cpp(237,108): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Map.cpp(300,16): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Map.cpp(301,16): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+  Physics.cpp
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Physics.cpp(95,23): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Physics.cpp(96,25): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Physics.cpp(132,25): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Physics.cpp(133,26): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Physics.cpp(192,29): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Physics.cpp(441,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Physics.cpp(442,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Physics.cpp(448,27): warning C4244: 'return': conversión de 'float' a 'int'; posible pérdida de datos
+  Player.cpp
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(33,48): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(34,48): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(87,22): warning C4305: '=': truncamiento de 'double' a 'float'
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(90,21): warning C4305: '=': truncamiento de 'double' a 'float'
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(93,22): warning C4305: '=': truncamiento de 'double' a 'float'
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(96,21): warning C4305: '=': truncamiento de 'double' a 'float'
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(112,22): warning C4305: '=': truncamiento de 'double' a 'float'
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(122,21): warning C4305: '=': truncamiento de 'double' a 'float'
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(179,47): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(181,10): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(194,103): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(194,79): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(197,95): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(197,55): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\src\Player.cpp(260,17): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+  Scene.cpp
+  Generando código...
+  PlatformGame.vcxproj -> C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\x64\Debug\PlatformGame.exe
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Fx\retro-video-game-coin-pickup-38299.ogg
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Fx\King\Ice\king_bump.wav
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Fx\King\Ice\king_jump.wav
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Fx\King\Ice\king_land.wav
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Fx\King\Ice\king_splat.wav
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Fx\King\Land\king_bump.wav
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Fx\King\Land\king_jump.wav
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Fx\King\Land\king_land.wav
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Fx\King\Land\king_splat.wav
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Fx\King\Snow\king_bump.wav
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Fx\King\Snow\king_jump.wav
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Fx\King\Snow\king_land.wav
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Fx\King\Snow\king_splat.wav
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Audio\Music\music_spy.ogg
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Maps\Tilemap.tmx
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Maps\Tileset.png
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Textures\fondo1.png
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Textures\fondo2.png
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Textures\fondo3.png
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Textures\fondo4.png
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Textures\fondo5.png
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Textures\goldCoin.png
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Textures\player1.png
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Textures\player\JumpKingSpriteSheet.png
+  C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\Assets\Textures\player\Move.aseprite
+  25 archivo(s) copiado(s)

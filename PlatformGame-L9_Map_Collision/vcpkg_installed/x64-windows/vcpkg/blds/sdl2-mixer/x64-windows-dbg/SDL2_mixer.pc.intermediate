@@ -1,0 +1,13 @@
+prefix=C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/sdl2-mixer_x64-windows/debug
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: SDL2_mixer
+Description: mixer library for Simple DirectMedia Layer
+Version: 2.8.0
+Requires: sdl2 >= 2.0.9
+Libs: -L${libdir} -lSDL2_mixer
+Cflags: -I${includedir}/SDL2
+Requires.private: vorbisfile wavpack
+Libs.private: 

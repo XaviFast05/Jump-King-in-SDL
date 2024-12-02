@@ -1,0 +1,34 @@
+-- Downloading https://github.com/glennrp/libpng/archive/v1.6.43.tar.gz -> glennrp-libpng-v1.6.43.tar.gz...
+-- Extracting source C:/Users/israp/AppData/Local/vcpkg/downloads/glennrp-libpng-v1.6.43.tar.gz
+-- Applying patch cmake.patch
+-- Applying patch fix-export-targets.patch
+-- Applying patch libm.patch
+-- Applying patch pkgconfig.patch
+-- Applying patch fix-msa-support-for-mips.patch
+-- Using source at C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/blds/libpng/src/v1.6.43-e957a32120.clean
+-- Found external ninja('1.11.0').
+-- Configuring x64-windows
+-- Building x64-windows-dbg
+-- Building x64-windows-rel
+-- Installing: C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/libpng_x64-windows/share/png/vcpkg-cmake-wrapper.cmake
+-- Fixing pkgconfig file: C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/libpng_x64-windows/lib/pkgconfig/libpng16.pc
+-- Using cached msys2-mingw-w64-x86_64-pkgconf-1~2.2.0-1-any.pkg.tar.zst.
+-- Using cached msys2-msys2-runtime-3.4.10-4-x86_64.pkg.tar.zst.
+-- Using msys root at C:/Users/israp/AppData/Local/vcpkg/downloads/tools/msys2/d33df895d441a36d
+-- Fixing pkgconfig file: C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/libpng_x64-windows/debug/lib/pkgconfig/libpng16.pc
+-- Installing: C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/libpng_x64-windows/debug/lib/pkgconfig/libpng.pc
+-- Installing: C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/libpng_x64-windows/lib/pkgconfig/libpng.pc
+CMake Warning at scripts/cmake/vcpkg_copy_pdbs.cmake:44 (message):
+  Could not find a matching pdb file for:
+
+      C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/libpng_x64-windows/bin/libpng16.dll
+      C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/libpng_x64-windows/debug/bin/libpng16d.dll
+
+Call Stack (most recent call first):
+  C:/Users/israp/AppData/Local/vcpkg/registries/git-trees/8673cfd41804628ce52c499b8d23c5696104ec47/portfile.cmake:103 (vcpkg_copy_pdbs)
+  scripts/ports.cmake:175 (include)
+
+
+-- Installing: C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/libpng_x64-windows/share/libpng/usage
+-- Installing: C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/libpng_x64-windows/share/libpng/copyright
+-- Performing post-build validation

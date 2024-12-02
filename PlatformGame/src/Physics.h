@@ -80,7 +80,9 @@ public:
 	void BeginContact(b2Contact* contact);
 	void EndContact(b2Contact* contact);
 
-	void DestroyBody(PhysBody* pbody);
+	void DeleteBody(PhysBody* pbody);
+	void DeletePhysBody(PhysBody* pbody);
+	bool IsPendingToDelete(PhysBody* physBody);
 
 private:
 

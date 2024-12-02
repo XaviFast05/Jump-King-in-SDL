@@ -1,0 +1,25 @@
+-- Downloading https://github.com/dbry/WavPack/archive/5.6.0.tar.gz -> dbry-WavPack-5.6.0.tar.gz...
+-- Extracting source C:/Users/israp/AppData/Local/vcpkg/downloads/dbry-WavPack-5.6.0.tar.gz
+-- Using source at C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/blds/wavpack/src/5.6.0-d46202430d.clean
+-- Found external ninja('1.11.0').
+-- Configuring x64-windows
+-- Building x64-windows-dbg
+-- Building x64-windows-rel
+CMake Warning at scripts/cmake/vcpkg_copy_pdbs.cmake:44 (message):
+  Could not find a matching pdb file for:
+
+      C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/wavpack_x64-windows/bin/wavpackdll.dll
+      C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/wavpack_x64-windows/debug/bin/wavpackdll.dll
+
+Call Stack (most recent call first):
+  C:/Users/israp/AppData/Local/vcpkg/registries/git-trees/d58b3734d0a42c7309216ade0432f7787fbd6ff5/portfile.cmake:28 (vcpkg_copy_pdbs)
+  scripts/ports.cmake:175 (include)
+
+
+-- Installing: C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/wavpack_x64-windows/share/wavpack/copyright
+-- Fixing pkgconfig file: C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/wavpack_x64-windows/lib/pkgconfig/wavpack.pc
+-- Using cached msys2-mingw-w64-x86_64-pkgconf-1~2.2.0-1-any.pkg.tar.zst.
+-- Using cached msys2-msys2-runtime-3.4.10-4-x86_64.pkg.tar.zst.
+-- Using msys root at C:/Users/israp/AppData/Local/vcpkg/downloads/tools/msys2/d33df895d441a36d
+-- Fixing pkgconfig file: C:/Users/israp/OneDrive/Documentos/GitHub/Platformer-Game/PlatformGame-L9_Map_Collision/vcpkg_installed/x64-windows/vcpkg/pkgs/wavpack_x64-windows/debug/lib/pkgconfig/wavpack.pc
+-- Performing post-build validation

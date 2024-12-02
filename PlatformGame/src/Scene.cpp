@@ -36,17 +36,9 @@ bool Scene::Awake()
 	player->SetParameters(configParameters.child("entities").child("player"));
 	
 	//L08 Create a new item using the entity manager and set the position to (200, 672) to test
-	Item* item = (Item*) Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
-	item->position = Vector2D(200, 672);
+	//Item* item = (Item*) Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
+	//item->position = Vector2D(200, 672);
 	player->position = Vector2D(0, 0);
-
-	// Create a enemy using the entity manager 
-	for (pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy"); enemyNode; enemyNode = enemyNode.next_sibling("enemy"))
-	{
-		Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->SetParameters(enemyNode);
-		enemyList.push_back(enemy);
-	}
 
 	return ret;
 }
@@ -69,7 +61,7 @@ bool Scene::Start()
 
 	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
 
-	changeLevel(sceneNode.child("entities").child("player").attribute("level").as_int());
+	changeLevel(sceneNode.child("entities").child("player").attribute("level").as_int(), false);
 	return true;
 }
 
@@ -89,11 +81,11 @@ bool Scene::Update(float dt)
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and player->currentLevel < 5)
 	{
-		changeLevel(player->currentLevel + 1);
+		changeLevel(player->currentLevel + 1, true);
 	}
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN and player->currentLevel > 1)
 	{
-		changeLevel(player->currentLevel - 1);
+		changeLevel(player->currentLevel - 1, false);
 	}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
@@ -180,7 +172,7 @@ void Scene::LoadState() {
 	player->SetPosition(playerPos);
 	player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, 0), true);
 
-	changeLevel(sceneNode.child("entities").child("player").attribute("level").as_int());
+	changeLevel(sceneNode.child("entities").child("player").attribute("level").as_int(), false);
 	//enemies
 	//Vector2D enemyPos = Vector2D(sceneNode.child("entities").child("enemy").attribute("x").as_int(),
 		//sceneNode.child("entities").child("enemy").attribute("y").as_int());
@@ -235,10 +227,10 @@ void Scene::SpawnPoint()
 	sceneNode.child("entities").child("player").attribute("level").set_value(1);
 	loadFile.save_file("config.xml");
 
-	changeLevel(1);
+	changeLevel(1, false);
 }
 
-void Scene::changeLevel(int level)
+void Scene::changeLevel(int level, bool upordown)
 {
 	player->currentLevel = level;
 
@@ -252,4 +244,22 @@ void Scene::changeLevel(int level)
 	Engine::GetInstance().textures.get()->GetSize(bg, texW, texH);
 
 	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", level);
+
+	if (enemyList.size() > 0)
+	{
+		Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
+		enemyList.clear();
+	}
+
+	//pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy");
+	//Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ENEMY);
+	//enemy->SetParameters(enemyNode);
+	//enemyList.push_back(enemy);
+	if (upordown)
+	{
+		pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy");
+		Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ENEMY);
+		enemy->SetParameters(enemyNode);
+		enemyList.push_back(enemy);
+	}
 }

@@ -23,8 +23,11 @@ public:
 
 	bool CleanUp();
 
+	bool DeleteBody();
+
 	void SetParameters(pugi::xml_node parameters) {
 		this->parameters = parameters;
+		Start();
 	}
 
 	void SetPosition(Vector2D pos);
@@ -33,7 +36,9 @@ public:
 
 	void ResetPath();
 
-public:
+	void OnCollision(PhysBody* physA, PhysBody* physB);
+
+	void OnCollisionEnd(PhysBody* physA, PhysBody* physB);
 
 private:
 
@@ -47,5 +52,5 @@ private:
 	Pathfinding* pathfinding;
 	Map* map;
 	bool DrawingPath = false;
-
+	bool hasStarted = false;
 };

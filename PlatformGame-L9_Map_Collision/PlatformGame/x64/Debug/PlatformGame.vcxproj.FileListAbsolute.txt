@@ -1,0 +1,11 @@
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\x64\Debug\pugixml.dll
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\x64\Debug\SDL2d.dll
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\x64\Debug\SDL2_imaged.dll
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\x64\Debug\libpng16d.dll
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\x64\Debug\zlibd1.dll
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\x64\Debug\SDL2_mixerd.dll
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\x64\Debug\vorbisfile.dll
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\x64\Debug\vorbis.dll
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\x64\Debug\ogg.dll
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\x64\Debug\wavpackdll.dll
+C:\Users\israp\OneDrive\Documentos\GitHub\Platformer-Game\PlatformGame-L9_Map_Collision\PlatformGame\x64\Debug\Platform.4970EBBF.Up2Date
