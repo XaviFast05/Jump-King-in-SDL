@@ -55,6 +55,34 @@ bool Enemy::Update(float dt)
 {
 	pathfinding->layerNav = map->GetNavigationLayer();
 
+	//Reset and propagate the pathfanding to follow the player
+	Vector2D enemyPos = GetPosition();
+	Vector2D playerPos = Engine::GetInstance().scene.get()->GetPlayerPosition();
+	Vector2D playerTilePos = Engine::GetInstance().map.get()->WorldToMap(playerPos.getX(), playerPos.getY());
+
+	pathfinding->ResetPath(Engine::GetInstance().map.get()->WorldToMap(enemyPos.getX(), enemyPos.getY()));
+	while (pathfinding->pathTiles.empty()) {
+		pathfinding->PropagateAStar(SQUARED);
+	}
+
+	pathfinding->DrawPath();
+
+	//Get last tile
+	if (pathfinding->pathTiles.size() > 1) {
+		Vector2D targetTile = pathfinding->pathTiles[pathfinding->pathTiles.size() - 2];
+		Vector2D targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(targetTile.getX(), targetTile.getY());
+
+		//Calculate vector movement
+		Vector2D movement = targetWorldPos - enemyPos;
+		float distance = movement.magnitude();
+
+		if (distance > 1.0f) { //If distance is bigger than
+			movement.normalized();
+			movement = movement * (5 * dt); 
+			SetPosition(enemyPos + movement);
+		}
+	}
+
 	// Pathfinding testing inputs
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 		Vector2D pos = GetPosition();

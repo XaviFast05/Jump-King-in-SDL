@@ -63,7 +63,7 @@ void Pathfinding::DrawPath() {
     // Draw visited
     for (const auto& pathTile : visited) {
     	Vector2D pathTileWorld = Engine::GetInstance().map.get()->MapToWorld(pathTile.getX(), pathTile.getY());
-        SDL_Rect rect = { 0,0,20,20 };
+        SDL_Rect rect = { 20,0,20,20 };
         Engine::GetInstance().render.get()->DrawTexture(pathTex, pathTileWorld.getX(), pathTileWorld.getY(),&rect);
     }
 
@@ -275,6 +275,7 @@ void Pathfinding::PropagateAStar(ASTAR_HEURISTICS heuristic) {
 
             // L12: TODO 2: When the destination is reach, call the function ComputePath
             ComputePath(frontierTile.getX(), frontierTile.getY());
+            return;
         }
     }
 

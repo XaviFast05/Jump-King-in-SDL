@@ -52,7 +52,7 @@ public:
     std::priority_queue<std::pair<int, Vector2D>, std::vector<std::pair<int, Vector2D>>, std::greater<std::pair<int, Vector2D>> > frontierDijkstra;
     std::vector<Vector2D> breadcrumbs; //list of tiles that form the path
     std::vector<std::vector<int>> costSoFar; //matrix that stores the accumulated cost in the propagation of the Dijkstra algorithm
-    std::list<Vector2D> pathTiles; //list of tiles that form the path
+    std::vector<Vector2D> pathTiles; //list of tiles that form the path
     SDL_Texture* tileX = nullptr; //texture used to show the path 
 
     // L13: A* Pathfinding variables
