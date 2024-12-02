@@ -46,5 +46,6 @@ private:
 	PhysBody* pbody;
 	Pathfinding* pathfinding;
 	Map* map;
+	bool DrawingPath = false;
 
 };

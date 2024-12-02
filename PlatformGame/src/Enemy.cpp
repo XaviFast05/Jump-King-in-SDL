@@ -65,7 +65,7 @@ bool Enemy::Update(float dt)
 		pathfinding->PropagateAStar(SQUARED);
 	}
 
-	pathfinding->DrawPath();
+
 
 	//Get last tile
 	if (pathfinding->pathTiles.size() > 1) {
@@ -78,8 +78,14 @@ bool Enemy::Update(float dt)
 
 		if (distance > 1.0f) { //If distance is bigger than
 			movement.normalized();
-			movement = movement * (5 * dt); 
-			SetPosition(enemyPos + movement);
+			b2Vec2 velocity(movement.getX() * 0.1f, movement.getY() * 0.1f); // Aplicar velocidad en X e Y
+			pbody->body->SetLinearVelocity(velocity);
+
+			if (distance < 1.0f)
+			{
+				pathfinding->ResetPath(targetWorldPos);
+
+			}
 		}
 	}
 
@@ -144,8 +150,13 @@ bool Enemy::Update(float dt)
 	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
 	currentAnimation->Update();
 
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	{
+		DrawingPath = !DrawingPath;
+	}
+
 	// Draw pathfinding 
-	pathfinding->DrawPath();
+	if (DrawingPath) pathfinding->DrawPath();
 
 	return true;
 }

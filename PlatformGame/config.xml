@@ -17,7 +17,7 @@
 	<scene>
 		<map path="Assets/Maps/" name="MapTemplate.tmx" />
 		<entities>
-			<player x="418" y="209" w="300" h="32" level="1" texture="Assets/Textures/player/JumpKingSpriteSheet.png">
+			<player x="31" y="209" w="300" h="32" level="1" texture="Assets/Textures/player/JumpKingSpriteSheet.png">
 				<animations>
 					<idle loop="true" speed="0.05">
 						<frame x="32" y="64" w="32" h="32" />
@@ -42,7 +42,7 @@
 				</animations>
 			</player>
 			<enemies>
-				<enemy name="badguy" x="200" y="300" w="32" h="32" texture="Assets/Textures/enemy/raven_idle.png" gravity="false">
+				<enemy name="badguy" x="200" y="300" w="32" h="32" texture="Assets/Textures/enemy/raven_idle.png" gravity="true">
 					<animations>
 						<idle loop="true" speed="0.05">
 							<frame x="0" y="0" w="32" h="32" />
