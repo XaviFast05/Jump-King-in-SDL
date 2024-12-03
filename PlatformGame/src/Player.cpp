@@ -200,7 +200,7 @@ bool Player::Update(float dt)
 	float y = METERS_TO_PIXELS(pbodyPos.p.y) - texH - 0.5 / 2;
 	position.setY(y + 12);
 
-	printf("%f", position.getY());
+	//printf("%f", position.getY());
 
 	if (position.getY() < -20 and currentLevel != maxLevel)
 	{
@@ -250,8 +250,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (levelsFallen >= 2)
 		{
 			LOG("ESTAMPADO");
-			isSplatted = true;
-			Engine::GetInstance().audio.get()->PlayFx(splatFxId);
+			Die();
 		}
 		levelsFallen = 0;
 	}
@@ -265,6 +264,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::ITEM:
 			LOG("Collision ITEM");
+			break;
+		case ColliderType::ENEMY:
+			LOG("Collision ENEMY - Die");
+			Die();
 			break;
 		case ColliderType::UNKNOWN:
 			break;
@@ -281,6 +284,9 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		break;
 	case ColliderType::ITEM:
 		LOG("End Collision ITEM");
+		break;
+	case ColliderType::ENEMY:
+		LOG("End Collision ENEMY");
 		break;
 	case ColliderType::UNKNOWN:
 		break;
@@ -318,4 +324,11 @@ Vector2D Player::GetPosition() {
 	b2Vec2 bodyPos = pbody->body->GetTransform().p;
 	Vector2D pos = Vector2D(METERS_TO_PIXELS(bodyPos.x), METERS_TO_PIXELS(bodyPos.y));
 	return pos;
+}
+
+void Player::Die()
+{
+	isSplatted = true;
+	Engine::GetInstance().audio.get()->PlayFx(splatFxId);
+	Respawn->LoadState();
 }

@@ -6,6 +6,7 @@
 #include "Animation.h"
 
 struct SDL_Texture;
+class Scene;
 
 class Player : public Entity
 {
@@ -34,6 +35,8 @@ public:
 
 	void SetPosition(Vector2D pos);
 
+	void Die();
+
 	Vector2D GetPosition();
 
 public:
@@ -53,6 +56,7 @@ public:
 	// L08 TODO 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
 	PhysBody* pbodyBody;
+	Scene* Respawn;
 	float jumpForce = 1.1f; // The force to apply when jumping
 	bool isJumping = false; // Flag to check if the player is currently jumping
 	bool isFalling = false;

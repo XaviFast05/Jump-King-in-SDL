@@ -34,7 +34,8 @@ bool Scene::Awake()
 	//L04: TODO 3b: Instantiate the player using the entity manager
 	player = (Player*)Engine::GetInstance().entityManager->CreateEntity(EntityType::PLAYER);
 	player->SetParameters(configParameters.child("entities").child("player"));
-	
+
+
 	//L08 Create a new item using the entity manager and set the position to (200, 672) to test
 	//Item* item = (Item*) Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
 	//item->position = Vector2D(200, 672);
@@ -46,8 +47,6 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	//L06 TODO 3: Call the function to load the map. 
-	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", 1);
 
 	CTtexture = Engine::GetInstance().textures->Load("Assets/Textures/CONTROLS.png");
 
@@ -74,6 +73,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+
 	//L03 TODO 3: Make the camera movement independent of framerate
 	float camSpeed = 1;
 
@@ -244,6 +244,7 @@ void Scene::changeLevel(int level, bool upordown)
 	Engine::GetInstance().textures.get()->GetSize(bg, texW, texH);
 
 	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", level);
+
 
 	if (enemyList.size() > 0)
 	{

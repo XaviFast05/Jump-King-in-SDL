@@ -201,7 +201,7 @@ bool Map::Load(std::string path, std::string fileName, int layer)
                     //Get the gid from tile
 
                     int gid = mapLayer->Get(i, j);
-                    if (gid != 0)
+                    if (gid != 0 && gid != 55)
                     {
                         LOG("%i, %i", maps.size(), map.size());
 
