@@ -330,5 +330,5 @@ void Player::Die()
 {
 	isSplatted = true;
 	Engine::GetInstance().audio.get()->PlayFx(splatFxId);
-	Respawn->LoadState();
+	//Respawn->LoadState();
 }

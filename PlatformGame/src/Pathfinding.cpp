@@ -266,6 +266,17 @@ void Pathfinding::PropagateAStar(ASTAR_HEURISTICS heuristic) {
     Vector2D playerPos = Engine::GetInstance().scene.get()->GetPlayerPosition();
     Vector2D playerPosTile = Engine::GetInstance().map.get()->WorldToMap((int)playerPos.getX(), (int)playerPos.getY());
 
+    // Verificar si el jugador está fuera de los límites del mapa
+    if (playerPosTile.getX() < 0 || playerPosTile.getY() < 0 ||
+        playerPosTile.getX() >= map->GetWidth() || playerPosTile.getY() >= map->GetHeight()) {
+        LOG("Player outside map, A* does not propagate");
+        return;
+    }
+
+    if (frontierAStar.empty()) {
+        LOG("cant propagate");
+        return;
+    }
 
     if (frontierAStar.size() > 0) {
         Vector2D frontierTile = frontierAStar.top().second;

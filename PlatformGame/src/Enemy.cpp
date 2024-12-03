@@ -59,7 +59,10 @@ bool Enemy::Start() {
 
 bool Enemy::Update(float dt)
 {
- 	//pathfinding->layerNav = map->GetNavigationLayer();
+	int maxIterations = 13; // Max number of iterations to avoid crashes
+	int iterations = 0;
+
+ 	pathfinding->layerNav = map->GetNavigationLayer();
 
 	//Reset and propagate the pathfanding to follow the player
 	Vector2D enemyPos = GetPosition();
@@ -67,11 +70,11 @@ bool Enemy::Update(float dt)
 	Vector2D playerTilePos = Engine::GetInstance().map.get()->WorldToMap(playerPos.getX(), playerPos.getY());
 
 	pathfinding->ResetPath(Engine::GetInstance().map.get()->WorldToMap(enemyPos.getX(), enemyPos.getY()));
-	while (pathfinding->pathTiles.empty()) {
+
+	while (pathfinding->pathTiles.empty() && iterations < maxIterations) {
 		pathfinding->PropagateAStar(SQUARED);
+		iterations++;
 	}
-
-
 
 	//Get last tile
 	if (pathfinding->pathTiles.size() > 1) {
