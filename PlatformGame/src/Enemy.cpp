@@ -23,15 +23,15 @@ bool Enemy::Awake() {
 	return true;
 }
 
-bool Enemy::Start() {
-
+bool Enemy::Start() 
+{
 	position.setX(parameters.attribute("x").as_int());
 	position.setY(parameters.attribute("y").as_int());
 
 	if (!hasStarted)
 	{
 		//Add a physics to an item - initialize the physics body
-		pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, 10, bodyType::DYNAMIC);
+		pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, 8, bodyType::DYNAMIC);
 	}
 	//initilize textures
 	texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("texture").as_string());
@@ -59,6 +59,11 @@ bool Enemy::Start() {
 
 bool Enemy::Update(float dt)
 {
+	if (position.getY() < -10)
+	{
+
+	}
+
 	int maxIterations = 13; // Max number of iterations to avoid crashes
 	int iterations = 0;
 

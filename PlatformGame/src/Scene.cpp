@@ -92,6 +92,12 @@ bool Scene::Update(float dt)
 	{
 		CTVisible = !CTVisible;
 	}
+	
+	if ((enemyList.size() > 0 && enemyList[0]->position.getY() < -10) || (enemyList.size() > 0 && enemyList[0]->position.getY() > 340))
+	{
+		Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
+		enemyList.clear();
+	}
 
 	return true;
 }
@@ -252,13 +258,32 @@ void Scene::changeLevel(int level, bool upordown)
 		enemyList.clear();
 	}
 
-	//pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy");
-	//Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ENEMY);
-	//enemy->SetParameters(enemyNode);
-	//enemyList.push_back(enemy);
 	if (upordown)
 	{
 		pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy");
+
+		switch (level)
+		{
+		case 2:
+			enemyNode.attribute("x") = 50;
+			enemyNode.attribute("y") = 50;
+			break;
+		case 3:
+			enemyNode.attribute("x") = 50;
+			enemyNode.attribute("y") = 50;
+			break;
+		case 4:
+			enemyNode.attribute("x") = 380;
+			enemyNode.attribute("y") = 50;
+			break;
+		case 5:
+			enemyNode.attribute("x") = 160;
+			enemyNode.attribute("y") = 50;
+			break;
+		default:
+			break;
+		}
+
 		Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ENEMY);
 		enemy->SetParameters(enemyNode);
 		enemyList.push_back(enemy);

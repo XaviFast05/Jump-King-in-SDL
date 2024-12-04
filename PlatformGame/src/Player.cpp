@@ -268,6 +268,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::ENEMY:
 			LOG("Collision ENEMY - Die");
 			Die();
+			//AQUI
 			break;
 		case ColliderType::UNKNOWN:
 			break;
@@ -330,5 +331,4 @@ void Player::Die()
 {
 	isSplatted = true;
 	Engine::GetInstance().audio.get()->PlayFx(splatFxId);
-	//Respawn->LoadState();
 }
