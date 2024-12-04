@@ -17,7 +17,7 @@
 	<scene>
 		<map path="Assets/Maps/" name="MapTemplate.tmx" />
 		<entities>
-			<player x="166" y="49" w="300" h="32" level="1" texture="Assets/Textures/player/JumpKingSpriteSheet.png">
+			<player x="251" y="329" w="300" h="32" level="1" texture="Assets/Textures/player/JumpKingSpriteSheet.png">
 				<animations>
 					<idle loop="true" speed="0.05">
 						<frame x="32" y="64" w="32" h="32" />

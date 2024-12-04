@@ -59,11 +59,6 @@ bool Enemy::Start()
 
 bool Enemy::Update(float dt)
 {
-	if (position.getY() < -10)
-	{
-
-	}
-
 	int maxIterations = 13; // Max number of iterations to avoid crashes
 	int iterations = 0;
 

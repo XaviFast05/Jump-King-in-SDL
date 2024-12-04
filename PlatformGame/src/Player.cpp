@@ -80,6 +80,7 @@ bool Player::Update(float dt)
 	{
 		isSplatted = false;
 		currentAnimation = &idle;
+		levelsFallen = 0;
 	}
 	
 	if (debug_ && !isDead)
