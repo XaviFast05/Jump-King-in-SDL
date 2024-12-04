@@ -75,8 +75,14 @@ bool Player::Update(float dt)
 		debug_ = !debug_;
 		levelsFallen = 0;
 	}
+
+	if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) || (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN))
+	{
+		isSplatted = false;
+		currentAnimation = &idle;
+	}
 	
-	if (debug_)
+	if (debug_ && !isDead)
 	{
 		velocity.y = pbody->body->GetLinearVelocity().y;
 
@@ -99,7 +105,7 @@ bool Player::Update(float dt)
 		}
 	}
 
-	if (!debug_)
+	if (!debug_ && !isDead)
 	{
 
 		if (velocity.x == 0 && currentAnimation != &splatted)
@@ -250,7 +256,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (levelsFallen >= 2)
 		{
 			LOG("ESTAMPADO");
-			Die();
+			Splash();
 		}
 		levelsFallen = 0;
 	}
@@ -266,9 +272,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision ITEM");
 			break;
 		case ColliderType::ENEMY:
-			LOG("Collision ENEMY - Die");
-			Die();
-			//AQUI
+			LOG("Collision ENEMY");
+			checkDeath = true;
 			break;
 		case ColliderType::UNKNOWN:
 			break;
@@ -287,6 +292,7 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		LOG("End Collision ITEM");
 		break;
 	case ColliderType::ENEMY:
+		checkDeath = false;
 		LOG("End Collision ENEMY");
 		break;
 	case ColliderType::UNKNOWN:
@@ -327,8 +333,24 @@ Vector2D Player::GetPosition() {
 	return pos;
 }
 
-void Player::Die()
+void Player::Splash()
 {
 	isSplatted = true;
 	Engine::GetInstance().audio.get()->PlayFx(splatFxId);
+}
+
+void Player::Die()
+{
+	isSplatted = true;
+	isJumping = false;
+	isFalling = false;
+	
+	currentAnimation = &splatted;
+	isDead = true;
+	Engine::GetInstance().audio.get()->PlayFx(splatFxId);
+}
+
+void Player::JumpFX()
+{
+	Engine::GetInstance().audio.get()->PlayFx(jumpFxId);
 }

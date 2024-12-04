@@ -35,8 +35,6 @@ public:
 
 	void SetPosition(Vector2D pos);
 
-	void Die();
-
 	Vector2D GetPosition();
 
 public:
@@ -84,4 +82,13 @@ public:
 
 	void ascend(bool upDown);
 	int levelsFallen = 0;
+
+	//Death logic
+	void Splash();
+
+	bool isDead = false;
+	bool checkDeath = false;
+	void Die();
+
+	void JumpFX();
 };

@@ -99,6 +99,31 @@ bool Scene::Update(float dt)
 		enemyList.clear();
 	}
 
+	if (enemyList.size() > 0 && enemyList[0]->isDead == true)
+	{
+		Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
+		enemyList.clear();
+	}
+
+	if (enemyList.size() > 0 && player->checkDeath == true && player->isDead == false)
+	{
+		if (player->GetPosition().getY() + 7 > enemyList[0]->GetPosition().getY())
+		{
+			player->Die();
+			player->checkDeath = false;
+		}
+		else
+		{
+			Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
+			enemyList.clear();
+			//XAVI SONIDO de cuando pajarraco muere
+			player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.4), true);
+			player->JumpFX();
+
+			player->checkDeath = false;
+		}
+	}
+
 	return true;
 }
 
@@ -111,16 +136,22 @@ bool Scene::PostUpdate()
 		ret = false;
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	{
+		player->isDead = false;
 		LoadState();
+	}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
+		player->isDead = false;
 		SpawnPoint();
 		SaveState();
 	}
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && player->isDead == false)
+	{
 		SaveState();
+	}
 
 	if (CTVisible && CTtexture != nullptr)
 	{

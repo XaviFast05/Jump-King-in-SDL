@@ -40,6 +40,8 @@ public:
 
 	void OnCollisionEnd(PhysBody* physA, PhysBody* physB);
 
+	bool isDead = false;
+
 private:
 
 	SDL_Texture* texture;
