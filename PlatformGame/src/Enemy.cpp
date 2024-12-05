@@ -41,6 +41,7 @@ bool Enemy::Start()
 
 	//Load animations
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
+	flying.LoadAnimations(parameters.child("animations").child("flying"));
 	currentAnimation = &idle;
 	//Assign collider type
 	pbody->ctype = ColliderType::ENEMY;
@@ -89,11 +90,11 @@ bool Enemy::Update(float dt)
 			movement.normalized();
 			b2Vec2 velocity(movement.getX() * 0.1f, movement.getY() * 0.1f); // Aplicar velocidad en X e Y
 			pbody->body->SetLinearVelocity(velocity);
+			IsSearching = true;
 
 			if (distance < 1.0f)
 			{
 				pathfinding->ResetPath(targetWorldPos);
-
 			}
 		}
 	}
@@ -105,58 +106,32 @@ bool Enemy::Update(float dt)
 		pathfinding->ResetPath(tilePos);
 	}
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_J) == KEY_DOWN) {
-		pathfinding->PropagateBFS();
+	if (enemyPos.getX() > playerPos.getX())
+	{
+		flipSprite = true;
+		if (flipSprite == true && hflip == SDL_FLIP_NONE) {
+			hflip = SDL_FLIP_HORIZONTAL;
+		}
+	}
+	else
+	{
+		flipSprite = false;
+		if (flipSprite == false && hflip == SDL_FLIP_HORIZONTAL) {
+			hflip = SDL_FLIP_NONE;
+		}
 	}
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_J) == KEY_REPEAT &&
-		Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
-		pathfinding->PropagateBFS();
+	if (IsSearching == true)
+	{
+		currentAnimation = &flying;
 	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
-		pathfinding->PropagateDijkstra();
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_K) == KEY_REPEAT &&
-		Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
-		pathfinding->PropagateDijkstra();
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
-		pathfinding->PropagateAStar(MANHATTAN);
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_B) == KEY_REPEAT &&
-		Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
-		pathfinding->PropagateAStar(MANHATTAN);
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
-		pathfinding->PropagateAStar(EUCLIDEAN);
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_N) == KEY_REPEAT &&
-		Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
-		pathfinding->PropagateAStar(EUCLIDEAN);
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
-		pathfinding->PropagateAStar(SQUARED);
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_M) == KEY_REPEAT &&
-		Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
-		pathfinding->PropagateAStar(SQUARED);
-	}
-
 
 	// L08 TODO 4: Add a physics to an item - update the position of the object from the physics.  
 	b2Transform pbodyPos = pbody->body->GetTransform();
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 
-	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
+	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame(), hflip);
 	currentAnimation->Update();
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
@@ -219,4 +194,8 @@ void Enemy::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	case ColliderType::PLAYER:
 		break;
 	}
+}
+
+float Suavizar(float start, float end, float alpha) {
+    return start + alpha * (end - start);
 }

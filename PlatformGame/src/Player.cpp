@@ -274,7 +274,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::ENEMY:
 			LOG("Collision ENEMY");
-			checkDeath = true;
+			if (debug_ == false)
+			{
+				checkDeath = true;
+			}
 			break;
 		case ColliderType::UNKNOWN:
 			break;

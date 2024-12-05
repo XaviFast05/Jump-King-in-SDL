@@ -42,6 +42,12 @@ public:
 
 	bool isDead = false;
 
+	SDL_RendererFlip hflip = SDL_FLIP_NONE;
+
+	bool flipSprite = false;
+
+	float Suavizar(float start, float end, float alpha);
+
 private:
 
 	SDL_Texture* texture;
@@ -50,9 +56,11 @@ private:
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
 	Animation idle;
+	Animation flying;
 	PhysBody* pbody;
 	Pathfinding* pathfinding;
 	Map* map;
 	bool DrawingPath = false;
 	bool hasStarted = false;
+	bool IsSearching = false;
 };
