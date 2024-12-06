@@ -77,25 +77,21 @@ bool Enemy::Update(float dt)
 		iterations++;
 	}
 
+
 	//Get last tile
-	if (pathfinding->pathTiles.size() > 1) {
-		Vector2D targetTile = pathfinding->pathTiles[pathfinding->pathTiles.size() - 2];
+	if (pathfinding->pathTiles.size() > 3) {
+		Vector2D targetTile = pathfinding->pathTiles[pathfinding->pathTiles.size() - 4];
 		Vector2D targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(targetTile.getX(), targetTile.getY());
 
 		//Calculate vector movement
-		Vector2D movement = targetWorldPos - enemyPos;
+		Vector2D movement = targetWorldPos + Vector2D(16, 16) - enemyPos;
 		float distance = movement.magnitude();
 
 		if (distance > 1.0f) { //If distance is bigger than
 			movement.normalized();
-			b2Vec2 velocity(movement.getX() * 0.1f, movement.getY() * 0.1f); // Aplicar velocidad en X e Y
+			b2Vec2 velocity(movement.getX() * 0.05f, movement.getY() * 0.05f); // Aplicar velocidad en X e Y
 			pbody->body->SetLinearVelocity(velocity);
 			IsSearching = true;
-
-			if (distance < 1.0f)
-			{
-				pathfinding->ResetPath(targetWorldPos);
-			}
 		}
 	}
 
