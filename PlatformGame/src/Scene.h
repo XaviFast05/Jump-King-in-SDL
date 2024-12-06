@@ -3,6 +3,7 @@
 #include "Module.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "CheckPointBF.h"
 #include <vector>
 
 struct SDL_Texture;
@@ -59,10 +60,13 @@ private:
 	std::string tilePosDebug = "[0,0]";
 	SDL_Texture* CTtexture = nullptr;
 	bool once = false;
+	int menu_introMS;
+	int birdDieFxId;
 
-	//L03: TODO 3b: Declare a Player attribute
+	// Declare a Player attribute
 	Player* player;
 	Enemy* enemy;
+	CheckPointBF* checkpoint;
 	std::vector<Enemy*> enemyList;
 
 	bool grounded = false;

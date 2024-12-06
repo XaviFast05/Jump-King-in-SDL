@@ -42,7 +42,17 @@ bool Enemy::Start()
 	//Load animations
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	flying.LoadAnimations(parameters.child("animations").child("flying"));
-	currentAnimation = &idle;
+	idleGrounded.LoadAnimations(parameters.child("animations").child("idleGrounded"));
+	flyingGrounded.LoadAnimations(parameters.child("animations").child("flyingGrounded"));
+	if (!isGrounded)
+	{
+		currentAnimation = &idle;
+	}
+	else if (isGrounded)
+	{
+		currentAnimation = &idleGrounded;
+	}
+
 	//Assign collider type
 	pbody->ctype = ColliderType::ENEMY;
 
@@ -50,6 +60,10 @@ bool Enemy::Start()
 
 	// Set the gravity of the body
 	if (!parameters.attribute("gravity").as_bool()) pbody->body->SetGravityScale(0);
+
+	chaseFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/bird_chase.wav");
+
+	Mix_Volume(chaseFxId, 200);
 
 	// Initialize pathfinding
 	pathfinding = new Pathfinding();
@@ -62,6 +76,15 @@ bool Enemy::Update(float dt)
 {
 	int maxIterations = 13; // Max number of iterations to avoid crashes
 	int iterations = 0;
+	
+	if (!isGrounded)
+	{
+		currentAnimation = &idle;
+	}
+	else if (isGrounded)
+	{
+		currentAnimation = &idleGrounded;
+	}
 
  	pathfinding->layerNav = map->GetNavigationLayer();
 
@@ -125,10 +148,36 @@ bool Enemy::Update(float dt)
 		}
 	}
 
+	if (currentAnimation == &idle) x = 0;
+
 	if (IsSearching == true)
 	{
-		currentAnimation = &flying;
+		if (!isGrounded)
+		{
+			currentAnimation = &flying;
+			x++;
+		}
+		else if (isGrounded)
+		{
+			currentAnimation = &flyingGrounded;
+			x++;
+		}
+		
 	}
+
+	if (currentAnimation == &flying && x == 1)
+	{
+		Engine::GetInstance().audio->PlayFx(chaseFxId);
+		x++;
+	}
+
+	if (currentAnimation == &flyingGrounded && x == 1)
+	{
+		Engine::GetInstance().audio->PlayFx(chaseFxId);
+		x++;
+	}
+
+
 
 	// L08 TODO 4: Add a physics to an item - update the position of the object from the physics.  
 	b2Transform pbodyPos = pbody->body->GetTransform();

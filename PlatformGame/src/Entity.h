@@ -9,6 +9,7 @@ enum class EntityType
 	PLAYERSENSOR,
 	ITEM,
 	ENEMY,
+	CHECKPOINTBF,
 	UNKNOWN
 };
 

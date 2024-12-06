@@ -13,7 +13,7 @@
 #include "Item.h"
 #include "Enemy.h"
 #include "Physics.h"
-
+#include "CheckPointBF.h"
 
 Scene::Scene() : Module()
 {
@@ -35,11 +35,15 @@ bool Scene::Awake()
 	player = (Player*)Engine::GetInstance().entityManager->CreateEntity(EntityType::PLAYER);
 	player->SetParameters(configParameters.child("entities").child("player"));
 
+	pugi::xml_node checkpointbf = configParameters.child("entities").child("checkpointbf");
+	checkpoint = (CheckPointBF*)Engine::GetInstance().entityManager->CreateEntity(EntityType::CHECKPOINTBF);
+	checkpoint->SetParameters(checkpointbf);
+
+	birdDieFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/bird_fly.wav");
 
 	//L08 Create a new item using the entity manager and set the position to (200, 672) to test
 	//Item* item = (Item*) Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
 	//item->position = Vector2D(200, 672);
-	player->position = Vector2D(0, 0);
 
 	return ret;
 }
@@ -61,6 +65,10 @@ bool Scene::Start()
 	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
 
 	changeLevel(sceneNode.child("entities").child("player").attribute("level").as_int(), false);
+
+	// Create music
+	menu_introMS = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
+
 	return true;
 }
 
@@ -116,10 +124,9 @@ bool Scene::Update(float dt)
 		{
 			Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
 			enemyList.clear();
-			//XAVI SONIDO de cuando pajarraco muere
+			Engine::GetInstance().audio->PlayFx(birdDieFxId);
 			player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.6), true);
 			player->JumpFX();
-
 			player->checkDeath = false;
 		}
 	}

@@ -279,6 +279,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				checkDeath = true;
 			}
 			break;
+		case ColliderType::CHECKPOINTBF:
+			//Respawn->SaveState();
 		case ColliderType::UNKNOWN:
 			break;
 		}

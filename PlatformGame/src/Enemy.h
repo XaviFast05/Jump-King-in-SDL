@@ -60,10 +60,14 @@ private:
 	Animation* currentAnimation = nullptr;
 	Animation idle;
 	Animation flying;
+	Animation idleGrounded;
+	Animation flyingGrounded;
+	int chaseFxId;
 	PhysBody* pbody;
 	Pathfinding* pathfinding;
 	Map* map;
 	bool DrawingPath = false;
 	bool hasStarted = false;
 	bool IsSearching = false;
+	int x = 0;
 };
