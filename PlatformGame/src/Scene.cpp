@@ -117,7 +117,7 @@ bool Scene::Update(float dt)
 			Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
 			enemyList.clear();
 			//XAVI SONIDO de cuando pajarraco muere
-			player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.4), true);
+			player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.6), true);
 			player->JumpFX();
 
 			player->checkDeath = false;
@@ -298,18 +298,26 @@ void Scene::changeLevel(int level, bool upordown)
 		case 2:
 			enemyNode.attribute("x") = 50;
 			enemyNode.attribute("y") = 50;
+			enemyNode.attribute("gravity") = true;
+			grounded = true;
 			break;
 		case 3:
 			enemyNode.attribute("x") = 50;
 			enemyNode.attribute("y") = 50;
+			enemyNode.attribute("gravity") = false;
+			grounded = false;
 			break;
 		case 4:
 			enemyNode.attribute("x") = 380;
 			enemyNode.attribute("y") = 50;
+			enemyNode.attribute("gravity") = false;
+			grounded = false;
 			break;
 		case 5:
 			enemyNode.attribute("x") = 160;
 			enemyNode.attribute("y") = 50;
+			enemyNode.attribute("gravity") = true;
+			grounded = true;
 			break;
 		default:
 			break;
@@ -318,5 +326,7 @@ void Scene::changeLevel(int level, bool upordown)
 		Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ENEMY);
 		enemy->SetParameters(enemyNode);
 		enemyList.push_back(enemy);
+
+		enemy->ChangeGrounded(grounded);
 	}
 }

@@ -64,4 +64,6 @@ private:
 	Player* player;
 	Enemy* enemy;
 	std::vector<Enemy*> enemyList;
+
+	bool grounded = false;
 };

@@ -48,8 +48,11 @@ public:
 
 	float Suavizar(float start, float end, float alpha);
 
+	void ChangeGrounded(bool grounded);
+
 private:
 
+	bool isGrounded = false;
 	SDL_Texture* texture;
 	const char* texturePath;
 	int texW, texH;

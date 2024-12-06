@@ -89,8 +89,16 @@ bool Enemy::Update(float dt)
 
 		if (distance > 1.0f) { //If distance is bigger than
 			movement.normalized();
+			if (!isGrounded)
+			{
 			b2Vec2 velocity(movement.getX() * 0.05f, movement.getY() * 0.05f); // Aplicar velocidad en X e Y
 			pbody->body->SetLinearVelocity(velocity);
+			}
+			else if (isGrounded)
+			{
+			b2Vec2 velocity(movement.getX() * 0.05f, 2); // Aplicar velocidad en X
+			pbody->body->SetLinearVelocity(velocity);
+			}
 			IsSearching = true;
 		}
 	}
@@ -194,4 +202,9 @@ void Enemy::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 
 float Suavizar(float start, float end, float alpha) {
     return start + alpha * (end - start);
+}
+
+void Enemy::ChangeGrounded(bool grounded)
+{
+	isGrounded = grounded;
 }
