@@ -85,6 +85,7 @@ bool Enemy::Update(float dt)
 	{
 		currentAnimation = &idleGrounded;
 	}
+	//printf("%i ,%i\n", pbody->body->GetPosition().x, pbody->body->GetPosition().y);
 
  	pathfinding->layerNav = map->GetNavigationLayer();
 
@@ -211,8 +212,8 @@ bool Enemy::DeleteBody()
 }
 
 void Enemy::SetPosition(Vector2D pos) {
-	pos.setX(pos.getX() + texW / 2);
-	pos.setY(pos.getY() + texH / 2);
+	pos.setX(pos.getX());
+	pos.setY(pos.getY());
 	b2Vec2 bodyPos = b2Vec2(PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()));
 	pbody->body->SetTransform(bodyPos, 0);
 }

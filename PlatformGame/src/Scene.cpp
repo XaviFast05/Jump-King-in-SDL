@@ -64,7 +64,17 @@ bool Scene::Start()
 
 	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
 
-	changeLevel(sceneNode.child("entities").child("player").attribute("level").as_int(), false);
+	changeLevel(sceneNode.child("entities").child("player").attribute("level").as_int(),
+		sceneNode.child("entities").child("enemies").child("enemy").attribute("saved").as_bool());
+
+	//enemies
+	if (enemyList.size() > 0)
+	{
+		Vector2D enemyPos = Vector2D(sceneNode.child("entities").child("enemies").child("enemy").attribute("x").as_int(),
+			sceneNode.child("entities").child("enemies").child("enemy").attribute("y").as_int());
+
+		enemyList[0]->SetPosition(enemyPos);
+	}
 
 	// Create music
 	menu_introMS = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
@@ -178,7 +188,7 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	SDL_DestroyTexture(bg);
+	//SDL_DestroyTexture(bg);
 	if (CTtexture != nullptr)
 	{
 		Engine::GetInstance().textures->UnLoad(CTtexture);
@@ -216,11 +226,19 @@ void Scene::LoadState() {
 	player->SetPosition(playerPos);
 	player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, 0), true);
 
-	changeLevel(sceneNode.child("entities").child("player").attribute("level").as_int(), false);
+	changeLevel(sceneNode.child("entities").child("player").attribute("level").as_int(), 
+		sceneNode.child("entities").child("enemies").child("enemy").attribute("saved").as_bool());
+
 	//enemies
-	//Vector2D enemyPos = Vector2D(sceneNode.child("entities").child("enemy").attribute("x").as_int(),
-		//sceneNode.child("entities").child("enemy").attribute("y").as_int());
-	//enemy->SetPosition(enemyPos);
+	if (enemyList.size() > 0)
+	{
+		Vector2D enemyPos = Vector2D(sceneNode.child("entities").child("enemies").child("enemy").attribute("x").as_int(),
+			sceneNode.child("entities").child("enemies").child("enemy").attribute("y").as_int());
+		printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		printf("%i, %i", sceneNode.child("entities").child("enemies").child("enemy").attribute("x").as_int(), sceneNode.child("entities").child("enemies").child("enemy").attribute("y").as_int());
+		printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		enemyList[0]->SetPosition(enemyPos);
+	}
 }
 
 // L15 TODO 2: Implement the Save function
@@ -237,16 +255,27 @@ void Scene::SaveState() {
 
 	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
 
+	if (enemyList.size() > 0)
+	{
+		sceneNode.child("entities").child("enemies").child("enemy").attribute("x").set_value(enemyList[0]->GetPosition().getX());
+		sceneNode.child("entities").child("enemies").child("enemy").attribute("y").set_value(enemyList[0]->GetPosition().getY());
+		sceneNode.child("entities").child("enemies").child("enemy").attribute("saved") = true;
+
+		printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		printf("%i, %i", sceneNode.child("entities").child("enemies").child("enemy").attribute("x").as_int(), sceneNode.child("entities").child("enemies").child("enemy").attribute("y").as_int());
+		printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	}
+	else
+	{
+		sceneNode.child("entities").child("enemies").child("enemy").attribute("saved") = false;
+	}
+
 	//Save info to XML 
 
 	//Player position
 	sceneNode.child("entities").child("player").attribute("x").set_value(player->GetPosition().getX());
 	sceneNode.child("entities").child("player").attribute("y").set_value(player->GetPosition().getY());
 	sceneNode.child("entities").child("player").attribute("level").set_value(player->currentLevel);
-
-	//enemies
-	//sceneNode.child("entities").child("enemy").attribute("x").set_value(enemy->GetPosition().getX());
-	//sceneNode.child("entities").child("enemy").attribute("y").set_value(enemy->GetPosition().getY());
 
 	//Saves the modifications to the XML 
 	loadFile.save_file("config.xml");
@@ -289,17 +318,15 @@ void Scene::changeLevel(int level, bool upordown)
 
 	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", level);
 
-
+	pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy");
 	if (enemyList.size() > 0)
 	{
 		Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
 		enemyList.clear();
 	}
 
-	if (upordown)
+	if (upordown && level != 1)
 	{
-		pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy");
-
 		switch (level)
 		{
 		case 2:
