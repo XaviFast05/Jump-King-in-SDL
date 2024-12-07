@@ -158,10 +158,17 @@ bool Scene::PostUpdate()
 		LoadState();
 	}
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		player->isDead = false;
 		SpawnPoint();
+		SaveState();
+	}
+
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		player->isDead = false;
+		SpawnPointLvl2();
 		SaveState();
 	}
 
@@ -301,6 +308,28 @@ void Scene::SpawnPoint()
 	loadFile.save_file("config.xml");
 
 	changeLevel(1, false);
+}
+
+void Scene::SpawnPointLvl2()
+{
+	Vector2D playerPos = Vector2D(321, 279);
+	player->SetPosition(playerPos);
+
+	pugi::xml_document loadFile;
+	pugi::xml_parse_result result = loadFile.load_file("config.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load file. Pugi error: %s", result.description());
+		return;
+	}
+
+	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
+
+	sceneNode.child("entities").child("player").attribute("level").set_value(1);
+	loadFile.save_file("config.xml");
+
+	changeLevel(2, false);
 }
 
 void Scene::changeLevel(int level, bool upordown)

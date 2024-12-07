@@ -127,13 +127,6 @@ bool Enemy::Update(float dt)
 		}
 	}
 
-	// Pathfinding testing inputs
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
-		Vector2D pos = GetPosition();
-		Vector2D tilePos = Engine::GetInstance().map.get()->WorldToMap(pos.getX(),pos.getY());
-		pathfinding->ResetPath(tilePos);
-	}
-
 	if (enemyPos.getX() > playerPos.getX())
 	{
 		flipSprite = true;
@@ -188,7 +181,7 @@ bool Enemy::Update(float dt)
 	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame(), hflip);
 	currentAnimation->Update();
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
 		DrawingPath = !DrawingPath;
 	}

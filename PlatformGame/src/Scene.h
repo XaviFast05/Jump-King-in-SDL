@@ -46,6 +46,8 @@ public:
 	void SaveState();
 	//Reset to original position
 	void SpawnPoint();
+	//Spawn in level 2
+	void SpawnPointLvl2();
 
 public:
 	// Get tilePosDebug value
