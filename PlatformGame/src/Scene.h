@@ -7,6 +7,7 @@
 #include <vector>
 
 struct SDL_Texture;
+class Timer;
 
 class Scene : public Module
 {
@@ -68,6 +69,7 @@ private:
 	Player* player;
 	Enemy* enemy;
 	CheckPointBF* checkpoint;
+	Timer* timer;
 	std::vector<Enemy*> enemyList;
 
 	bool grounded = false;

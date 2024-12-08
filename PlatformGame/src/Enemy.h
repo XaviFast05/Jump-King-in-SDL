@@ -70,4 +70,5 @@ private:
 	bool hasStarted = false;
 	bool IsSearching = false;
 	int x = 0;
+	int y = 0;
 };

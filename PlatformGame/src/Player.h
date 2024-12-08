@@ -7,6 +7,7 @@
 
 struct SDL_Texture;
 class Scene;
+class Timer;
 
 class Player : public Entity
 {
@@ -56,6 +57,7 @@ public:
 	PhysBody* pbody;
 	PhysBody* pbodyBody;
 	Scene* Respawn;
+	Timer* timer;
 	float jumpForce = 1.1f; // The force to apply when jumping
 	bool isJumping = false; // Flag to check if the player is currently jumping
 	bool isFalling = false;

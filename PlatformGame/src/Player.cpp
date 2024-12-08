@@ -356,6 +356,11 @@ void Player::Die()
 	currentAnimation = &splatted;
 	isDead = true;
 	Engine::GetInstance().audio.get()->PlayFx(splatFxId);
+	timer->Start();
+	if (timer->ReadSec() == 3)
+	{
+		pbody->body->SetTransform(b2Vec2(0, PIXEL_TO_METERS(position.getY())), 0);
+	}
 }
 
 void Player::JumpFX()

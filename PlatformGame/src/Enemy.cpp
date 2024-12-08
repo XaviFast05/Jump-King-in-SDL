@@ -142,11 +142,16 @@ bool Enemy::Update(float dt)
 		}
 	}
 
-	if (currentAnimation == &idle) x = 0;
+	if (currentAnimation == &idle)
+	{
+		x = 0;
+		y = 0;
+	}
+
 
 	if (IsSearching == true)
 	{
-		if (!isGrounded)
+		if (isGrounded)
 		{
 			currentAnimation = &flying;
 			x++;
@@ -154,21 +159,21 @@ bool Enemy::Update(float dt)
 		else if (isGrounded)
 		{
 			currentAnimation = &flyingGrounded;
-			x++;
+			y++;
 		}
 		
 	}
 
-	if (currentAnimation == &flying && x == 1)
+	if (currentAnimation == &flying && x == 1 )
 	{
 		Engine::GetInstance().audio->PlayFx(chaseFxId);
 		x++;
 	}
 
-	if (currentAnimation == &flyingGrounded && x == 1)
+	if (currentAnimation == &flyingGrounded &&  y == 1)
 	{
 		Engine::GetInstance().audio->PlayFx(chaseFxId);
-		x++;
+		y++;
 	}
 
 
