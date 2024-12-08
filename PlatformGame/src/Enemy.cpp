@@ -115,13 +115,13 @@ bool Enemy::Update(float dt)
 			movement.normalized();
 			if (!isGrounded)
 			{
-			b2Vec2 velocity(movement.getX() * 0.05f, movement.getY() * 0.05f); // Aplicar velocidad en X e Y
-			pbody->body->SetLinearVelocity(velocity);
+				b2Vec2 velocity(movement.getX() * 0.05f, movement.getY() * 0.05f); // Aplicar velocidad en X e Y
+				pbody->body->SetLinearVelocity(velocity);
 			}
 			else if (isGrounded)
 			{
-			b2Vec2 velocity(movement.getX() * 0.05f, 2); // Aplicar velocidad en X
-			pbody->body->SetLinearVelocity(velocity);
+				b2Vec2 velocity(movement.getX() * 0.05f, 2); // Aplicar velocidad en X
+				pbody->body->SetLinearVelocity(velocity);
 			}
 			IsSearching = true;
 		}
@@ -142,16 +142,9 @@ bool Enemy::Update(float dt)
 		}
 	}
 
-	if (currentAnimation == &idle)
-	{
-		x = 0;
-		y = 0;
-	}
-
-
 	if (IsSearching == true)
 	{
-		if (isGrounded)
+		if (!isGrounded)
 		{
 			currentAnimation = &flying;
 			x++;
@@ -173,7 +166,7 @@ bool Enemy::Update(float dt)
 	if (currentAnimation == &flyingGrounded &&  y == 1)
 	{
 		Engine::GetInstance().audio->PlayFx(chaseFxId);
-		y++;
+		x++;
 	}
 
 

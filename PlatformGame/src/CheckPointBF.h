@@ -7,6 +7,7 @@
 
 struct SDL_Texture;
 class Scene;
+class Player;
 
 class CheckPointBF : public Entity
 {
@@ -23,6 +24,8 @@ public:
 	bool Update(float dt);
 
 	bool CleanUp();
+
+	void SetPosition(Vector2D pos);
 
 	// L08 TODO 6: Define OnCollision function for the player. 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
@@ -48,6 +51,8 @@ public:
 
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
+	Player* player;
+	Scene* scene;
 	Animation notTaken;
 	Animation taken;
 

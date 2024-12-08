@@ -8,6 +8,7 @@
 
 struct SDL_Texture;
 class Timer;
+class CheckPointBF;
 
 class Scene : public Module
 {
@@ -49,6 +50,8 @@ public:
 	void SpawnPoint();
 	//Spawn in level 2
 	void SpawnPointLvl2();
+
+	bool Saving = false; 
 
 public:
 	// Get tilePosDebug value

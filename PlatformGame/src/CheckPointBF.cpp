@@ -58,6 +58,12 @@ bool CheckPointBF::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH + 15);
 
+
+
+
+
+	//SetPosition(newPos);
+
 	Engine::GetInstance().render.get()->DrawTexture(texture, (float)position.getX(), (float)position.getY(), &currentAnimation->GetCurrentFrame());
 	currentAnimation->Update();
 
@@ -71,6 +77,13 @@ bool CheckPointBF::CleanUp()
 	return true;
 }
 
+void CheckPointBF::SetPosition(Vector2D pos) {
+	pos.setX(pos.getX());
+	pos.setY(pos.getY());
+	b2Vec2 bodyPos = b2Vec2(PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()));
+	pbody->body->SetTransform(bodyPos, 0);
+}
+
 // Define OnCollision function for the CheckPointBF. 
 void CheckPointBF::OnCollision(PhysBody* physA, PhysBody* physB) {
 
@@ -82,6 +95,7 @@ void CheckPointBF::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (!CheckTaken)
 		{
 			Engine::GetInstance().audio.get()->PlayFx(CheckPointTakenFxId);
+			//scene->Saving = true;
 			CheckTaken = true;
 		}
 		break;

@@ -141,6 +141,12 @@ bool Scene::Update(float dt)
 		}
 	}
 
+	if (Saving == true)
+	{
+		SaveState();
+		Saving = false;
+	};
+
 	return true;
 }
 
@@ -199,7 +205,7 @@ bool Scene::PostUpdate()
 		}
 
 		Vector2D newPos = Vector2D(0, 0);
-
+		
 		player->isFalling = false;
 		player->isJumping = false;
 		player->pbody->body->SetLinearVelocity(b2Vec2_zero);
@@ -227,6 +233,18 @@ bool Scene::PostUpdate()
 
 		player->SetPosition(newPos);
 	}
+
+	Vector2D newCheck = Vector2D(-50, 0);
+
+	switch (player->currentLevel)
+	{
+	case 4:
+		newCheck = Vector2D(51, 207);
+		break;
+	default:
+		break;
+	}
+	checkpoint->SetPosition(newCheck);
 
 	if (CTVisible && CTtexture != nullptr)
 	{
