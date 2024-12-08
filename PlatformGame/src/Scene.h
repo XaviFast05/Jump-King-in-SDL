@@ -63,7 +63,6 @@ private:
 	SDL_Texture* CTtexture = nullptr;
 	bool once = false;
 	int menu_introMS;
-	int birdDieFxId;
 
 	// Declare a Player attribute
 	Player* player;

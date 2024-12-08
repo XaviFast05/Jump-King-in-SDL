@@ -48,7 +48,8 @@ public:
 	int jumpFxId;
 	int landFxId;
 	int splatFxId;
-	// For landFxId
+	int killFxId;
+
 	int x = 0;
 
 	// L08 TODO 5: Add physics to the player - declare a Physics body
@@ -91,4 +92,5 @@ public:
 	void Die();
 
 	void JumpFX();
+	void KillFX();
 };

@@ -39,8 +39,6 @@ bool Scene::Awake()
 	checkpoint = (CheckPointBF*)Engine::GetInstance().entityManager->CreateEntity(EntityType::CHECKPOINTBF);
 	checkpoint->SetParameters(checkpointbf);
 
-	birdDieFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/bird_fly.wav");
-
 	//L08 Create a new item using the entity manager and set the position to (200, 672) to test
 	//Item* item = (Item*) Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
 	//item->position = Vector2D(200, 672);
@@ -134,9 +132,11 @@ bool Scene::Update(float dt)
 		{
 			Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
 			enemyList.clear();
-			Engine::GetInstance().audio->PlayFx(birdDieFxId);
-			player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.6), true);
+
 			player->JumpFX();
+			player->KillFX();
+
+			player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.6), true);
 			player->checkDeath = false;
 		}
 	}
@@ -161,6 +161,11 @@ bool Scene::PostUpdate()
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		player->isDead = false;
+
+		player->isFalling = false;
+		player->isJumping = false;
+		player->pbody->body->SetLinearVelocity(b2Vec2_zero);
+
 		SpawnPoint();
 		SaveState();
 	}
@@ -168,6 +173,11 @@ bool Scene::PostUpdate()
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		player->isDead = false;
+
+		player->isFalling = false;
+		player->isJumping = false;
+		player->pbody->body->SetLinearVelocity(b2Vec2_zero);
+
 		SpawnPointLvl2();
 		SaveState();
 	}
@@ -175,6 +185,47 @@ bool Scene::PostUpdate()
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && player->isDead == false)
 	{
 		SaveState();
+	}	
+	
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && player->isDead == false)
+	{
+		if (enemyList.size() > 0)
+		{
+			changeLevel(player->currentLevel, true);
+		}
+		else
+		{
+			changeLevel(player->currentLevel, false);
+		}
+
+		Vector2D newPos = Vector2D(0, 0);
+
+		player->isFalling = false;
+		player->isJumping = false;
+		player->pbody->body->SetLinearVelocity(b2Vec2_zero);
+
+		switch (player->currentLevel)
+		{
+		case 1:
+			newPos = Vector2D(251, 329);
+			break;
+		case 2:
+			newPos = Vector2D(331, 269);
+			break;
+		case 3:
+			newPos = Vector2D(221, 289);
+			break;
+		case 4:
+			newPos = Vector2D(134, 309);
+			break;
+		case 5:
+			newPos = Vector2D(134, 289);
+			break;
+		default:
+			break;
+		}
+
+		player->SetPosition(newPos);
 	}
 
 	if (CTVisible && CTtexture != nullptr)
@@ -241,9 +292,7 @@ void Scene::LoadState() {
 	{
 		Vector2D enemyPos = Vector2D(sceneNode.child("entities").child("enemies").child("enemy").attribute("x").as_int(),
 			sceneNode.child("entities").child("enemies").child("enemy").attribute("y").as_int());
-		printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		printf("%i, %i", sceneNode.child("entities").child("enemies").child("enemy").attribute("x").as_int(), sceneNode.child("entities").child("enemies").child("enemy").attribute("y").as_int());
-		printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
 		enemyList[0]->SetPosition(enemyPos);
 	}
 }
@@ -267,10 +316,6 @@ void Scene::SaveState() {
 		sceneNode.child("entities").child("enemies").child("enemy").attribute("x").set_value(enemyList[0]->GetPosition().getX());
 		sceneNode.child("entities").child("enemies").child("enemy").attribute("y").set_value(enemyList[0]->GetPosition().getY());
 		sceneNode.child("entities").child("enemies").child("enemy").attribute("saved") = true;
-
-		printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		printf("%i, %i", sceneNode.child("entities").child("enemies").child("enemy").attribute("x").as_int(), sceneNode.child("entities").child("enemies").child("enemy").attribute("y").as_int());
-		printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 	}
 	else
 	{
@@ -329,7 +374,7 @@ void Scene::SpawnPointLvl2()
 	sceneNode.child("entities").child("player").attribute("level").set_value(1);
 	loadFile.save_file("config.xml");
 
-	changeLevel(2, false);
+	changeLevel(2, true);
 }
 
 void Scene::changeLevel(int level, bool upordown)

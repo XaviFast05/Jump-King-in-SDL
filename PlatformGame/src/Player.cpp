@@ -62,6 +62,8 @@ bool Player::Start()
 	jumpFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_jump.wav");
 	landFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_land.wav");
 	splatFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_splat.wav");
+	killFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/bird_fly.wav");
+
 	return true;
 }
 
@@ -359,4 +361,9 @@ void Player::Die()
 void Player::JumpFX()
 {
 	Engine::GetInstance().audio.get()->PlayFx(jumpFxId);
+}
+
+void Player::KillFX()
+{
+	Engine::GetInstance().audio.get()->PlayFx(killFxId);
 }
