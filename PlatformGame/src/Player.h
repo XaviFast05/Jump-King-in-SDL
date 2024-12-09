@@ -65,6 +65,7 @@ public:
 	bool running = false;
 	bool isSplatted = false;
 	bool debug_;
+	bool Loading = false;
 
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;

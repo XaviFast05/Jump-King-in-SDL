@@ -57,12 +57,8 @@ bool CheckPointBF::Update(float dt)
 	b2Transform pbodyPos = pbody->body->GetTransform();
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH + 15);
-
-
-
-
-
-	//SetPosition(newPos);
+	
+	if (CheckTaken == false) currentAnimation = &notTaken;
 
 	Engine::GetInstance().render.get()->DrawTexture(texture, (float)position.getX(), (float)position.getY(), &currentAnimation->GetCurrentFrame());
 	currentAnimation->Update();
@@ -95,7 +91,7 @@ void CheckPointBF::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (!CheckTaken)
 		{
 			Engine::GetInstance().audio.get()->PlayFx(CheckPointTakenFxId);
-			//scene->Saving = true;
+			Saving = true;
 			CheckTaken = true;
 		}
 		break;

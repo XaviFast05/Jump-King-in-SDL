@@ -141,11 +141,17 @@ bool Scene::Update(float dt)
 		}
 	}
 
-	if (Saving == true)
+	if (checkpoint->Saving == true)
 	{
 		SaveState();
-		Saving = false;
-	};
+		checkpoint->Saving = false;
+	}
+
+	if (player->Loading == true)
+	{
+		LoadState();
+		player->Loading = false;
+	}
 
 	return true;
 }
@@ -174,6 +180,7 @@ bool Scene::PostUpdate()
 
 		SpawnPoint();
 		SaveState();
+		checkpoint->CheckTaken = false;
 	}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
@@ -186,11 +193,14 @@ bool Scene::PostUpdate()
 
 		SpawnPointLvl2();
 		SaveState();
+		checkpoint->CheckTaken = false;
 	}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && player->isDead == false)
 	{
 		SaveState();
+		//Reset checkpoint
+		checkpoint->CheckTaken = false;
 	}	
 	
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && player->isDead == false)
@@ -282,6 +292,7 @@ Vector2D Scene::GetPlayerPosition()
 
 // L15 TODO 1: Implement the Load function
 void Scene::LoadState() {
+	b2Vec2 Vdefault = b2Vec2(0, 0);
 
 	pugi::xml_document loadFile;
 	pugi::xml_parse_result result = loadFile.load_file("config.xml");
@@ -313,6 +324,10 @@ void Scene::LoadState() {
 
 		enemyList[0]->SetPosition(enemyPos);
 	}
+
+	player->pbody->body->SetLinearVelocity(Vdefault);
+	
+	player->splatted.Reset();
 }
 
 // L15 TODO 2: Implement the Save function

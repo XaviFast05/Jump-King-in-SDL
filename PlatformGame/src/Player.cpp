@@ -157,6 +157,8 @@ bool Player::Update(float dt)
 			currentAnimation = &move;
 		}
 
+		
+
 		//Jump
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN and not isJumping and not isFalling) 
 		{
@@ -282,7 +284,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			}
 			break;
 		case ColliderType::CHECKPOINTBF:
-			//Respawn->SaveState();
+
 		case ColliderType::UNKNOWN:
 			break;
 		}
@@ -354,13 +356,12 @@ void Player::Die()
 	isFalling = false;
 	
 	currentAnimation = &splatted;
+
 	isDead = true;
+	Loading = true;
+
+
 	Engine::GetInstance().audio.get()->PlayFx(splatFxId);
-	timer->Start();
-	if (timer->ReadSec() == 3)
-	{
-		pbody->body->SetTransform(b2Vec2(0, PIXEL_TO_METERS(position.getY())), 0);
-	}
 }
 
 void Player::JumpFX()

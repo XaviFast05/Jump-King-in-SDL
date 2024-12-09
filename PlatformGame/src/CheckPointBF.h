@@ -57,6 +57,7 @@ public:
 	Animation taken;
 
 	bool CheckTaken = false;
+	bool Saving = false;
 	int CheckPointTakenFxId;
 
 };

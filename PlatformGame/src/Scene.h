@@ -51,8 +51,6 @@ public:
 	//Spawn in level 2
 	void SpawnPointLvl2();
 
-	bool Saving = false; 
-
 public:
 	// Get tilePosDebug value
 	std::string GetTilePosDebug() {
