@@ -85,7 +85,7 @@ bool Player::Update(float dt)
 		levelsFallen = 0;
 	}
 	
-	if (debug_ && !isDead)
+	if (debug_)
 	{
 		velocity.y = pbody->body->GetLinearVelocity().y;
 
@@ -108,7 +108,7 @@ bool Player::Update(float dt)
 		}
 	}
 
-	if (!debug_ && !isDead)
+	if (!debug_ || !isDead)
 	{
 
 		if (velocity.x == 0 && currentAnimation != &splatted)
@@ -121,8 +121,7 @@ bool Player::Update(float dt)
 		{
 			if (isJumping == false)
 			{
-				currentAnimation = &splatted;
-				Engine::GetInstance().audio.get()->PlayFx(splatFxId);
+				Die();
 			}
 		}
 
@@ -135,6 +134,7 @@ bool Player::Update(float dt)
 			if (flipSprite == true && hflip == SDL_FLIP_NONE) {
 				hflip = SDL_FLIP_HORIZONTAL;
 			}
+			isDead = false;
 		}
 
 		// Move right
@@ -146,6 +146,7 @@ bool Player::Update(float dt)
 			if (flipSprite == false && hflip == SDL_FLIP_HORIZONTAL) {
 				hflip = SDL_FLIP_NONE;
 			}
+			isDead = false;
 		}
 
 		if (isJumping == true) {
@@ -167,6 +168,7 @@ bool Player::Update(float dt)
 			isSplatted = false;
 			Engine::GetInstance().audio.get()->PlayFx(jumpFxId);
 			isJumping = true;
+			isDead = false;
 		}
 
 		if (isJumping == true)
@@ -359,8 +361,6 @@ void Player::Die()
 
 	isDead = true;
 	Loading = true;
-
-
 	Engine::GetInstance().audio.get()->PlayFx(splatFxId);
 }
 
