@@ -84,7 +84,6 @@ bool Enemy::Update(float dt)
 	{
 		currentAnimation = &idleGrounded;
 	}
-	//printf("%i ,%i\n", pbody->body->GetPosition().x, pbody->body->GetPosition().y);
 
  	pathfinding->layerNav = map->GetNavigationLayer();
 

@@ -211,8 +211,6 @@ bool Player::Update(float dt)
 	float y = METERS_TO_PIXELS(pbodyPos.p.y) - texH - 0.5 / 2;
 	position.setY(y + 12);
 
-	//printf("%f", position.getY());
-
 	if (position.getY() < -20 and currentLevel != maxLevel)
 	{
 		ascend(true);

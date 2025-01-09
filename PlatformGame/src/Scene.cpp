@@ -402,6 +402,7 @@ void Scene::SpawnPoint()
 	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
 
 	sceneNode.child("entities").child("player").attribute("level").set_value(1);
+	sceneNode.child("entities").child("player").child("items").attribute("lvl1").set_value(false);
 	sceneNode.child("entities").child("player").child("items").attribute("lvl2").set_value(false);
 	sceneNode.child("entities").child("player").child("items").attribute("lvl3").set_value(false);
 	sceneNode.child("entities").child("player").child("items").attribute("lvl4").set_value(false);
@@ -429,6 +430,7 @@ void Scene::SpawnPointLvl2()
 	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
 
 	sceneNode.child("entities").child("player").attribute("level").set_value(1);
+	sceneNode.child("entities").child("player").child("items").attribute("lvl1").set_value(false);
 	sceneNode.child("entities").child("player").child("items").attribute("lvl2").set_value(false);
 	sceneNode.child("entities").child("player").child("items").attribute("lvl3").set_value(false);
 	sceneNode.child("entities").child("player").child("items").attribute("lvl4").set_value(false);
@@ -505,8 +507,11 @@ void Scene::changeLevel(int level, bool upordown)
 		break;
 	}
 
+	pugi::xml_document loadFile;
+	pugi::xml_parse_result result = loadFile.load_file("config.xml");
+
 	std::string lvl = "lvl" + std::to_string(level);
-	if (itemNode.attribute(lvl.c_str()).as_bool() == false)
+	if (loadFile.child("config").child("scene").child("entities").child("player").child("items").attribute(lvl.c_str()).as_bool() == false)
 	{
 		if (canSpawnItem == true)
 		{
