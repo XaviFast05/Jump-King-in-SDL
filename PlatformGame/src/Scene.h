@@ -3,6 +3,7 @@
 #include "Module.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Item.h"
 #include "CheckPointBF.h"
 #include <vector>
 
@@ -69,9 +70,12 @@ private:
 	// Declare a Player attribute
 	Player* player;
 	Enemy* enemy;
+	Item* item;
 	CheckPointBF* checkpoint;
 	Timer* timer;
 	std::vector<Enemy*> enemyList;
+	std::vector<Item*> itemList;
+	std::vector<int> takenItems;
 
 	bool grounded = false;
 };

@@ -49,7 +49,6 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-
 	CTtexture = Engine::GetInstance().textures->Load("Assets/Textures/CONTROLS.png");
 
 	pugi::xml_document loadFile;
@@ -74,6 +73,8 @@ bool Scene::Start()
 		enemyList[0]->SetPosition(enemyPos);
 	}
 
+	takenItems.clear();
+
 	// Create music
 	menu_introMS = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
 
@@ -89,7 +90,6 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-
 	//L03 TODO 3: Make the camera movement independent of framerate
 	float camSpeed = 1;
 
@@ -139,6 +139,16 @@ bool Scene::Update(float dt)
 			player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.6), true);
 			player->checkDeath = false;
 		}
+	}
+
+	if (itemList.size() > 0 && player->takeItem == true)
+	{
+		Engine::GetInstance().entityManager->DestroyEntity(itemList[0]);
+		itemList.clear();
+		//SONIDO PILLAR ITEM
+
+		takenItems.push_back(player->currentLevel);
+		player->takeItem = false;
 	}
 
 	if (checkpoint->Saving == true)
@@ -312,6 +322,7 @@ void Scene::LoadState() {
 		sceneNode.child("entities").child("player").attribute("y").as_int());
 	player->SetPosition(playerPos);
 	player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, 0), true);
+	takenItems.clear();
 
 	changeLevel(sceneNode.child("entities").child("player").attribute("level").as_int(), 
 		sceneNode.child("entities").child("enemies").child("enemy").attribute("saved").as_bool());
@@ -326,7 +337,6 @@ void Scene::LoadState() {
 	}
 
 	player->pbody->body->SetLinearVelocity(Vdefault);
-	
 	player->splatted.Reset();
 }
 
@@ -353,6 +363,15 @@ void Scene::SaveState() {
 	else
 	{
 		sceneNode.child("entities").child("enemies").child("enemy").attribute("saved") = false;
+	}
+	
+	if (takenItems.size() > 0)
+	{
+		for (int i = 0; i < takenItems.size(); i++)
+		{
+			std::string lvl = "lvl" + std::to_string(takenItems[i]);
+			sceneNode.child("entities").child("player").child("items").attribute(lvl.c_str()) = true;
+		}
 	}
 
 	//Save info to XML 
@@ -383,9 +402,14 @@ void Scene::SpawnPoint()
 	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
 
 	sceneNode.child("entities").child("player").attribute("level").set_value(1);
+	sceneNode.child("entities").child("player").child("items").attribute("lvl2").set_value(false);
+	sceneNode.child("entities").child("player").child("items").attribute("lvl3").set_value(false);
+	sceneNode.child("entities").child("player").child("items").attribute("lvl4").set_value(false);
+	sceneNode.child("entities").child("player").child("items").attribute("lvl5").set_value(false);
 	loadFile.save_file("config.xml");
+	takenItems.clear();
 
-	changeLevel(1, false);
+	changeLevel(1, true);
 }
 
 void Scene::SpawnPointLvl2()
@@ -405,7 +429,12 @@ void Scene::SpawnPointLvl2()
 	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
 
 	sceneNode.child("entities").child("player").attribute("level").set_value(1);
+	sceneNode.child("entities").child("player").child("items").attribute("lvl2").set_value(false);
+	sceneNode.child("entities").child("player").child("items").attribute("lvl3").set_value(false);
+	sceneNode.child("entities").child("player").child("items").attribute("lvl4").set_value(false);
+	sceneNode.child("entities").child("player").child("items").attribute("lvl5").set_value(false);
 	loadFile.save_file("config.xml");
+	takenItems.clear();
 
 	changeLevel(2, true);
 }
@@ -426,10 +455,65 @@ void Scene::changeLevel(int level, bool upordown)
 	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", level);
 
 	pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy");
+	pugi::xml_node itemNode = configParameters.child("entities").child("player").child("items");
 	if (enemyList.size() > 0)
 	{
 		Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
 		enemyList.clear();
+	}
+	if (itemList.size() > 0)
+	{
+		Engine::GetInstance().entityManager->DestroyEntity(itemList[0]);
+		itemList.clear();
+	}
+	
+	bool canSpawnItem = true;
+	if (takenItems.size() > 0)
+	{
+     	for (int i = 0; i < takenItems.size(); i++)
+		{
+			if (level == takenItems[i])
+			{
+				canSpawnItem = false;
+			}
+		}
+	}
+
+	switch (level)
+	{
+	case 1:
+		itemNode.attribute("x") = 240;
+		itemNode.attribute("y") = 30;
+		break;
+	case 2:
+		itemNode.attribute("x") = 424;
+		itemNode.attribute("y") = 155;
+		break;
+	case 3:
+		itemNode.attribute("x") = 309;
+		itemNode.attribute("y") = 135;
+		break;
+	case 4:
+		itemNode.attribute("x") = 436;
+		itemNode.attribute("y") = 95;
+		break;
+	case 5:
+		itemNode.attribute("x") = 45;
+		itemNode.attribute("y") = 215;
+		break;
+	default:
+		break;
+	}
+
+	std::string lvl = "lvl" + std::to_string(level);
+	if (itemNode.attribute(lvl.c_str()).as_bool() == false)
+	{
+		if (canSpawnItem == true)
+		{
+			Item* item = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
+			item->SetParameters(itemNode);
+			itemList.push_back(item);
+		}
 	}
 
 	if (upordown && level != 1)

@@ -7,6 +7,7 @@
 #include "Log.h"
 #include "Render.h"
 #include "Player.h"
+#include "Item.h"
 #include "Window.h"
 #include "box2D/box2d.h"
 #include "Map.h"
@@ -350,11 +351,15 @@ void Physics::BeginContact(b2Contact* contact)
 	// Call the OnCollision listener function to bodies A and B, passing as inputs our custom PhysBody classes
 	PhysBody* physA = (PhysBody*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 	PhysBody* physB = (PhysBody*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+	if ((physB->ctype == ColliderType::ITEM or physA->ctype == ColliderType::ITEM) and (physB->ctype == ColliderType::PLAYERSENSOR or physA->ctype == ColliderType::ITEM))
+	{
+		printf("ASDFIOHSFJI");
+	}
 
 	if (physA && physA->listener != NULL && !IsPendingToDelete(physA)) {
 		if (physB) // Ensure physB is also valid
 		{
-			physA->listener->OnCollision(physA, physB);
+ 			physA->listener->OnCollision(physA, physB);
 		}
 	}
 

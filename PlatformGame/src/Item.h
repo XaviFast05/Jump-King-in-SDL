@@ -20,17 +20,24 @@ public:
 	bool Update(float dt);
 
 	bool CleanUp();
+	bool DeleteBody();
+
+	void OnCollision(PhysBody* physA, PhysBody* physB);
+
+	void OnCollisionEnd(PhysBody* physA, PhysBody* physB);
+
+public:
+	int type;
+	pugi::xml_document loadFile;
+	pugi::xml_parse_result result = loadFile.load_file("config.xml");
 
 	void SetParameters(pugi::xml_node parameters) {
 		this->parameters = parameters;
+		Start();
 	}
 
-public:
-
-	bool isPicked = false;
-
 private:
-
+	bool started = false;
 	SDL_Texture* texture;
 	const char* texturePath;
 	int texW, texH;

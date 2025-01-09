@@ -55,7 +55,6 @@ bool Enemy::Start()
 
 	//Assign collider type
 	pbody->ctype = ColliderType::ENEMY;
-
 	pbody->listener = this;
 
 	// Set the gravity of the body
@@ -169,8 +168,6 @@ bool Enemy::Update(float dt)
 		x++;
 	}
 
-
-
 	// L08 TODO 4: Add a physics to an item - update the position of the object from the physics.  
 	b2Transform pbodyPos = pbody->body->GetTransform();
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
@@ -227,7 +224,6 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLAYER:
 		break;
 	case ColliderType::PLAYERSENSOR:
-		//isDead = true;
 		break;
 	}
 }

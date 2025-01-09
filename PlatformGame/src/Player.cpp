@@ -158,8 +158,6 @@ bool Player::Update(float dt)
 			currentAnimation = &move;
 		}
 
-		
-
 		//Jump
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN and not isJumping and not isFalling) 
 		{
@@ -277,6 +275,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::ITEM:
 			LOG("Collision ITEM");
+			takeItem = true;
 			break;
 		case ColliderType::ENEMY:
 			LOG("Collision ENEMY");
