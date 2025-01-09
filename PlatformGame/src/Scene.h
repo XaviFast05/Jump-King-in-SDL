@@ -6,6 +6,7 @@
 #include "Item.h"
 #include "CheckPointBF.h"
 #include <vector>
+#include "GuiControlButton.h"
 
 struct SDL_Texture;
 class Timer;
@@ -52,6 +53,9 @@ public:
 	//Spawn in level 2
 	void SpawnPointLvl2();
 
+	// Handles multiple Gui Event methods
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 public:
 	// Get tilePosDebug value
 	std::string GetTilePosDebug() {
@@ -78,4 +82,7 @@ private:
 	std::vector<int> takenItems;
 
 	bool grounded = false;
+
+	// L16: TODO 2: Declare a GUI Control Button 
+	GuiControlButton* guiBt;
 };

@@ -19,6 +19,7 @@ class EntityManager;
 class Map;
 //L08 TODO 2: Add Physics module
 class Physics;
+class GuiManager;
 
 class Engine
 {
@@ -99,7 +100,7 @@ public:
 	std::shared_ptr<Map> map;
 	// L08: TODO 2: Add Physics module
 	std::shared_ptr<Physics> physics;
-
+	std::shared_ptr<GuiManager> guiManager;
 
 private: 
 
@@ -126,7 +127,7 @@ private:
 	//Maximun frame duration in miliseconds.
 	int maxFrameDuration = 16;
 
-	std::string gameTitle = "Platformer Game";
+	std::string gameTitle = "Jump King in SDL";
 
 	//L05 TODO 2: Declare a xml_document to load the config file
 	pugi::xml_document configFile;

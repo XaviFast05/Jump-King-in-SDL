@@ -14,6 +14,8 @@
 #include "Enemy.h"
 #include "Physics.h"
 #include "CheckPointBF.h"
+#include "GuiControl.h"
+#include "GuiManager.h"
 
 Scene::Scene() : Module()
 {
@@ -42,6 +44,10 @@ bool Scene::Awake()
 	//L08 Create a new item using the entity manager and set the position to (200, 672) to test
 	//Item* item = (Item*) Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
 	//item->position = Vector2D(200, 672);
+
+	// L16: TODO 2: Instantiate a new GuiControlButton in the Scene
+	SDL_Rect btPos = { 420, 450, 120, 120 };
+	guiBt = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "TEST", btPos, this);
 
 	return ret;
 }
@@ -162,6 +168,12 @@ bool Scene::Update(float dt)
 		LoadState();
 		player->Loading = false;
 	}
+
+	//Get mouse position and obtain the map coordinate
+	int scale = Engine::GetInstance().window.get()->GetScale();
+	Vector2D mousePos = Engine::GetInstance().input.get()->GetMousePosition();
+	Vector2D mouseTile = Engine::GetInstance().map.get()->WorldToMap(mousePos.getX() - Engine::GetInstance().render.get()->camera.x / scale,
+																	 mousePos.getY() - Engine::GetInstance().render.get()->camera.y / scale);
 
 	return true;
 }
@@ -559,4 +571,12 @@ void Scene::changeLevel(int level, bool upordown)
 
 		enemy->ChangeGrounded(grounded);
 	}
+}
+
+bool Scene::OnGuiMouseClickEvent(GuiControl* control)
+{
+	// L15: DONE 5: Implement the OnGuiMouseClickEvent method
+	LOG("Press Gui Control: %d", control->id);
+
+	return true;
 }
