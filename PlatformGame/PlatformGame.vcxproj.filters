@@ -93,10 +93,10 @@
     <ClCompile Include="src\CheckPointBF.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\PlatformGame-L16_GUI_System_Solution\src\GuiControlButton.cpp">
+    <ClCompile Include="src\GuiControlButton.cpp">
       <Filter>Source Files\Engine\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\PlatformGame-L16_GUI_System_Solution\src\GuiManager.cpp">
+    <ClCompile Include="src\GuiManager.cpp">
       <Filter>Source Files\Engine\GUI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,13 +167,13 @@
     <ClInclude Include="src\CheckPointBF.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\PlatformGame-L16_GUI_System_Solution\src\GuiControlButton.h">
+    <ClInclude Include="src\GuiControl.h">
       <Filter>Source Files\Engine\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\PlatformGame-L16_GUI_System_Solution\src\GuiManager.h">
+    <ClInclude Include="src\GuiManager.h">
       <Filter>Source Files\Engine\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\PlatformGame-L16_GUI_System_Solution\src\GuiControl.h">
+    <ClInclude Include="src\GuiControlButton.h">
       <Filter>Source Files\Engine\GUI</Filter>
     </ClInclude>
   </ItemGroup>

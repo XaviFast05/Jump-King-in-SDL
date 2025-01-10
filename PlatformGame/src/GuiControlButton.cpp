@@ -2,6 +2,7 @@
 #include "Render.h"
 #include "Engine.h"
 #include "Audio.h"
+#include "Window.h"
 
 GuiControlButton::GuiControlButton(int id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
@@ -21,18 +22,30 @@ bool GuiControlButton::Update(float dt)
 {
 	if (state != GuiControlState::DISABLED)
 	{
+
 		// L16: TODO 3: Update the state of the GUiButton according to the mouse position
 		Vector2D mousePos = Engine::GetInstance().input->GetMousePosition();
 
+		// Ajustar la posición del ratón según la escala de la ventana y la posición de la cámara
+		int scale = Engine::GetInstance().window.get()->GetScale();
+		mousePos.setX(mousePos.getX() + Engine::GetInstance().render->camera.x);
+		mousePos.setY(mousePos.getY() + Engine::GetInstance().render->camera.y);
+
+		// Mensajes de depuración para verificar la posición del ratón y los límites del botón
+		printf("Mouse Position: (%f, %f)\n", mousePos.getX(), mousePos.getY());
+		printf("Button Bounds: x=%d, y=%d, w=%d, h=%d\n", bounds.x, bounds.y, bounds.w, bounds.h);
+
+
 		//If the position of the mouse if inside the bounds of the button 
 		if (mousePos.getX() > bounds.x && mousePos.getX() < bounds.x + bounds.w && mousePos.getY() > bounds.y && mousePos.getY() < bounds.y + bounds.h) {
-		
+
+			printf("Mouse is inside the button\n");
 			state = GuiControlState::FOCUSED;
 
 			if (Engine::GetInstance().input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 				state = GuiControlState::PRESSED;
 			}
-			
+
 			if (Engine::GetInstance().input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
 				NotifyObserver();
 			}
@@ -58,8 +71,13 @@ bool GuiControlButton::Update(float dt)
 			break;
 		}
 
-		Engine::GetInstance().render->DrawText(text.c_str(), bounds.x, bounds.y, bounds.w, bounds.h);
+		// Dibujar el texto en el centro del botón
+		int textWidth = bounds.w;
+		int textHeight = bounds.h;
+		int textX = bounds.x + (bounds.w - textWidth) / 2;
+		int textY = bounds.y + (bounds.h - textHeight) / 2;
 
+		Engine::GetInstance().render->DrawText(text.c_str(), textX, textY, textWidth, textHeight);
 	}
 
 	return false;

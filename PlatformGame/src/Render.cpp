@@ -49,6 +49,12 @@ bool Render::Awake()
 		camera.y = 0;
 	}
 
+	//initialise the SDL_ttf library
+	TTF_Init();
+
+	//load a font into memory
+	font = TTF_OpenFont("Assets/Fonts/Jumpking/ttf_pixolde_bold.ttf", 25);
+
 	return ret;
 }
 

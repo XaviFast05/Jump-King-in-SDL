@@ -46,7 +46,9 @@ bool Scene::Awake()
 	//item->position = Vector2D(200, 672);
 
 	// L16: TODO 2: Instantiate a new GuiControlButton in the Scene
-	SDL_Rect btPos = { 420, 450, 120, 120 };
+	int scale = Engine::GetInstance().window.get()->GetScale();
+
+	SDL_Rect btPos = { 400 , 300 , 120, 60 };
 	guiBt = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "TEST", btPos, this);
 
 	return ret;
