@@ -136,12 +136,27 @@ bool Scene::Update(float dt)
 	{
 		if (player->GetPosition().getY() + 7 > enemyList[0]->GetPosition().getY() && !player->invincible)
 		{
+			pugi::xml_document loadFile;
+			pugi::xml_parse_result result = loadFile.load_file("config.xml");
+
 			player->Die();
 			player->checkDeath = false;
+
 			player->loseLife();
-			if (player->lifes == 0)
+			loadFile.child("config").child("scene").child("entities").child("player").attribute("lifes").set_value(player->lifes);
+			loadFile.save_file("config.xml");
+
+ 			if (player->lifes == 0)
 			{
+				player->isDead = false;
+
+				player->isFalling = false;
+				player->isJumping = false;
+				player->pbody->body->SetLinearVelocity(b2Vec2_zero);
+
 				SpawnPoint();
+				SaveState();
+				checkpoint->CheckTaken = false;
 			}
 		}
 		else
@@ -152,8 +167,11 @@ bool Scene::Update(float dt)
 			player->JumpFX();
 			player->KillFX();
 
-			player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.6), true);
 			player->checkDeath = false;
+		}
+		if (!player->invincible)
+		{
+			player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.6), true);
 		}
 	}
 
@@ -414,8 +432,8 @@ void Scene::SaveState() {
 
 	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
 
-	sceneNode.child("entities").child("enemies").child("enemy").attribute("lifes").set_value(player->lifes);
-	sceneNode.child("entities").child("enemies").child("enemy").attribute("coins").set_value(player->coins);
+	sceneNode.child("entities").child("player").attribute("lifes").set_value(player->lifes);
+	sceneNode.child("entities").child("player").attribute("coins").set_value(player->coins);
 
 	if (enemyList.size() > 0)
 	{
@@ -464,9 +482,11 @@ void Scene::SpawnPoint()
 
 	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
 
-	sceneNode.child("entities").child("player").attribute("level").set_value(1);
-	sceneNode.child("entities").child("player").attribute("lifes").set_value(3);
-	sceneNode.child("entities").child("player").attribute("coins").set_value(0);
+	sceneNode.child("entities").child("player").attribute("level") = 1;
+	sceneNode.child("entities").child("player").attribute("lifes") = 3;
+	sceneNode.child("entities").child("player").attribute("coins") = 0;
+	player->resetCoins();
+	player->lifes = 3;
 
 	player->invincible = false;
 	playerInvincible = false;
@@ -555,34 +575,32 @@ void Scene::changeLevel(int level, bool upordown)
 			}
 		}
 	}
-
-	int currentType;
 	switch (level)
 	{
 	case 1:
 		itemNode.attribute("x") = 240;
 		itemNode.attribute("y") = 30;
-		currentType = 1;
+		itemNode.attribute("type") = 1;
 		break;
 	case 2:
 		itemNode.attribute("x") = 424;
 		itemNode.attribute("y") = 155;
-		currentType = 2;
+		itemNode.attribute("type") = 2;
 		break;
 	case 3:
 		itemNode.attribute("x") = 309;
 		itemNode.attribute("y") = 135;
-		currentType = 2;
+		itemNode.attribute("type") = 3;
 		break;
 	case 4:
 		itemNode.attribute("x") = 436;
 		itemNode.attribute("y") = 95;
-		currentType = 1;
+		itemNode.attribute("type") = 2;
 		break;
 	case 5:
 		itemNode.attribute("x") = 45;
 		itemNode.attribute("y") = 215;
-		currentType = 1;
+		itemNode.attribute("type") = 1;
 		break;
 	default:
 		break;
@@ -599,7 +617,6 @@ void Scene::changeLevel(int level, bool upordown)
 			Item* item = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
 			item->SetParameters(itemNode);
 			itemList.push_back(item);
-			item->type = currentType;
 		}
 	}
 	

@@ -27,8 +27,10 @@ bool Item::Start()
 	{
 		position.setX(parameters.attribute("x").as_int());
 		position.setY(parameters.attribute("y").as_int());
+		type = parameters.attribute("type").as_int();
 
-		texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/item/test.png");
+		std::string texturePath = "Assets/Textures/items/item" + std::to_string(type) + ".png";
+		texture = Engine::GetInstance().textures.get()->Load(texturePath.c_str());
 	
 		// L08 TODO 4: Add a physics to an item - initialize the physics body
 		Engine::GetInstance().textures.get()->GetSize(texture, texW, texH);

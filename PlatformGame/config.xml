@@ -47,10 +47,10 @@
 						<frame x="960" y="32" w="32" h="32" />
 					</splatted>
 				</animations>
-				<items lvl1="false" lvl2="false" lvl3="false" lvl4="false" lvl5="false" x="0" y="0" />
+				<items lvl1="false" lvl2="false" lvl3="false" lvl4="false" lvl5="false" x="0" y="0" type="" />
 			</player>
 			<enemies>
-				<enemy name="Crow" x="50" y="50" w="32" h="26" texture="Assets/Textures/enemy/raven_idle.png" gravity="false" saved="false">
+				<enemy name="Crow" x="221" y="149" w="32" h="26" texture="Assets/Textures/enemy/raven_idle.png" gravity="false" saved="false">
 					<animations>
 						<idle loop="true" speed="0.05">
 							<frame x="0" y="0" w="32" h="32" />
