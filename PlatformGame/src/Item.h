@@ -26,8 +26,9 @@ public:
 
 	void OnCollisionEnd(PhysBody* physA, PhysBody* physB);
 
-public:
 	int type;
+
+public:
 	pugi::xml_document loadFile;
 	pugi::xml_parse_result result = loadFile.load_file("config.xml");
 

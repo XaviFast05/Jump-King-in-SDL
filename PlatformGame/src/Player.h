@@ -39,6 +39,21 @@ public:
 	void SetPosition(Vector2D pos);
 
 	Vector2D GetPosition();
+	int coins = 0;
+	void addCoins(int quantity)
+	{
+		coins += quantity;
+	}
+	void resetCoins()
+	{
+		coins = 0;
+	}
+
+	int lifes;
+	void loseLife()
+	{
+		lifes--;
+	}
 
 public:
 
@@ -98,4 +113,6 @@ public:
 
 	void JumpFX();
 	void KillFX();
+
+	bool invincible = false;
 };
