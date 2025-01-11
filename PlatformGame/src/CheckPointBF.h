@@ -58,6 +58,6 @@ public:
 
 	bool CheckTaken = false;
 	bool Saving = false;
+	bool onPlayer = false;
 	int CheckPointTakenFxId;
-
 };

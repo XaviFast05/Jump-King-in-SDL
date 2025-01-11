@@ -40,10 +40,10 @@ bool Scene::Awake()
 	pugi::xml_node checkpointbf = configParameters.child("entities").child("checkpointbf");
 	checkpoint = (CheckPointBF*)Engine::GetInstance().entityManager->CreateEntity(EntityType::CHECKPOINTBF);
 	checkpoint->SetParameters(checkpointbf);
-
-	//L08 Create a new item using the entity manager and set the position to (200, 672) to test
-	//Item* item = (Item*) Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
-	//item->position = Vector2D(200, 672);
+	checkpoint2 = (CheckPointBF*)Engine::GetInstance().entityManager->CreateEntity(EntityType::CHECKPOINTBF);
+	checkpoint2->SetParameters(checkpointbf);
+	checkpoint3 = (CheckPointBF*)Engine::GetInstance().entityManager->CreateEntity(EntityType::CHECKPOINTBF);
+	checkpoint3->SetParameters(checkpointbf);
 
 	// L16: TODO 2: Instantiate a new GuiControlButton in the Scene
 	int scale = Engine::GetInstance().window.get()->GetScale();
@@ -85,6 +85,10 @@ bool Scene::Start()
 	}
 
 	takenItems.clear();
+
+	checkpoint->CheckTaken = sceneNode.child("entities").child("checkpointbf").attribute("taken1").as_bool();
+	checkpoint2->CheckTaken = sceneNode.child("entities").child("checkpointbf").attribute("taken2").as_bool();
+	checkpoint3->CheckTaken = sceneNode.child("entities").child("checkpointbf").attribute("taken3").as_bool();
 
 	// Create music
 	menu_introMS = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
@@ -222,6 +226,16 @@ bool Scene::Update(float dt)
 		SaveState();
 		checkpoint->Saving = false;
 	}
+	if (checkpoint2->Saving == true)
+	{
+		SaveState();
+		checkpoint2->Saving = false;
+	}
+	if (checkpoint3->Saving == true)
+	{
+		SaveState();
+		checkpoint3->Saving = false;
+	}
 
 	if (player->Loading == true)
 	{
@@ -263,6 +277,8 @@ bool Scene::PostUpdate()
 		SpawnPoint();
 		SaveState();
 		checkpoint->CheckTaken = false;
+		checkpoint2->CheckTaken = false;
+		checkpoint3->CheckTaken = false;
 	}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
@@ -276,14 +292,51 @@ bool Scene::PostUpdate()
 		SpawnPointLvl2();
 		SaveState();
 		checkpoint->CheckTaken = false;
+		checkpoint2->CheckTaken = false;
+		checkpoint3->CheckTaken = false;
 	}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && player->isDead == false)
 	{
 		SaveState();
-		//Reset checkpoint
-		checkpoint->CheckTaken = false;
 	}	
+
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_DOWN and checkpoint->onPlayer == true)
+	{
+		if (checkpoint2->CheckTaken)
+		{
+			changeLevel(4, true);
+		}
+		else if (checkpoint3->CheckTaken)
+		{
+			changeLevel(5, true);
+		}
+	}	
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_DOWN and checkpoint2->onPlayer == true)
+	{
+		if (checkpoint3->CheckTaken)
+		{
+			changeLevel(5, true);
+		}
+	}
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN and checkpoint2->onPlayer == true)
+	{
+		if (checkpoint->CheckTaken)
+		{
+			changeLevel(3, true);
+		}
+	}
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN and checkpoint3->onPlayer == true)
+	{
+		if (checkpoint2->CheckTaken)
+		{
+			changeLevel(4, true);
+		}
+		else if (checkpoint->CheckTaken)
+		{
+			changeLevel(3, true);
+		}
+	}
 	
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && player->isDead == false)
 	{
@@ -327,16 +380,26 @@ bool Scene::PostUpdate()
 	}
 
 	Vector2D newCheck = Vector2D(-50, 0);
+	checkpoint->SetPosition(newCheck);
+	checkpoint2->SetPosition(newCheck);
+	checkpoint3->SetPosition(newCheck);
 
 	switch (player->currentLevel)
 	{
+	case 3:
+		newCheck = Vector2D(51, 207);
+		checkpoint->SetPosition(newCheck);
+		break;
 	case 4:
 		newCheck = Vector2D(51, 207);
+		checkpoint2->SetPosition(newCheck);
 		break;
+	case 5:
+		newCheck = Vector2D(51, 207);
+		checkpoint3->SetPosition(newCheck);
 	default:
 		break;
 	}
-	checkpoint->SetPosition(newCheck);
 
 	if (CTVisible && CTtexture != nullptr)
 	{
@@ -402,6 +465,10 @@ void Scene::LoadState() {
 	player->coins = sceneNode.child("entities").child("player").attribute("coins").as_int();
 	player->lifes = sceneNode.child("entities").child("player").attribute("lifes").as_int();
 
+	checkpoint->CheckTaken = sceneNode.child("entities").child("checkpointbf").attribute("taken1").as_bool();
+	checkpoint2->CheckTaken = sceneNode.child("entities").child("checkpointbf").attribute("taken2").as_bool();
+	checkpoint3->CheckTaken = sceneNode.child("entities").child("checkpointbf").attribute("taken3").as_bool();
+
 	player->invincible = false;
 	playerInvincible = false;
 
@@ -462,6 +529,10 @@ void Scene::SaveState() {
 	sceneNode.child("entities").child("player").attribute("y").set_value(player->GetPosition().getY());
 	sceneNode.child("entities").child("player").attribute("level").set_value(player->currentLevel);
 
+	sceneNode.child("entities").child("checkpointbf").attribute("taken1").set_value(checkpoint->CheckTaken);
+	sceneNode.child("entities").child("checkpointbf").attribute("taken2").set_value(checkpoint2->CheckTaken);
+	sceneNode.child("entities").child("checkpointbf").attribute("taken3").set_value(checkpoint3->CheckTaken);
+
 	//Saves the modifications to the XML 
 	loadFile.save_file("config.xml");
 }
@@ -499,6 +570,14 @@ void Scene::SpawnPoint()
 	loadFile.save_file("config.xml");
 	takenItems.clear();
 
+	sceneNode.child("entities").child("checkpointbf").attribute("taken1").set_value(false);
+	sceneNode.child("entities").child("checkpointbf").attribute("taken2").set_value(false);
+	sceneNode.child("entities").child("checkpointbf").attribute("taken3").set_value(false);
+
+	checkpoint->CheckTaken = false;
+	checkpoint2->CheckTaken = false;
+	checkpoint3->CheckTaken = false;
+
 	changeLevel(1, true);
 }
 
@@ -532,6 +611,14 @@ void Scene::SpawnPointLvl2()
 	sceneNode.child("entities").child("player").child("items").attribute("lvl5").set_value(false);
 	loadFile.save_file("config.xml");
 	takenItems.clear();
+
+	sceneNode.child("entities").child("checkpointbf").attribute("taken1").set_value(false);
+	sceneNode.child("entities").child("checkpointbf").attribute("taken2").set_value(false);
+	sceneNode.child("entities").child("checkpointbf").attribute("taken3").set_value(false);
+
+	checkpoint->CheckTaken = false;
+	checkpoint2->CheckTaken = false;
+	checkpoint3->CheckTaken = false;
 
 	changeLevel(2, true);
 }

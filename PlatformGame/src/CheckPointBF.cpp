@@ -59,6 +59,10 @@ bool CheckPointBF::Update(float dt)
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH + 15);
 	
 	if (CheckTaken == false) currentAnimation = &notTaken;
+	if (CheckTaken == true)
+	{
+		currentAnimation = &taken;
+	}
 
 	Engine::GetInstance().render.get()->DrawTexture(texture, (float)position.getX(), (float)position.getY(), &currentAnimation->GetCurrentFrame());
 	currentAnimation->Update();
@@ -82,7 +86,6 @@ void CheckPointBF::SetPosition(Vector2D pos) {
 
 // Define OnCollision function for the CheckPointBF. 
 void CheckPointBF::OnCollision(PhysBody* physA, PhysBody* physB) {
-
 	switch (physB->ctype)
 	{
 	case ColliderType::PLAYERSENSOR:
@@ -94,6 +97,7 @@ void CheckPointBF::OnCollision(PhysBody* physA, PhysBody* physB) {
 			Saving = true;
 			CheckTaken = true;
 		}
+		onPlayer = true;
 		break;
 	}
 }
@@ -103,6 +107,7 @@ void CheckPointBF::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	switch (physB->ctype)
 	{
 	case ColliderType::PLAYERSENSOR:
+		onPlayer = false;
 		break;
 	}
 }

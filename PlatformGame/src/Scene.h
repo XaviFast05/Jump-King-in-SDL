@@ -76,6 +76,8 @@ private:
 	Enemy* enemy;
 	Item* item;
 	CheckPointBF* checkpoint;
+	CheckPointBF* checkpoint2;
+	CheckPointBF* checkpoint3;
 	Timer* timer;
 	std::vector<Enemy*> enemyList;
 	std::vector<Item*> itemList;
