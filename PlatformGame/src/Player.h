@@ -99,7 +99,7 @@ public:
 
 	int currentLevel = loadFile.child("config").child("scene").child("entities").child("player").attribute("level").as_int();
 
-	int maxLevel = 5;
+	int maxLevel = 6;
 
 	void ascend(bool upDown);
 	int levelsFallen = 0;

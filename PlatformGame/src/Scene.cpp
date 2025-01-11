@@ -110,7 +110,7 @@ bool Scene::Update(float dt)
 
 	Engine::GetInstance().render.get()->DrawTexture(bg, 0, 0);
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and player->currentLevel < 5)
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and player->currentLevel < 6)
 	{
 		changeLevel(player->currentLevel + 1, true);
 	}
@@ -707,7 +707,7 @@ void Scene::changeLevel(int level, bool upordown)
 		}
 	}
 	
-	if (upordown && level != 1)
+	if (upordown && level != 1 && level != 6)
 	{
 		switch (level)
 		{
