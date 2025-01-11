@@ -50,6 +50,10 @@ public:
 
 	void ChangeGrounded(bool grounded);
 
+	bool isBoss = false;
+
+	int lifes = 6;
+
 private:
 
 	bool isGrounded = false;

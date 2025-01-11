@@ -165,17 +165,39 @@ bool Scene::Update(float dt)
 		}
 		else
 		{
-			Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
-			enemyList.clear();
+			if (enemyList[0]->isBoss == false)
+			{
+				Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
+				enemyList.clear();
 
-			player->JumpFX();
-			player->KillFX();
+				player->JumpFX();
+				player->KillFX();
 
-			player->checkDeath = false;
-		}
-		if (!player->invincible)
-		{
-			player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.6), true);
+				player->checkDeath = false;
+			}
+			if (!player->invincible and enemyList[0]->isBoss == false)
+			{
+				player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.6), true);
+			}
+			if (enemyList[0]->isBoss == true)
+			{
+				player->JumpFX();
+				player->KillFX();
+				enemyList[0]->lifes -= 1;
+				player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -1), true);
+
+				player->checkDeath = false;
+			}
+			if (enemyList[0]->lifes == 0)
+			{
+				Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
+				enemyList.clear();
+
+				player->JumpFX();
+				player->KillFX();
+
+				player->checkDeath = false;
+			}
 		}
 	}
 
@@ -662,52 +684,55 @@ void Scene::changeLevel(int level, bool upordown)
 			}
 		}
 	}
-	switch (level)
+	if (level != player->maxLevel)
 	{
-	case 1:
-		itemNode.attribute("x") = 240;
-		itemNode.attribute("y") = 30;
-		itemNode.attribute("type") = 1;
-		break;
-	case 2:
-		itemNode.attribute("x") = 424;
-		itemNode.attribute("y") = 155;
-		itemNode.attribute("type") = 2;
-		break;
-	case 3:
-		itemNode.attribute("x") = 309;
-		itemNode.attribute("y") = 135;
-		itemNode.attribute("type") = 3;
-		break;
-	case 4:
-		itemNode.attribute("x") = 436;
-		itemNode.attribute("y") = 95;
-		itemNode.attribute("type") = 2;
-		break;
-	case 5:
-		itemNode.attribute("x") = 45;
-		itemNode.attribute("y") = 215;
-		itemNode.attribute("type") = 1;
-		break;
-	default:
-		break;
-	}
-
-	pugi::xml_document loadFile;
-	pugi::xml_parse_result result = loadFile.load_file("config.xml");
-
-	std::string lvl = "lvl" + std::to_string(level);
-	if (loadFile.child("config").child("scene").child("entities").child("player").child("items").attribute(lvl.c_str()).as_bool() == false)
-	{
-		if (canSpawnItem == true)
+		switch (level)
 		{
-			Item* item = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
-			item->SetParameters(itemNode);
-			itemList.push_back(item);
+		case 1:
+			itemNode.attribute("x") = 240;
+			itemNode.attribute("y") = 30;
+			itemNode.attribute("type") = 1;
+			break;
+		case 2:
+			itemNode.attribute("x") = 424;
+			itemNode.attribute("y") = 155;
+			itemNode.attribute("type") = 2;
+			break;
+		case 3:
+			itemNode.attribute("x") = 309;
+			itemNode.attribute("y") = 135;
+			itemNode.attribute("type") = 3;
+			break;
+		case 4:
+			itemNode.attribute("x") = 436;
+			itemNode.attribute("y") = 95;
+			itemNode.attribute("type") = 2;
+			break;
+		case 5:
+			itemNode.attribute("x") = 45;
+			itemNode.attribute("y") = 215;
+			itemNode.attribute("type") = 1;
+			break;
+		default:
+			break;
+		}
+
+		pugi::xml_document loadFile;
+		pugi::xml_parse_result result = loadFile.load_file("config.xml");
+
+		std::string lvl = "lvl" + std::to_string(level);
+		if (loadFile.child("config").child("scene").child("entities").child("player").child("items").attribute(lvl.c_str()).as_bool() == false)
+		{
+			if (canSpawnItem == true)
+			{
+				Item* item = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
+				item->SetParameters(itemNode);
+				itemList.push_back(item);
+			}
 		}
 	}
 	
-	if (upordown && level != 1 && level != 6)
+	if (upordown && level != 1 && level != player->maxLevel)
 	{
 		switch (level)
 		{
@@ -744,6 +769,18 @@ void Scene::changeLevel(int level, bool upordown)
 		enemyList.push_back(enemy);
 
 		enemy->ChangeGrounded(grounded);
+	}
+
+	if (level == player->maxLevel)
+	{
+		enemyNode.attribute("x") = 160;
+		enemyNode.attribute("y") = 50;
+		enemyNode.attribute("gravity") = true;
+		Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ENEMY);
+
+		enemy->isBoss = true;
+		enemy->SetParameters(enemyNode);
+		enemyList.push_back(enemy);
 	}
 }
 

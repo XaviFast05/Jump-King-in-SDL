@@ -44,7 +44,13 @@ bool Enemy::Start()
 	flying.LoadAnimations(parameters.child("animations").child("flying"));
 	idleGrounded.LoadAnimations(parameters.child("animations").child("idleGrounded"));
 	flyingGrounded.LoadAnimations(parameters.child("animations").child("flyingGrounded"));
-	if (!isGrounded)
+
+	if (isBoss)
+	{
+		//AQUI ANIMACION JEFETRON
+		currentAnimation = &idle;
+	}
+	else if (!isGrounded)
 	{
 		currentAnimation = &idle;
 	}
