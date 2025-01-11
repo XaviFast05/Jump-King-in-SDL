@@ -52,7 +52,7 @@
  <tileset firstgid="55" source="Path.tsx"/>
  <layer id="1" name="Nivel 1" width="24" height="18" visible="0">
   <properties>
-   <property name="Draw" type="bool" value="false"/>
+   <property name="Draw" type="bool" value="true"/>
   </properties>
   <data>
    <tile gid="45"/>
@@ -491,7 +491,7 @@
  </layer>
  <layer id="2" name="Nivel 2" width="24" height="18" visible="0">
   <properties>
-   <property name="Draw" type="bool" value="false"/>
+   <property name="Draw" type="bool" value="true"/>
   </properties>
   <data>
    <tile gid="26"/>
@@ -930,7 +930,7 @@
  </layer>
  <layer id="3" name="Nivel 3" width="24" height="18" visible="0">
   <properties>
-   <property name="Draw" type="bool" value="false"/>
+   <property name="Draw" type="bool" value="true"/>
   </properties>
   <data>
    <tile gid="26"/>
@@ -1369,7 +1369,7 @@
  </layer>
  <layer id="4" name="Nivel 4" width="24" height="18" visible="0">
   <properties>
-   <property name="Draw" type="bool" value="false"/>
+   <property name="Draw" type="bool" value="true"/>
   </properties>
   <data>
    <tile gid="26"/>
@@ -1808,7 +1808,7 @@
  </layer>
  <layer id="5" name="Nivel 5" width="24" height="18" visible="0">
   <properties>
-   <property name="Draw" type="bool" value="false"/>
+   <property name="Draw" type="bool" value="true"/>
   </properties>
   <data>
    <tile gid="12"/>
@@ -2245,9 +2245,9 @@
    <tile gid="25"/>
   </data>
  </layer>
- <layer id="11" name="Nivel 6" width="24" height="18" visible="0">
+ <layer id="6" name="Nivel 6" width="24" height="18" visible="0">
   <properties>
-   <property name="Draw" type="bool" value="false"/>
+   <property name="Draw" type="bool" value="true"/>
   </properties>
   <data>
    <tile gid="12"/>

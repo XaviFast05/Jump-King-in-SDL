@@ -71,13 +71,7 @@ bool GuiControlButton::Update(float dt)
 			break;
 		}
 
-		// Dibujar el texto en el centro del botón
-		int textWidth = bounds.w;
-		int textHeight = bounds.h;
-		int textX = bounds.x + (bounds.w - textWidth) / 2;
-		int textY = bounds.y + (bounds.h - textHeight) / 2;
-
-		Engine::GetInstance().render->DrawText(text.c_str(), textX, textY, textWidth, textHeight);
+		Engine::GetInstance().render->DrawText(text.c_str(), bounds.x, bounds.y, bounds.w, bounds.h);
 	}
 
 	return false;
