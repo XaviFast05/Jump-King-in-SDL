@@ -636,7 +636,7 @@ void Scene::changeLevel(int level, bool upordown)
 	bg = Engine::GetInstance().textures.get()->Load(fileName.c_str());
 	Engine::GetInstance().textures.get()->GetSize(bg, texW, texH);
 
-	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", level);
+ 	Engine::GetInstance().map->Load("Assets/Maps/", "Tilemap.tmx", level);
 
 	pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy");
 	pugi::xml_node itemNode = configParameters.child("entities").child("player").child("items");
