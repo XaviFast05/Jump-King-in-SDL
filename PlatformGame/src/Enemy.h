@@ -49,6 +49,10 @@ public:
 
 	void ChangeGrounded(bool grounded);
 
+	void HurtHutao();
+
+	void HutaoAttack();
+
 	bool isBoss = false;
 
 	int lifes = 4;
@@ -68,8 +72,12 @@ private:
 	Animation flying;
 	Animation idleGrounded;
 	Animation flyingGrounded;
+	Animation hutaoAttack;
+	Animation hutaoIdle;
 	int chaseFxId;
 	int chaseGroundedFxId;
+	int hutaoAttackFxId;
+	int hutaoHurtFxId;
 	PhysBody* pbody;
 	Pathfinding* pathfinding;
 	Map* map;
@@ -78,6 +86,7 @@ private:
 	bool IsSearching = false;
 	int x = 0;
 	int y = 0;
+	int z = 0;
 
 	Timer bossTimer;
 };

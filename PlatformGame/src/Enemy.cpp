@@ -45,11 +45,13 @@ bool Enemy::Start()
 	flying.LoadAnimations(parameters.child("animations").child("flying"));
 	idleGrounded.LoadAnimations(parameters.child("animations").child("idleGrounded"));
 	flyingGrounded.LoadAnimations(parameters.child("animations").child("flyingGrounded"));
+	hutaoAttack.LoadAnimations(parameters.child("animations").child("hutaoAttack"));
+	hutaoIdle.LoadAnimations(parameters.child("animations").child("hutaoIdle"));
 
 	if (isBoss)
 	{
 		//XAVI AQUI ANIMACION JEFETRON BASE
-		currentAnimation = &idle;
+		currentAnimation = &hutaoIdle;
 		bossTimer.Start();
 	}
 	else if (!isGrounded)
@@ -70,6 +72,8 @@ bool Enemy::Start()
 
 	chaseFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/bird_chase.wav");
 	chaseGroundedFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/Old_Man_chase.wav");
+	hutaoAttackFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/hutao/babe_scream.wav");
+	hutaoHurtFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/hutao/babe_pickup.wav");
 
 	Mix_Volume(chaseFxId, 200);
 
@@ -101,6 +105,10 @@ bool Enemy::Update(float dt)
 	{
 		currentAnimation = &idleGrounded;
 	}
+	else if (isBoss)
+	{
+		currentAnimation = &hutaoIdle;
+	}
 
  	pathfinding->layerNav = map->GetNavigationLayer();
 
@@ -130,6 +138,7 @@ bool Enemy::Update(float dt)
 			if (bossTimer.ReadSec() < 2)
 			{
 				//IDLE
+				currentAnimation = &hutaoIdle;
 				if (side == false)
 				{
 					targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(3, 1);
@@ -138,15 +147,24 @@ bool Enemy::Update(float dt)
 				{
 					targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(20, 2);
 				}
+				z = 0;
 			}
 			else if (bossTimer.ReadSec() < 4)
 			{
 				//ATTACK
+				if (z == 0)
+				{
+					HutaoAttack();
+					z = 1;
+				}
+
+				currentAnimation = &hutaoAttack;
 				targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(targetTile.getX(), 14);
 			}
 			else if (bossTimer.ReadSec() < 5)
 			{
 				//IDLE
+				currentAnimation = &hutaoIdle;
 				if (side == false)
 				{
 					targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(20, 2);
@@ -155,6 +173,7 @@ bool Enemy::Update(float dt)
 				{
 					targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(3, 1);
 				}
+				z = 0;
 			}
 			else
 			{
@@ -198,20 +217,24 @@ bool Enemy::Update(float dt)
 		}
 	}
 
-	if (IsSearching == true)
+	if (!isBoss)
 	{
-		if (!isGrounded)
+		if (IsSearching == true)
 		{
-			currentAnimation = &flying;
-			x++;
+			if (!isGrounded)
+			{
+				currentAnimation = &flying;
+				x++;
+			}
+			else if (isGrounded)
+			{
+				currentAnimation = &flyingGrounded;
+				y++;
+			}
+
 		}
-		else if (isGrounded)
-		{
-			currentAnimation = &flyingGrounded;
-			y++;
-		}
-		
 	}
+
 
 	if (currentAnimation == &flying && x == 1 )
 	{
@@ -297,4 +320,14 @@ void Enemy::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 void Enemy::ChangeGrounded(bool grounded)
 {
 	isGrounded = grounded;
+}
+
+void Enemy::HurtHutao()
+{
+	Engine::GetInstance().audio->PlayFx(hutaoHurtFxId);
+}
+
+void Enemy::HutaoAttack()
+{
+	Engine::GetInstance().audio->PlayFx(hutaoAttackFxId);
 }

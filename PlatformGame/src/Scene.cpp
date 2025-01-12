@@ -194,7 +194,8 @@ bool Scene::Update(float dt)
 				player->JumpFX();
 				if (enemyList[0]->isGrounded == true)
 				{
-					player->KillGroundedFX();
+					//hutao
+					enemyList[0]->HurtHutao();
 				}
 				else if (enemyList[0]->isGrounded == false) player->KillFX();
 				enemyList[0]->lifes -= 1;
@@ -207,6 +208,7 @@ bool Scene::Update(float dt)
 				player->JumpFX();
 				if (enemyList[0]->isGrounded == true)
 				{
+					//hutao
 					player->KillGroundedFX();
 				}
 				else if (enemyList[0]->isGrounded == false) player->KillFX();
