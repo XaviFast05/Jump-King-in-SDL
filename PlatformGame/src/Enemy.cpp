@@ -9,6 +9,7 @@
 #include "Physics.h"
 #include "Map.h"
 #include "EntityManager.h"
+#include "Timer.h"
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
@@ -49,6 +50,7 @@ bool Enemy::Start()
 	{
 		//AQUI ANIMACION JEFETRON
 		currentAnimation = &idle;
+		bossTimer.Start();
 	}
 	else if (!isGrounded)
 	{
@@ -80,7 +82,15 @@ bool Enemy::Start()
 
 bool Enemy::Update(float dt)
 {
-	int maxIterations = 13; // Max number of iterations to avoid crashes
+	int maxIterations = 0;
+	if (isBoss)
+	{
+		maxIterations = 40; // Max number of iterations to avoid crashes
+	}
+	else
+	{
+		maxIterations = 13; // Max number of iterations to avoid crashes
+	}
 	int iterations = 0;
 	
 	if (!isGrounded)
@@ -106,11 +116,48 @@ bool Enemy::Update(float dt)
 		iterations++;
 	}
 
-
 	//Get last tile
 	if (pathfinding->pathTiles.size() > 3) {
 		Vector2D targetTile = pathfinding->pathTiles[pathfinding->pathTiles.size() - 4];
-		Vector2D targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(targetTile.getX(), targetTile.getY());
+		Vector2D targetWorldPos;
+		if (isBoss == false)
+		{
+			targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(targetTile.getX(), targetTile.getY());
+		}
+		else
+		{
+			if (bossTimer.ReadSec() < 2)
+			{
+				if (side == false)
+				{
+					targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(3, 1);
+				}
+				else
+				{
+					targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(20, 2);
+				}
+			}
+			else if (bossTimer.ReadSec() < 4)
+			{
+				targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(targetTile.getX(), 14);
+			}
+			else if (bossTimer.ReadSec() < 5)
+			{
+				if (side == false)
+				{
+					targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(20, 2);
+				}
+				else
+				{
+					targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(3, 1);
+				}
+			}
+			else
+			{
+				bossTimer.Start();
+				side = !side;
+			}
+		}
 
 		//Calculate vector movement
 		Vector2D movement = targetWorldPos + Vector2D(16, 16) - enemyPos;
@@ -241,10 +288,6 @@ void Enemy::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	case ColliderType::PLAYER:
 		break;
 	}
-}
-
-float Suavizar(float start, float end, float alpha) {
-    return start + alpha * (end - start);
 }
 
 void Enemy::ChangeGrounded(bool grounded)

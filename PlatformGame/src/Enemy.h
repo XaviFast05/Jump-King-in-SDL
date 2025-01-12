@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Pathfinding.h"
 #include "Map.h"
+#include "Timer.h"
 
 struct SDL_Texture;
 
@@ -46,15 +47,15 @@ public:
 
 	bool flipSprite = false;
 
-	float Suavizar(float start, float end, float alpha);
-
 	void ChangeGrounded(bool grounded);
 
 	bool isBoss = false;
 
-	int lifes = 6;
+	int lifes = 4;
 
 	bool isGrounded = false;
+
+	bool side = false;
 
 private:
 	
@@ -77,4 +78,6 @@ private:
 	bool IsSearching = false;
 	int x = 0;
 	int y = 0;
+
+	Timer bossTimer;
 };

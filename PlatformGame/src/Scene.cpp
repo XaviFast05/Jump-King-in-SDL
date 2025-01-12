@@ -143,7 +143,7 @@ bool Scene::Update(float dt)
 		enemyList.clear();
 	}
 
-	if (enemyList.size() > 0 && player->checkDeath == true && player->isDead == false)
+ 	if (enemyList.size() > 0 && player->checkDeath == true && player->isDead == false)
 	{
 		if (player->GetPosition().getY() + 7 > enemyList[0]->GetPosition().getY() && !player->invincible)
 		{
@@ -172,11 +172,9 @@ bool Scene::Update(float dt)
 		}
 		else
 		{
+			bool killEnemy = false;
 			if (enemyList[0]->isBoss == false)
 			{
-				Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
-				enemyList.clear();
-
 				player->JumpFX();
 				if (enemyList[0]->isGrounded == true)
 				{
@@ -185,8 +183,9 @@ bool Scene::Update(float dt)
 				else if (enemyList[0]->isGrounded == false) player->KillFX();
 
 				player->checkDeath = false;
+				killEnemy = true;
 			}
-			if (!player->invincible and enemyList[0]->isBoss == false)
+			if (!player->invincible)
 			{
 				player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.6), true);
 			}
@@ -199,15 +198,12 @@ bool Scene::Update(float dt)
 				}
 				else if (enemyList[0]->isGrounded == false) player->KillFX();
 				enemyList[0]->lifes -= 1;
-				player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -1), true);
+				player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -1.2), true);
 
 				player->checkDeath = false;
 			}
 			if (enemyList[0]->lifes == 0)
 			{
-				Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
-				enemyList.clear();
-
 				player->JumpFX();
 				if (enemyList[0]->isGrounded == true)
 				{
@@ -216,6 +212,12 @@ bool Scene::Update(float dt)
 				else if (enemyList[0]->isGrounded == false) player->KillFX();
 
 				player->checkDeath = false;
+				killEnemy = true;
+			}
+			if (killEnemy)
+			{
+				Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
+				enemyList.clear();
 			}
 		}
 	}
