@@ -48,7 +48,7 @@ bool Enemy::Start()
 
 	if (isBoss)
 	{
-		//AQUI ANIMACION JEFETRON
+		//XAVI AQUI ANIMACION JEFETRON BASE
 		currentAnimation = &idle;
 		bossTimer.Start();
 	}
@@ -126,8 +126,10 @@ bool Enemy::Update(float dt)
 		}
 		else
 		{
+			//XAVI animacions del jefe en ataque
 			if (bossTimer.ReadSec() < 2)
 			{
+				//IDLE
 				if (side == false)
 				{
 					targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(3, 1);
@@ -139,10 +141,12 @@ bool Enemy::Update(float dt)
 			}
 			else if (bossTimer.ReadSec() < 4)
 			{
+				//ATTACK
 				targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(targetTile.getX(), 14);
 			}
 			else if (bossTimer.ReadSec() < 5)
 			{
+				//IDLE
 				if (side == false)
 				{
 					targetWorldPos = Engine::GetInstance().map.get()->MapToWorld(20, 2);
