@@ -92,6 +92,11 @@ bool Scene::Start()
 
 	// Create music
 	menu_introMS = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
+	invincibilityMS = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_loop.wav", 0);
+
+	// Create FX
+	coinFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Items/plink.wav");
+	oneUpId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Items/1up.wav");
 
 	return true;
 }
@@ -105,6 +110,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	// Set music
+
 	//L03 TODO 3: Make the camera movement independent of framerate
 	float camSpeed = 1;
 
@@ -171,7 +178,11 @@ bool Scene::Update(float dt)
 				enemyList.clear();
 
 				player->JumpFX();
-				player->KillFX();
+				if (enemyList[0]->isGrounded == true)
+				{
+					player->KillGroundedFX();
+				}
+				else if (enemyList[0]->isGrounded == false) player->KillFX();
 
 				player->checkDeath = false;
 			}
@@ -182,7 +193,11 @@ bool Scene::Update(float dt)
 			if (enemyList[0]->isBoss == true)
 			{
 				player->JumpFX();
-				player->KillFX();
+				if (enemyList[0]->isGrounded == true)
+				{
+					player->KillGroundedFX();
+				}
+				else if (enemyList[0]->isGrounded == false) player->KillFX();
 				enemyList[0]->lifes -= 1;
 				player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -1), true);
 
@@ -194,7 +209,11 @@ bool Scene::Update(float dt)
 				enemyList.clear();
 
 				player->JumpFX();
-				player->KillFX();
+				if (enemyList[0]->isGrounded == true)
+				{
+					player->KillGroundedFX();
+				}
+				else if (enemyList[0]->isGrounded == false) player->KillFX();
 
 				player->checkDeath = false;
 			}
@@ -209,6 +228,7 @@ bool Scene::Update(float dt)
 		case 1:
 			//monedas
 			player->addCoins(5);
+			Engine::GetInstance().audio->PlayFx(coinFxId);
 			break;
 		case 2:
 			//poder invencible
@@ -217,6 +237,7 @@ bool Scene::Update(float dt)
 			break;
 		case 3:
 			//vida
+			Engine::GetInstance().audio->PlayFx(oneUpId);
 			player->lifes++;
 			break;
 		default:

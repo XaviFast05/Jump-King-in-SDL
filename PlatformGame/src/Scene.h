@@ -56,6 +56,8 @@ public:
 	// Handles multiple Gui Event methods
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
+	bool PlayMusicOnce(bool play);
+
 public:
 	// Get tilePosDebug value
 	std::string GetTilePosDebug() {
@@ -70,6 +72,9 @@ private:
 	SDL_Texture* CTtexture = nullptr;
 	bool once = false;
 	int menu_introMS;
+	int invincibilityMS;
+	int coinFxId;
+	int oneUpId;
 
 	// Declare a Player attribute
 	Player* player;

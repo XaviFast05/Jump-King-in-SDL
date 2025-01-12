@@ -67,6 +67,7 @@ bool Enemy::Start()
 	if (!parameters.attribute("gravity").as_bool()) pbody->body->SetGravityScale(0);
 
 	chaseFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/bird_chase.wav");
+	chaseGroundedFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/Old_Man_chase.wav");
 
 	Mix_Volume(chaseFxId, 200);
 
@@ -169,7 +170,7 @@ bool Enemy::Update(float dt)
 
 	if (currentAnimation == &flyingGrounded &&  y == 1)
 	{
-		Engine::GetInstance().audio->PlayFx(chaseFxId);
+		Engine::GetInstance().audio->PlayFx(chaseGroundedFxId);
 		x++;
 	}
 

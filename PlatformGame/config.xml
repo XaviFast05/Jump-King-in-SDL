@@ -46,11 +46,38 @@
 						<frame x="96" y="32" w="32" h="32" />
 						<frame x="960" y="32" w="32" h="32" />
 					</splatted>
+					<idleInv loop="true" speed="0.05">
+						<frame x="32" y="208" w="32" h="32" />
+						<frame x="64" y="208" w="32" h="32" />
+						<frame x="96" y="208" w="32" h="32" />
+						<frame x="64" y="208" w="32" h="32" />
+					</idleInv>
+					<moveInv loop="true" speed="0.2">
+						<frame x="32" y="128" w="32" h="32" />
+						<frame x="64" y="128" w="32" h="32" />
+						<frame x="96" y="128" w="32" h="32" />
+					</moveInv>
+					<jumpingInv loop="true" speed="0.2">
+						<frame x="32" y="160" w="32" h="48" />
+					</jumpingInv>
+					<fallingInv loop="true" speed="0.2">
+						<frame x="64" y="160" w="32" h="48" />
+					</fallingInv>
+					<splattedInv loop="true" speed="0.05">
+						<frame x="96" y="128" w="32" h="32" />
+						<frame x="960" y="128" w="32" h="32" />
+						<frame x="96" y="128" w="32" h="32" />
+						<frame x="960" y="128" w="32" h="32" />
+						<frame x="96" y="128" w="32" h="32" />
+						<frame x="960" y="128" w="32" h="32" />
+						<frame x="96" y="128" w="32" h="32" />
+						<frame x="960" y="128" w="32" h="32" />
+					</splattedInv>
 				</animations>
 				<items lvl1="false" lvl2="false" lvl3="false" lvl4="false" lvl5="false" x="0" y="0" type="" />
 			</player>
 			<enemies>
-				<enemy name="Crow" x="201" y="312" w="32" h="26" texture="Assets/Textures/enemy/raven_idle.png" gravity="false" saved="false">
+				<enemy name="Crow" x="145" y="51" w="32" h="26" texture="Assets/Textures/enemy/raven_idle.png" gravity="false" saved="false">
 					<animations>
 						<idle loop="true" speed="0.05">
 							<frame x="0" y="0" w="32" h="32" />

@@ -9,6 +9,7 @@
 #include "Physics.h"
 #include "Map.h"
 #include "EntityManager.h"
+#include "Enemy.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -31,6 +32,7 @@ bool Player::Start()
 {
 	//L03: TODO 2: Initialize Player parameters
 	texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("texture").as_string());
+
 	position.setX(parameters.attribute("x").as_int());
 	position.setY(parameters.attribute("y").as_int());
 	texW = parameters.attribute("w").as_int();
@@ -43,6 +45,11 @@ bool Player::Start()
 	jumping.LoadAnimations(parameters.child("animations").child("jumping"));
 	falling.LoadAnimations(parameters.child("animations").child("falling"));
 	splatted.LoadAnimations(parameters.child("animations").child("splatted"));
+	idleInv.LoadAnimations(parameters.child("animations").child("idleInv"));
+	moveInv.LoadAnimations(parameters.child("animations").child("moveInv"));
+	jumpingInv.LoadAnimations(parameters.child("animations").child("jumpingInv"));
+	fallingInv.LoadAnimations(parameters.child("animations").child("fallingInv"));
+	splattedInv.LoadAnimations(parameters.child("animations").child("splattedInv"));
 	currentAnimation = &idle;
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
@@ -63,6 +70,7 @@ bool Player::Start()
 	landFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_land.wav");
 	splatFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_splat.wav");
 	killFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/bird_fly.wav");
+	killGroundedFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/Old_Man_die.wav");
 
 	return true;
 }
@@ -111,10 +119,19 @@ bool Player::Update(float dt)
 	if (!debug_ || !isDead)
 	{
 
-		if (velocity.x == 0 && currentAnimation != &splatted)
+		if (velocity.x == 0 && (currentAnimation != &splatted or currentAnimation != &splattedInv))
 		{
-			currentAnimation = &idle;
+
+			if (invincible == true)
+			{
+				currentAnimation = &idleInv;
+			}
+			else if (invincible == false)
+			{
+				currentAnimation = &idle;
+			}
 			running = false;
+
 		}
 
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F4) == KEY_DOWN and (isJumping != true or isFalling != true))
@@ -149,13 +166,32 @@ bool Player::Update(float dt)
 			isDead = false;
 		}
 
-		if (isJumping == true) {
-			currentAnimation = &jumping;
+		if (isJumping == true) 
+		{
+			if (invincible == true)
+			{
+				currentAnimation = &jumpingInv;
+			}
+			else if (invincible == false)
+			{
+				currentAnimation = &jumping;
+			}
 		}
 
-		if (running == true && currentAnimation != &jumping)
+		if (running == true && currentAnimation != &jumping )
 		{
-			currentAnimation = &move;
+			if (invincible == false)
+			{
+				currentAnimation = &move;
+			}
+		}
+
+		if (running == true && currentAnimation != &jumpingInv)
+		{
+			if (invincible == true)
+			{
+				currentAnimation = &moveInv;
+			}
 		}
 
 		//Jump
@@ -186,19 +222,45 @@ bool Player::Update(float dt)
 			x = 1;
 		}
 
+		if (x == 0 && currentAnimation == &idleInv && isFalling != true)
+		{
+			Engine::GetInstance().audio.get()->PlayFx(landFxId);
+			x = 1;
+		}
+
+		if (x == 0 && currentAnimation == &moveInv && isFalling != true)
+		{
+			Engine::GetInstance().audio.get()->PlayFx(landFxId);
+			x = 1;
+		}
+
 		if (velocity.y > 1)
 		{
 			isFalling = true;
 		}
 
 		if (isFalling == true) {
-			currentAnimation = &falling;
+			if (invincible == true)
+			{
+				currentAnimation = &fallingInv;
+			}
+			else if (invincible == false)
+			{
+				currentAnimation = &falling;
+			}
 			x = 0;
 		}
 
 		if (isSplatted == true)
 		{
-			currentAnimation = &splatted;
+			if (invincible == true)
+			{
+				currentAnimation = &splattedInv;
+			}
+			else if (invincible == false)
+			{
+				currentAnimation = &splatted;
+			}
 		}
 	}
 	// Apply the velocity to the player
@@ -369,4 +431,9 @@ void Player::JumpFX()
 void Player::KillFX()
 {
 	Engine::GetInstance().audio.get()->PlayFx(killFxId);
+}
+
+void Player::KillGroundedFX()
+{
+	Engine::GetInstance().audio.get()->PlayFx(killGroundedFxId);
 }

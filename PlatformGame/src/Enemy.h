@@ -54,9 +54,10 @@ public:
 
 	int lifes = 6;
 
-private:
-
 	bool isGrounded = false;
+
+private:
+	
 	SDL_Texture* texture;
 	const char* texturePath;
 	int texW, texH;
@@ -67,6 +68,7 @@ private:
 	Animation idleGrounded;
 	Animation flyingGrounded;
 	int chaseFxId;
+	int chaseGroundedFxId;
 	PhysBody* pbody;
 	Pathfinding* pathfinding;
 	Map* map;

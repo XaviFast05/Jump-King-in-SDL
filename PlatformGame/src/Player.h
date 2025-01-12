@@ -8,6 +8,7 @@
 struct SDL_Texture;
 class Scene;
 class Timer;
+class Enemy;
 
 class Player : public Entity
 {
@@ -67,6 +68,7 @@ public:
 	int landFxId;
 	int splatFxId;
 	int killFxId;
+	int killGroundedFxId;
 
 	int x = 0;
 
@@ -75,6 +77,7 @@ public:
 	PhysBody* pbodyBody;
 	Scene* Respawn;
 	Timer* timer;
+	Enemy* enemy;
 	float jumpForce = 1.1f; // The force to apply when jumping
 	bool isJumping = false; // Flag to check if the player is currently jumping
 	bool isFalling = false;
@@ -91,6 +94,11 @@ public:
 	Animation jumping;
 	Animation falling;
 	Animation splatted;
+	Animation idleInv;
+	Animation moveInv;
+	Animation jumpingInv;
+	Animation fallingInv;
+	Animation splattedInv;
 
 	SDL_RendererFlip hflip = SDL_FLIP_NONE;
 
@@ -113,6 +121,7 @@ public:
 
 	void JumpFX();
 	void KillFX();
+	void KillGroundedFX();
 
 	bool invincible = false;
 };
