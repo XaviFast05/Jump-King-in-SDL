@@ -90,10 +90,6 @@ bool Scene::Start()
 	checkpoint2->CheckTaken = sceneNode.child("entities").child("checkpointbf").attribute("taken2").as_bool();
 	checkpoint3->CheckTaken = sceneNode.child("entities").child("checkpointbf").attribute("taken3").as_bool();
 
-	// Create music
-	menu_introMS = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
-	invincibilityMS = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_loop.wav", 0);
-
 	// Create FX
 	coinFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Items/plink.wav");
 	oneUpId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Items/1up.wav");
@@ -110,191 +106,215 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	// Set music
+	if (active)
+	{	
+		guiBt->state = GuiControlState::DISABLED;
+		// Set music
+		if (playerInvincible == true)
+		{
+			if (x == 0)
+			{
+				invincibilityMS = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_loop.wav", 0);
+				x = 1;
+				y = 0;
+			}
+		}
+		else if (y == 0)
+		{
+			menu_introMS = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
+			y = 1;
+			x = 0;
+		}
+		//L03 TODO 3: Make the camera movement independent of framerate
+		float camSpeed = 1;
 
-	//L03 TODO 3: Make the camera movement independent of framerate
-	float camSpeed = 1;
+		Engine::GetInstance().render.get()->DrawTexture(bg, 0, 0);
 
-	Engine::GetInstance().render.get()->DrawTexture(bg, 0, 0);
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and player->currentLevel < 6)
+		{
+			changeLevel(player->currentLevel + 1, true);
+		}
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN and player->currentLevel > 1)
+		{
+			changeLevel(player->currentLevel - 1, false);
+		}
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and player->currentLevel < 6)
-	{
-		changeLevel(player->currentLevel + 1, true);
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+		{
+			CTVisible = !CTVisible;
+		}
+
+		if ((enemyList.size() > 0 && enemyList[0]->position.getY() < -10) || (enemyList.size() > 0 && enemyList[0]->position.getY() > 340))
+		{
+			Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
+			enemyList.clear();
+		}
+
+		if (enemyList.size() > 0 && enemyList[0]->isDead == true)
+		{
+			Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
+			enemyList.clear();
+		}
+
+		if (enemyList.size() > 0 && player->checkDeath == true && player->isDead == false)
+		{
+			if (player->GetPosition().getY() + 7 > enemyList[0]->GetPosition().getY() && !player->invincible)
+			{
+				pugi::xml_document loadFile;
+				pugi::xml_parse_result result = loadFile.load_file("config.xml");
+
+				player->Die();
+				player->checkDeath = false;
+
+				player->loseLife();
+				loadFile.child("config").child("scene").child("entities").child("player").attribute("lifes").set_value(player->lifes);
+				loadFile.save_file("config.xml");
+
+				if (player->lifes == 0)
+				{
+					player->isDead = false;
+
+					player->isFalling = false;
+					player->isJumping = false;
+					player->pbody->body->SetLinearVelocity(b2Vec2_zero);
+
+					SpawnPoint();
+					SaveState();
+					checkpoint->CheckTaken = false;
+				}
+			}
+			else
+			{
+				bool killEnemy = false;
+				if (enemyList[0]->isBoss == false)
+				{
+					player->JumpFX();
+					if (enemyList[0]->isGrounded == true)
+					{
+						player->KillGroundedFX();
+					}
+					else if (enemyList[0]->isGrounded == false) player->KillFX();
+
+					player->checkDeath = false;
+					killEnemy = true;
+				}
+				if (!player->invincible)
+				{
+					player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.6), true);
+				}
+				if (enemyList[0]->isBoss == true)
+				{
+					player->JumpFX();
+					if (enemyList[0]->isGrounded == true)
+					{
+						//hutao
+						enemyList[0]->HurtHutao();
+					}
+					else if (enemyList[0]->isGrounded == false) player->KillFX();
+					enemyList[0]->lifes -= 1;
+					player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -1.2), true);
+
+					player->checkDeath = false;
+				}
+				if (enemyList[0]->lifes == 0)
+				{
+					player->JumpFX();
+					if (enemyList[0]->isGrounded == true)
+					{
+						//hutao
+						player->KillGroundedFX();
+					}
+					else if (enemyList[0]->isGrounded == false) player->KillFX();
+
+					player->checkDeath = false;
+					killEnemy = true;
+				}
+				if (killEnemy)
+				{
+					Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
+					enemyList.clear();
+				}
+			}
+		}
+
+		if (itemList.size() > 0 && player->takeItem == true)
+		{
+			//SONIDO PILLAR ITEM ABAJO, DEPENDIENDO DEL TIPO
+			switch (itemList[0]->type)
+			{
+			case 1:
+				//monedas
+				player->addCoins(5);
+				Engine::GetInstance().audio->PlayFx(coinFxId);
+				break;
+			case 2:
+				//poder invencible
+				playerInvencibility.Start();
+				playerInvincible = true;
+				break;
+			case 3:
+				//vida
+				Engine::GetInstance().audio->PlayFx(oneUpId);
+				player->lifes++;
+				break;
+			default:
+				break;
+			}
+
+			Engine::GetInstance().entityManager->DestroyEntity(itemList[0]);
+			itemList.clear();
+
+			takenItems.push_back(player->currentLevel);
+			player->takeItem = false;
+		}
+
+		if (playerInvincible)
+		{
+			if (playerInvencibility.ReadSec() < 5)
+			{
+				player->invincible = true;
+			}
+			else
+			{
+				player->invincible = false;
+				playerInvincible = false;
+			}
+		}
+
+		if (checkpoint->Saving == true)
+		{
+			SaveState();
+			checkpoint->Saving = false;
+		}
+		if (checkpoint2->Saving == true)
+		{
+			SaveState();
+			checkpoint2->Saving = false;
+		}
+		if (checkpoint3->Saving == true)
+		{
+			SaveState();
+			checkpoint3->Saving = false;
+		}
+
+		if (player->Loading == true)
+		{
+			LoadState();
+			player->Loading = false;
+		}
+
+		//Get mouse position and obtain the map coordinate
+		int scale = Engine::GetInstance().window.get()->GetScale();
+		Vector2D mousePos = Engine::GetInstance().input.get()->GetMousePosition();
+		Vector2D mouseTile = Engine::GetInstance().map.get()->WorldToMap(mousePos.getX() - Engine::GetInstance().render.get()->camera.x / scale,
+			mousePos.getY() - Engine::GetInstance().render.get()->camera.y / scale);
+
 	}
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN and player->currentLevel > 1)
+	else if (!active)
 	{
-		changeLevel(player->currentLevel - 1, false);
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-	{
+		guiBt->state = GuiControlState::NORMAL;
 		CTVisible = !CTVisible;
 	}
-	
-	if ((enemyList.size() > 0 && enemyList[0]->position.getY() < -10) || (enemyList.size() > 0 && enemyList[0]->position.getY() > 340))
-	{
-		Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
-		enemyList.clear();
-	}
-
-	if (enemyList.size() > 0 && enemyList[0]->isDead == true)
-	{
-		Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
-		enemyList.clear();
-	}
-
- 	if (enemyList.size() > 0 && player->checkDeath == true && player->isDead == false)
-	{
-		if (player->GetPosition().getY() + 7 > enemyList[0]->GetPosition().getY() && !player->invincible)
-		{
-			pugi::xml_document loadFile;
-			pugi::xml_parse_result result = loadFile.load_file("config.xml");
-
-			player->Die();
-			player->checkDeath = false;
-
-			player->loseLife();
-			loadFile.child("config").child("scene").child("entities").child("player").attribute("lifes").set_value(player->lifes);
-			loadFile.save_file("config.xml");
-
- 			if (player->lifes == 0)
-			{
-				player->isDead = false;
-
-				player->isFalling = false;
-				player->isJumping = false;
-				player->pbody->body->SetLinearVelocity(b2Vec2_zero);
-
-				SpawnPoint();
-				SaveState();
-				checkpoint->CheckTaken = false;
-			}
-		}
-		else
-		{
-			bool killEnemy = false;
-			if (enemyList[0]->isBoss == false)
-			{
-				player->JumpFX();
-				if (enemyList[0]->isGrounded == true)
-				{
-					player->KillGroundedFX();
-				}
-				else if (enemyList[0]->isGrounded == false) player->KillFX();
-
-				player->checkDeath = false;
-				killEnemy = true;
-			}
-			if (!player->invincible)
-			{
-				player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -0.6), true);
-			}
-			if (enemyList[0]->isBoss == true)
-			{
-				player->JumpFX();
-				if (enemyList[0]->isGrounded == true)
-				{
-					//hutao
-					enemyList[0]->HurtHutao();
-				}
-				else if (enemyList[0]->isGrounded == false) player->KillFX();
-				enemyList[0]->lifes -= 1;
-				player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -1.2), true);
-
-				player->checkDeath = false;
-			}
-			if (enemyList[0]->lifes == 0)
-			{
-				player->JumpFX();
-				if (enemyList[0]->isGrounded == true)
-				{
-					//hutao
-					player->KillGroundedFX();
-				}
-				else if (enemyList[0]->isGrounded == false) player->KillFX();
-
-				player->checkDeath = false;
-				killEnemy = true;
-			}
-			if (killEnemy)
-			{
-				Engine::GetInstance().entityManager->DestroyEntity(enemyList[0]);
-				enemyList.clear();
-			}
-		}
-	}
-
-	if (itemList.size() > 0 && player->takeItem == true)
-	{
-		//SONIDO PILLAR ITEM ABAJO, DEPENDIENDO DEL TIPO
-		switch (itemList[0]->type)
-		{
-		case 1:
-			//monedas
-			player->addCoins(5);
-			Engine::GetInstance().audio->PlayFx(coinFxId);
-			break;
-		case 2:
-			//poder invencible
-			playerInvencibility.Start();
-			playerInvincible = true;
-			break;
-		case 3:
-			//vida
-			Engine::GetInstance().audio->PlayFx(oneUpId);
-			player->lifes++;
-			break;
-		default:
-			break;
-		}
-
-		Engine::GetInstance().entityManager->DestroyEntity(itemList[0]);
-		itemList.clear();
-
-		takenItems.push_back(player->currentLevel);
-		player->takeItem = false;
-	}
-
-	if (playerInvincible)
-	{
-		if (playerInvencibility.ReadSec() < 5)
-		{
-			player->invincible = true;
-		}
-		else
-		{
-			player->invincible = false;
-			playerInvincible = false;
-		}
-	}
-
-	if (checkpoint->Saving == true)
-	{
-		SaveState();
-		checkpoint->Saving = false;
-	}
-	if (checkpoint2->Saving == true)
-	{
-		SaveState();
-		checkpoint2->Saving = false;
-	}
-	if (checkpoint3->Saving == true)
-	{
-		SaveState();
-		checkpoint3->Saving = false;
-	}
-
-	if (player->Loading == true)
-	{
-		LoadState();
-		player->Loading = false;
-	}
-
-	//Get mouse position and obtain the map coordinate
-	int scale = Engine::GetInstance().window.get()->GetScale();
-	Vector2D mousePos = Engine::GetInstance().input.get()->GetMousePosition();
-	Vector2D mouseTile = Engine::GetInstance().map.get()->WorldToMap(mousePos.getX() - Engine::GetInstance().render.get()->camera.x / scale,
-																	 mousePos.getY() - Engine::GetInstance().render.get()->camera.y / scale);
 
 	return true;
 }
@@ -813,6 +833,10 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 {
 	// L15: DONE 5: Implement the OnGuiMouseClickEvent method
 	LOG("Press Gui Control: %d", control->id);
-
+	if (control->id == 1)
+	{
+		active = true;
+		printf("Gameplay");
+	}
 	return true;
 }

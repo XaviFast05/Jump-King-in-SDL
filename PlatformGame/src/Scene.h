@@ -75,6 +75,8 @@ private:
 	int invincibilityMS;
 	int coinFxId;
 	int oneUpId;
+	int x = 0;
+	int y = 0;
 
 	// Declare a Player attribute
 	Player* player;

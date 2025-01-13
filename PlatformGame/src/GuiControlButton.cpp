@@ -32,14 +32,14 @@ bool GuiControlButton::Update(float dt)
 		mousePos.setY(mousePos.getY() + Engine::GetInstance().render->camera.y);
 
 		// Mensajes de depuración para verificar la posición del ratón y los límites del botón
-		printf("Mouse Position: (%f, %f)\n", mousePos.getX(), mousePos.getY());
-		printf("Button Bounds: x=%d, y=%d, w=%d, h=%d\n", bounds.x, bounds.y, bounds.w, bounds.h);
+		//printf("Mouse Position: (%f, %f)\n", mousePos.getX(), mousePos.getY());
+		//printf("Button Bounds: x=%d, y=%d, w=%d, h=%d\n", bounds.x, bounds.y, bounds.w, bounds.h);
 
 
 		//If the position of the mouse if inside the bounds of the button 
 		if (mousePos.getX() > bounds.x && mousePos.getX() < bounds.x + bounds.w && mousePos.getY() > bounds.y && mousePos.getY() < bounds.y + bounds.h) {
 
-			printf("Mouse is inside the button\n");
+			//printf("Mouse is inside the button\n");
 			state = GuiControlState::FOCUSED;
 
 			if (Engine::GetInstance().input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {

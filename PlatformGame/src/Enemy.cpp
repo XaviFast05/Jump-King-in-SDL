@@ -50,7 +50,6 @@ bool Enemy::Start()
 
 	if (isBoss)
 	{
-		//XAVI AQUI ANIMACION JEFETRON BASE
 		currentAnimation = &hutaoIdle;
 		bossTimer.Start();
 	}
