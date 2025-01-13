@@ -56,7 +56,7 @@ public:
 	// Handles multiple Gui Event methods
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
-	bool PlayMusicOnce(bool play);
+	void ButtonManager();
 
 public:
 	// Get tilePosDebug value
@@ -94,6 +94,11 @@ private:
 
 	// L16: TODO 2: Declare a GUI Control Button 
 	GuiControlButton* guiBt;
+	GuiControlButton* guiContinue;
+	GuiControlButton* guiConfig;
+	GuiControlButton* guiCredits;
+	GuiControlButton* guiExit;
+
 	
 	Timer playerInvencibility;
 	bool playerInvincible;

@@ -41,37 +41,39 @@ bool Map::Start() {
 bool Map::Update(float dt)
 {
     bool ret = true;
+    if (gamePlay)
+    {
+        if (mapLoaded) {
+            // L07 TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
+            // iterate all tiles in a layer
+            for (const auto& mapLayer : mapData.layers) {
+                //L09 TODO 7: Check if the property Draw exist get the value, if it's true draw the lawyer
+                for (int i = 0; i < mapData.width; i++) {
+                    for (int j = 0; j < mapData.height; j++) {
 
-    if (mapLoaded) {
-        // L07 TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
-        // iterate all tiles in a layer
-        for (const auto& mapLayer : mapData.layers) {
-            //L09 TODO 7: Check if the property Draw exist get the value, if it's true draw the lawyer
-            for (int i = 0; i < mapData.width; i++) {
-                for (int j = 0; j < mapData.height; j++) {
+                        // L07 TODO 9: Complete the draw function
 
-                    // L07 TODO 9: Complete the draw function
-
-                    //Get the gid from tile
-                    int gid = mapLayer->Get(i, j);
-                    //Check if the gid is different from 0 - some tiles are empty
-                    if (gid != 0) {
-                        //L09: TODO 3: Obtain the tile set using GetTilesetFromTileId
-                        TileSet* tileSet = GetTilesetFromTileId(gid);
-                        if (tileSet != nullptr) {
-                            //Get the Rect from the tileSetTexture;
-                            SDL_Rect tileRect = tileSet->GetRect(gid);
-                            //Get the screen coordinates from the tile coordinates
-                            Vector2D mapCoord = MapToWorld(i, j);
-                            //Draw the texture
-                            Engine::GetInstance().render->DrawTexture(tileSet->texture, mapCoord.getX(), mapCoord.getY(), &tileRect);
+                        //Get the gid from tile
+                        int gid = mapLayer->Get(i, j);
+                        //Check if the gid is different from 0 - some tiles are empty
+                        if (gid != 0) {
+                            //L09: TODO 3: Obtain the tile set using GetTilesetFromTileId
+                            TileSet* tileSet = GetTilesetFromTileId(gid);
+                            if (tileSet != nullptr) {
+                                //Get the Rect from the tileSetTexture;
+                                SDL_Rect tileRect = tileSet->GetRect(gid);
+                                //Get the screen coordinates from the tile coordinates
+                                Vector2D mapCoord = MapToWorld(i, j);
+                                //Draw the texture
+                                Engine::GetInstance().render->DrawTexture(tileSet->texture, mapCoord.getX(), mapCoord.getY(), &tileRect);
+                            }
                         }
                     }
                 }
             }
         }
     }
-
+   
     return ret;
 }
 

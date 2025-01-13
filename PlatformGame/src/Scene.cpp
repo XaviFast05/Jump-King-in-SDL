@@ -48,8 +48,18 @@ bool Scene::Awake()
 	// L16: TODO 2: Instantiate a new GuiControlButton in the Scene
 	int scale = Engine::GetInstance().window.get()->GetScale();
 
-	SDL_Rect btPos = { 400 , 300 , 120, 60 };
-	guiBt = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "TEST", btPos, this);
+	//Create the buttons
+	SDL_Rect btPos = { 200 , 100 , 120, 60 };
+	SDL_Rect btPos2 = { 200 , 175 , 120, 60 };
+	SDL_Rect btPos3 = { 200 , 250 , 120, 60 };
+	SDL_Rect btPos4 = { 200 , 325 , 120, 60 };
+	SDL_Rect btPos5 = { 200 , 400 , 120, 60 };
+
+	guiBt = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "PLAY", btPos, this);
+	guiContinue = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "CONTINUE", btPos2, this);
+	guiConfig = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "CONFIG", btPos3, this);
+	guiCredits = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "CREDITS", btPos4, this);
+	guiExit = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "EXIT", btPos5, this);
 
 	return ret;
 }
@@ -106,9 +116,19 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	if (active)
+	if (gamePlay)
 	{	
-		guiBt->state = GuiControlState::DISABLED;
+		ButtonManager();
+		if (gamePlay)
+		{
+			//update entities
+			player->Update(13.333);
+			for (int i = 0; i < enemyList.size(); i++)
+			{
+				enemyList[i]->Update(13.333);
+			}
+			checkpoint->Update(13.333);
+		}
 		// Set music
 		if (playerInvincible == true)
 		{
@@ -303,17 +323,15 @@ bool Scene::Update(float dt)
 			player->Loading = false;
 		}
 
-		//Get mouse position and obtain the map coordinate
-		int scale = Engine::GetInstance().window.get()->GetScale();
-		Vector2D mousePos = Engine::GetInstance().input.get()->GetMousePosition();
-		Vector2D mouseTile = Engine::GetInstance().map.get()->WorldToMap(mousePos.getX() - Engine::GetInstance().render.get()->camera.x / scale,
-			mousePos.getY() - Engine::GetInstance().render.get()->camera.y / scale);
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+		{
+			gamePlay = false;
+		}
 
 	}
 	else if (!active)
 	{
-		guiBt->state = GuiControlState::NORMAL;
-		CTVisible = !CTVisible;
+
 	}
 
 	return true;
@@ -835,8 +853,28 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	LOG("Press Gui Control: %d", control->id);
 	if (control->id == 1)
 	{
-		active = true;
+		gamePlay = true;
 		printf("Gameplay");
 	}
 	return true;
+}
+
+void Scene::ButtonManager()
+{
+	if (gamePlay)
+	{
+		guiBt->state = GuiControlState::DISABLED;
+		guiContinue->state = GuiControlState::DISABLED;
+		guiConfig->state = GuiControlState::DISABLED;
+		guiCredits->state = GuiControlState::DISABLED;
+		guiExit->state = GuiControlState::DISABLED;
+	}
+	else if (!gamePlay)
+	{
+		guiBt->state = GuiControlState::NORMAL;
+		guiContinue->state = GuiControlState::NORMAL;
+		guiConfig->state = GuiControlState::NORMAL;
+		guiCredits->state = GuiControlState::NORMAL;
+		guiExit->state = GuiControlState::NORMAL;
+	}
 }
