@@ -1,0 +1,80 @@
+﻿  Scene.cpp
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(87,85): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(86,113): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(118,18): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(121,25): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(123,22): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(215,64): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(227,64): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(487,48): warning C4838: la conversión de 'double' en 'int' requiere una conversión de restricción
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(487,48): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(487,58): warning C4838: la conversión de 'float' en 'int' requiere una conversión de restricción
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(487,58): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(533,68): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(532,97): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(555,85): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\src\Scene.cpp(554,113): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+  Generando código
+  1 of 1943 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    8 functions had inline decision re-evaluated but remain unchanged
+  Generación de código finalizada
+  PlatformGame.vcxproj -> C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\PlatformGame.exe
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Bonfire\fire.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Enemy\bird_chase.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Enemy\bird_fly.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Enemy\Old_Man_chase.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Enemy\Old_Man_die.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Enemy\hutao\babe_jump.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Enemy\hutao\babe_kiss.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Enemy\hutao\babe_mou.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Enemy\hutao\babe_pickup.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Enemy\hutao\babe_scream.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Enemy\hutao\babe_surprised2.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Enemy\hutao\king_land.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Items\1up.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\Items\plink.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\King\Ice\king_bump.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\King\Ice\king_jump.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\King\Ice\king_land.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\King\Ice\king_splat.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\King\Land\king_bump.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\King\Land\king_jump.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\King\Land\king_land.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\King\Land\king_splat.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\King\Snow\king_bump.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\King\Snow\king_jump.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\King\Snow\king_land.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Fx\King\Snow\king_splat.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Music\menu_intro.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Audio\Music\menu_loop.wav
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Fonts\arial\1_19tmLBmVPfbohCvb7HgJFg.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Fonts\arial\Arial-Font.jpg
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Fonts\arial\arial.ttf
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Fonts\arial\Arial_font_2021-11-28_14-10-13.jpg
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Fonts\Jumpking\ttf_pixolde_bold.ttf
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Maps\MapMetadata.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Maps\Path.tsx
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Maps\Tilemap.tmx
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Maps\Tileset.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Maps\x.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\CONTROLS.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\fondo1.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\fondo10.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\fondo2.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\fondo3.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\fondo4.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\fondo5.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\fondo6.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\fondo7.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\fondo8.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\fondo9.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\Bonfire\Bonfire.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\enemy\merchant.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\enemy\raven_idle.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\items\item1.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\items\item2.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\items\item3.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\player\JumpKingSpriteSheet.png
+  C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\Assets\Textures\player\Move.aseprite
+  57 archivo(s) copiado(s)

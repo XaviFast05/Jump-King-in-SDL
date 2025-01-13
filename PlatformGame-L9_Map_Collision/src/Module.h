@@ -13,6 +13,7 @@ public:
 	void Init()
 	{
 		active = true;
+		gamePlay = false;
 	}
 
 	// Called before render is available
@@ -62,6 +63,7 @@ public:
 
 	std::string name;
 	bool active;
+	bool gamePlay;
 	//L05 TODO 4a: Declare a pugi::xml_node to store the module configuration parameters
 	pugi::xml_node configParameters;
 

@@ -41,7 +41,21 @@ bool Map::Start() {
 bool Map::Update(float dt)
 {
     bool ret = true;
+    if (gamePlay)
+    {
+        if (mapLoaded) 
+        {
+            // L07 TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
+            // iterate all tiles in a layer
+            for (const auto& mapLayer : mapData.layers) 
+            {
+                //L09 TODO 7: Check if the property Draw exist get the value, if it's true draw the lawyer
+                for (int i = 0; i < mapData.width; i++) 
+                {
+                    for (int j = 0; j < mapData.height; j++) 
+                    {
 
+<<<<<<< Updated upstream:PlatformGame-L9_Map_Collision/src/Map.cpp
     if (mapLoaded) {
 
         // L07 TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
@@ -50,22 +64,24 @@ bool Map::Update(float dt)
             //L09 TODO 7: Check if the property Draw exist get the value, if it's true draw the lawyer
             for (int i = 0; i < mapData.width; i++) {
                 for (int j = 0; j < mapData.height; j++) {
+=======
+                        // L07 TODO 9: Complete the draw function
+>>>>>>> Stashed changes:PlatformGame/src/Map.cpp
 
-                    // L07 TODO 9: Complete the draw function
-
-                    //Get the gid from tile
-                    int gid = mapLayer->Get(i, j);
-                    //Check if the gid is different from 0 - some tiles are empty
-                    if (gid != 0) {
-                        //L09: TODO 3: Obtain the tile set using GetTilesetFromTileId
-                        TileSet* tileSet = GetTilesetFromTileId(gid);
-                        if (tileSet != nullptr) {
-                            //Get the Rect from the tileSetTexture;
-                            SDL_Rect tileRect = tileSet->GetRect(gid);
-                            //Get the screen coordinates from the tile coordinates
-                            Vector2D mapCoord = MapToWorld(i, j);
-                            //Draw the texture
-                            Engine::GetInstance().render->DrawTexture(tileSet->texture, mapCoord.getX(), mapCoord.getY(), &tileRect);
+                        //Get the gid from tile
+                        int gid = mapLayer->Get(i, j);
+                        //Check if the gid is different from 0 - some tiles are empty
+                        if (gid != 0) {
+                            //L09: TODO 3: Obtain the tile set using GetTilesetFromTileId
+                            TileSet* tileSet = GetTilesetFromTileId(gid);
+                            if (tileSet != nullptr) {
+                                //Get the Rect from the tileSetTexture;
+                                SDL_Rect tileRect = tileSet->GetRect(gid);
+                                //Get the screen coordinates from the tile coordinates
+                                Vector2D mapCoord = MapToWorld(i, j);
+                                //Draw the texture
+                                Engine::GetInstance().render->DrawTexture(tileSet->texture, mapCoord.getX(), mapCoord.getY(), &tileRect);
+                            }
                         }
                     }
 <<<<<<< Updated upstream
@@ -89,6 +105,7 @@ bool Map::Update(float dt)
             }
         }
     }
+    
 
 <<<<<<< Updated upstream
 =======
@@ -227,11 +244,36 @@ bool Map::Load(std::string path, std::string fileName, int layer)
         PhysBody* c2 = Engine::GetInstance().physics.get()->CreateRectangle(352 + 64, 384 + 32, 128, 64, STATIC);
         c2->ctype = ColliderType::PLATFORM;
 
+<<<<<<< Updated upstream:PlatformGame-L9_Map_Collision/src/Map.cpp
         PhysBody* c3 = Engine::GetInstance().physics.get()->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
         c3->ctype = ColliderType::PLATFORM;
 =======
      
 >>>>>>> Stashed changes
+=======
+                    int gid = mapLayer->Get(i, j);
+                    if (gid != 0 && gid != 55)
+                    {
+                        Vector2D mapCoord = MapToWorld(i, j);
+                        PhysBody* a = Engine::GetInstance().physics.get()->CreateRectangle(mapCoord.getX() + 10, mapCoord.getY() + 10, 20, 20, STATIC);
+                        a->ctype = ColliderType::PLATFORM;
+                        map.push_back(a);
+                    }
+                }
+            }
+        }
+
+        maps.push_back(map);
+        map.clear();
+
+        if (!maps.empty() && maps.size() >= 2)
+        {
+            for (int i = 0; i < maps[maps.size() - 2].size() - 1; i++)
+            {
+                Engine::GetInstance().physics.get()->DeleteBody(maps[maps.size() - 2][i]);
+            }
+        }
+>>>>>>> Stashed changes:PlatformGame/src/Map.cpp
 
         ret = true;
 

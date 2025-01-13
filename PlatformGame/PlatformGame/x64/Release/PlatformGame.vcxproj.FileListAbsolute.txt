@@ -1,0 +1,16 @@
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\pugixml.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\SDL2.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\SDL2_image.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\libpng16.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\zlib1.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\SDL2_mixer.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\vorbisfile.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\vorbis.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\ogg.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\wavpackdll.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\PlatformGame\x64\Release\Platform.4970EBBF.Up2Date
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\SDL2_ttf.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\freetype.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\bz2.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\brotlidec.dll
+C:\Users\mfoyo\Documents\GitHub\Platformer-Game\PlatformGame\x64\Release\brotlicommon.dll
