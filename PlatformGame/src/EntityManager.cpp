@@ -116,7 +116,7 @@ void EntityManager::AddEntity(Entity* entity)
 bool EntityManager::Update(float dt)
 {
 	bool ret = true;
-	if (gamePlay)
+	if (active)
 	{
 		//Iterates over the entities and calls Update
 		for (const auto entity : entities)

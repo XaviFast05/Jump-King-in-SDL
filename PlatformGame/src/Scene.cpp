@@ -67,6 +67,7 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
+	Engine::GetInstance().audio->active = true;
 	CTtexture = Engine::GetInstance().textures->Load("Assets/Textures/CONTROLS.png");
 
 	pugi::xml_document loadFile;
@@ -116,19 +117,10 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	if (gamePlay)
+
+	if (active)
 	{	
 		ButtonManager();
-		if (gamePlay)
-		{
-			//update entities
-			player->Update(13.333);
-			for (int i = 0; i < enemyList.size(); i++)
-			{
-				enemyList[i]->Update(13.333);
-			}
-			checkpoint->Update(13.333);
-		}
 		// Set music
 		if (playerInvincible == true)
 		{
@@ -325,7 +317,14 @@ bool Scene::Update(float dt)
 
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 		{
-			gamePlay = false;
+			guiBt->state = GuiControlState::NORMAL;
+			guiContinue->state = GuiControlState::NORMAL;
+			guiConfig->state = GuiControlState::NORMAL;
+			guiCredits->state = GuiControlState::NORMAL;
+			guiExit->state = GuiControlState::NORMAL;
+			Engine::GetInstance().entityManager->active = false;
+			Engine::GetInstance().map->active = false;
+			Engine::GetInstance().scene->active = false;
 		}
 
 	}
@@ -853,15 +852,26 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	LOG("Press Gui Control: %d", control->id);
 	if (control->id == 1)
 	{
-		gamePlay = true;
+		SpawnPoint();
+		Engine::GetInstance().entityManager->active = true;
+		Engine::GetInstance().map->active = true;
+		Engine::GetInstance().scene->active = true;
 		printf("Gameplay");
+	}
+	if (control->id == 2)
+	{
+		LoadState();
+		Engine::GetInstance().entityManager->active = true;
+		Engine::GetInstance().map->active = true;
+		Engine::GetInstance().scene->active = true;
+		printf("Gameplay2");
 	}
 	return true;
 }
 
 void Scene::ButtonManager()
 {
-	if (gamePlay)
+	if (active)
 	{
 		guiBt->state = GuiControlState::DISABLED;
 		guiContinue->state = GuiControlState::DISABLED;
@@ -869,7 +879,7 @@ void Scene::ButtonManager()
 		guiCredits->state = GuiControlState::DISABLED;
 		guiExit->state = GuiControlState::DISABLED;
 	}
-	else if (!gamePlay)
+	else if (!active)
 	{
 		guiBt->state = GuiControlState::NORMAL;
 		guiContinue->state = GuiControlState::NORMAL;

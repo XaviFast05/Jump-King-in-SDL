@@ -14,7 +14,7 @@ public:
 
 	void Init()
 	{
-		active = true;
+		active = false;
 		gamePlay = false;
 	}
 

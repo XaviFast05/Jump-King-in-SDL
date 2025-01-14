@@ -41,7 +41,7 @@ bool Map::Start() {
 bool Map::Update(float dt)
 {
     bool ret = true;
-    if (gamePlay)
+    if (active)
     {
         if (mapLoaded) {
             // L07 TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
