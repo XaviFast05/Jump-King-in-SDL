@@ -49,11 +49,11 @@ bool Scene::Awake()
 	int scale = Engine::GetInstance().window.get()->GetScale();
 
 	//Create the buttons
-	SDL_Rect btPos = { 200 , 100 , 120, 60 };
-	SDL_Rect btPos2 = { 200 , 175 , 120, 60 };
-	SDL_Rect btPos3 = { 200 , 250 , 120, 60 };
-	SDL_Rect btPos4 = { 200 , 325 , 120, 60 };
-	SDL_Rect btPos5 = { 200 , 400 , 120, 60 };
+	SDL_Rect btPos = { 200 , 100 , 50, 20 };
+	SDL_Rect btPos2 = { 200 , 125 , 50, 20 };
+	SDL_Rect btPos3 = { 200 , 150 , 50, 20 };
+	SDL_Rect btPos4 = { 200 , 175 , 50, 20 };
+	SDL_Rect btPos5 = { 200 , 200 , 50, 20 };
 
 	guiBt = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "PLAY", btPos, this);
 	guiContinue = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "CONTINUE", btPos2, this);
@@ -856,7 +856,6 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		Engine::GetInstance().entityManager->active = true;
 		Engine::GetInstance().map->active = true;
 		Engine::GetInstance().scene->active = true;
-		printf("Gameplay");
 	}
 	if (control->id == 2)
 	{
@@ -864,7 +863,6 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		Engine::GetInstance().entityManager->active = true;
 		Engine::GetInstance().map->active = true;
 		Engine::GetInstance().scene->active = true;
-		printf("Gameplay2");
 	}
 	return true;
 }

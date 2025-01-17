@@ -18,6 +18,19 @@ private:
 
 	bool canClick = true;
 	bool drawBasic = false;
+	bool chargeSounds = false;
+	bool focused = false;
+	bool pressed = false;
+
+	//Colors for the button
+	SDL_Color white = { 255, 255, 255, 255 };
+	SDL_Color black = { 0, 0, 20, 0 };
+	SDL_Color grey = { 100, 100, 100, 100 };
+	SDL_Color yellow = { 255, 255, 0, 255 };
+
+	//button FX
+	int focusedFxId;
+	int pressedFxId;
 };
 
 #pragma once
