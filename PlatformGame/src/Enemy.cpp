@@ -73,6 +73,7 @@ bool Enemy::Start()
 	chaseGroundedFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/Old_Man_chase.wav");
 	hutaoAttackFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/hutao/babe_scream.wav");
 	hutaoHurtFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/hutao/babe_pickup.wav");
+	hutaoUnaliveFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/hutao/babe_mou.wav");
 
 	Mix_Volume(chaseFxId, 200);
 
@@ -96,11 +97,11 @@ bool Enemy::Update(float dt)
 	}
 	int iterations = 0;
 	
-	if (!isGrounded)
+	if (!isGrounded and !isBoss)
 	{
 		currentAnimation = &idle;
 	}
-	else if (isGrounded)
+	else if (isGrounded and !isBoss)
 	{
 		currentAnimation = &idleGrounded;
 	}
@@ -329,4 +330,9 @@ void Enemy::HurtHutao()
 void Enemy::HutaoAttack()
 {
 	Engine::GetInstance().audio->PlayFx(hutaoAttackFxId);
+}
+
+void Enemy::unaliveHutao()
+{
+	Engine::GetInstance().audio->PlayFx(hutaoUnaliveFxId);
 }

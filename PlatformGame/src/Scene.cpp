@@ -155,7 +155,7 @@ bool Scene::Update(float dt)
 
 		Engine::GetInstance().render.get()->DrawTexture(bg, 0, 0);
 
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and player->currentLevel < 6)
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN and player->currentLevel < player->maxLevel)
 		{
 			changeLevel(player->currentLevel + 1, true);
 		}
@@ -230,13 +230,17 @@ bool Scene::Update(float dt)
 				if (enemyList[0]->isBoss == true)
 				{
 					player->JumpFX();
-					if (enemyList[0]->isGrounded == true)
+
+					enemyList[0]->lifes -= 1;
+					if (enemyList[0]->lifes == 0)
 					{
-						//hutao
+						//xavifast aqui puedes empezar el timer de q se ponga la pantalla de credito
+						enemyList[0]->unaliveHutao();
+					}
+					else
+					{
 						enemyList[0]->HurtHutao();
 					}
-					else if (enemyList[0]->isGrounded == false) player->KillFX();
-					enemyList[0]->lifes -= 1;
 					player->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -1.2), true);
 
 					player->checkDeath = false;
@@ -244,12 +248,14 @@ bool Scene::Update(float dt)
 				if (enemyList[0]->lifes == 0)
 				{
 					player->JumpFX();
-					if (enemyList[0]->isGrounded == true)
+					if (enemyList[0]->isBoss == false)
 					{
-						//hutao
-						player->KillGroundedFX();
+						if (enemyList[0]->isGrounded == true)
+						{
+							player->KillGroundedFX();
+						}
+						else if (enemyList[0]->isGrounded == false) player->KillFX();
 					}
-					else if (enemyList[0]->isGrounded == false) player->KillFX();
 
 					player->checkDeath = false;
 					killEnemy = true;
@@ -406,38 +412,54 @@ bool Scene::PostUpdate()
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_DOWN and checkpoint->onPlayer == true)
 	{
+		Vector2D newPos = Vector2D(0, 0);
 		if (checkpoint2->CheckTaken)
 		{
-			changeLevel(4, true);
+			newPos = Vector2D(332, 309);
+			player->SetPosition(newPos);
+			changeLevel(7, true);
 		}
 		else if (checkpoint3->CheckTaken)
 		{
-			changeLevel(5, true);
+			newPos = Vector2D(435, 309);
+			player->SetPosition(newPos);
+			changeLevel(11, true);
 		}
 	}	
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_DOWN and checkpoint2->onPlayer == true)
 	{
+		Vector2D newPos = Vector2D(0, 0);
 		if (checkpoint3->CheckTaken)
 		{
-			changeLevel(5, true);
+			newPos = Vector2D(435, 309);
+			player->SetPosition(newPos);
+			changeLevel(11, true);
 		}
 	}
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN and checkpoint2->onPlayer == true)
 	{
+		Vector2D newPos = Vector2D(0, 0);
 		if (checkpoint->CheckTaken)
 		{
-			changeLevel(3, true);
+			newPos = Vector2D(51, 207);
+			player->SetPosition(newPos);
+			changeLevel(4, true);
 		}
 	}
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN and checkpoint3->onPlayer == true)
 	{
+		Vector2D newPos = Vector2D(0, 0);
 		if (checkpoint2->CheckTaken)
 		{
-			changeLevel(4, true);
+			newPos = Vector2D(332, 309);
+			player->SetPosition(newPos);
+			changeLevel(7, true);
 		}
 		else if (checkpoint->CheckTaken)
 		{
-			changeLevel(3, true);
+			newPos = Vector2D(51, 207);
+			player->SetPosition(newPos);
+			changeLevel(4, true);
 		}
 	}
 	
@@ -475,6 +497,27 @@ bool Scene::PostUpdate()
 		case 5:
 			newPos = Vector2D(134, 289);
 			break;
+		case 6:
+			newPos = Vector2D(260, 309);
+			break;
+		case 7:
+			newPos = Vector2D(270, 309);
+			break;
+		case 8:
+			newPos = Vector2D(323, 269);
+			break;
+		case 9:
+			newPos = Vector2D(241, 309);
+			break;
+		case 10:
+			newPos = Vector2D(229, 329);
+			break;
+		case 11:
+			newPos = Vector2D(434, 309);
+			break;
+		case 12:
+			newPos = Vector2D(240, 329);
+			break;
 		default:
 			break;
 		}
@@ -489,16 +532,16 @@ bool Scene::PostUpdate()
 
 	switch (player->currentLevel)
 	{
-	case 3:
+	case 4:
 		newCheck = Vector2D(51, 207);
 		checkpoint->SetPosition(newCheck);
 		break;
-	case 4:
-		newCheck = Vector2D(51, 207);
+	case 7:
+		newCheck = Vector2D(332, 309);
 		checkpoint2->SetPosition(newCheck);
 		break;
-	case 5:
-		newCheck = Vector2D(51, 207);
+	case 11:
+		newCheck = Vector2D(435, 309);
 		checkpoint3->SetPosition(newCheck);
 	default:
 		break;
@@ -787,11 +830,41 @@ void Scene::changeLevel(int level, bool upordown)
 		case 4:
 			itemNode.attribute("x") = 436;
 			itemNode.attribute("y") = 95;
-			itemNode.attribute("type") = 2;
+			itemNode.attribute("type") = 1;
 			break;
 		case 5:
 			itemNode.attribute("x") = 45;
 			itemNode.attribute("y") = 215;
+			itemNode.attribute("type") = 1;
+			break;
+		case 6:
+			itemNode.attribute("x") = 165;
+			itemNode.attribute("y") = 163;
+			itemNode.attribute("type") = 3;
+			break;
+		case 7:
+			itemNode.attribute("x") = 193;
+			itemNode.attribute("y") = 159;
+			itemNode.attribute("type") = 2;
+			break;
+		case 8:
+			itemNode.attribute("x") = 294;
+			itemNode.attribute("y") = 139;
+			itemNode.attribute("type") = 1;
+			break;
+		case 9:
+			itemNode.attribute("x") = 152;
+			itemNode.attribute("y") = 139;
+			itemNode.attribute("type") = 2;
+			break;
+		case 10:
+			itemNode.attribute("x") = 111;
+			itemNode.attribute("y") = 279;
+			itemNode.attribute("type") = 3;
+			break;
+		case 11:
+			itemNode.attribute("x") = 443;
+			itemNode.attribute("y") = 139;
 			itemNode.attribute("type") = 1;
 			break;
 		default:
@@ -840,6 +913,42 @@ void Scene::changeLevel(int level, bool upordown)
 			enemyNode.attribute("y") = 50;
 			enemyNode.attribute("gravity") = true;
 			grounded = true;
+			break;
+		case 6:
+			enemyNode.attribute("x") = 211;
+			enemyNode.attribute("y") = 89;
+			enemyNode.attribute("gravity") = true;
+			grounded = false;
+			break;
+		case 7:
+			enemyNode.attribute("x") = 92;
+			enemyNode.attribute("y") = 149;
+			enemyNode.attribute("gravity") = false;
+			grounded = false;
+			break;
+		case 8:
+			enemyNode.attribute("x") = 109;
+			enemyNode.attribute("y") = 89;
+			enemyNode.attribute("gravity") = true;
+			grounded = true;
+			break;
+		case 9:
+			enemyNode.attribute("x") = 441;
+			enemyNode.attribute("y") = 109;
+			enemyNode.attribute("gravity") = false;
+			grounded = false;
+			break;
+		case 10:
+			enemyNode.attribute("x") = 392;
+			enemyNode.attribute("y") = 89;
+			enemyNode.attribute("gravity") = true;
+			grounded = true;
+			break;
+		case 11:
+			enemyNode.attribute("x") = 292;
+			enemyNode.attribute("y") = 69;
+			enemyNode.attribute("gravity") = false;
+			grounded = false;
 			break;
 		default:
 			break;

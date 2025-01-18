@@ -3578,11 +3578,11 @@
    <tile gid="62"/>
    <tile gid="62"/>
    <tile gid="62"/>
-   <tile gid="63"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
+   <tile gid="62"/>
+   <tile gid="68"/>
+   <tile gid="68"/>
+   <tile gid="68"/>
+   <tile gid="69"/>
    <tile gid="73"/>
    <tile gid="73"/>
    <tile gid="73"/>
@@ -4425,11 +4425,11 @@
    <tile gid="62"/>
    <tile gid="62"/>
    <tile gid="62"/>
-   <tile gid="63"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
+   <tile gid="62"/>
+   <tile gid="56"/>
+   <tile gid="56"/>
+   <tile gid="56"/>
+   <tile gid="57"/>
    <tile gid="73"/>
    <tile gid="73"/>
    <tile gid="73"/>
@@ -4882,34 +4882,34 @@
    <tile gid="62"/>
   </data>
  </layer>
- <layer id="12" name="Nivel 12" width="24" height="18" visible="0">
+ <layer id="12" name="Nivel 12" width="24" height="18">
   <properties>
    <property name="Draw" type="bool" value="true"/>
   </properties>
   <data>
    <tile gid="63"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
-   <tile gid="73"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
+   <tile gid="62"/>
    <tile gid="61"/>
    <tile gid="63"/>
    <tile gid="73"/>
