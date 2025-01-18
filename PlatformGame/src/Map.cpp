@@ -203,7 +203,7 @@ bool Map::Load(std::string path, std::string fileName, int layer)
                     //Get the gid from tile
 
                     int gid = mapLayer->Get(i, j);
-                    if (gid != 0 && gid != 55)
+                    if (gid != 0 && gid != 73)
                     {
                         Vector2D mapCoord = MapToWorld(i, j);
                         PhysBody* a = Engine::GetInstance().physics.get()->CreateRectangle(mapCoord.getX() + 10, mapCoord.getY() + 10, 20, 20, STATIC);
