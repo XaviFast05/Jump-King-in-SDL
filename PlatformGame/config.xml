@@ -17,7 +17,7 @@
 	<scene>
 		<map path="Assets/Maps/" name="MapTemplate.tmx" />
 		<entities>
-			<player x="326" y="270" w="300" h="32" level="1" texture="Assets/Textures/player/JumpKingSpriteSheet.png" coins="0" lifes="3">
+			<player x="307" y="245" w="300" h="32" level="12" texture="Assets/Textures/player/JumpKingSpriteSheet.png" coins="5" lifes="1">
 				<animations>
 					<idle loop="true" speed="0.05">
 						<frame x="32" y="64" w="32" h="32" />
@@ -77,7 +77,7 @@
 				<items lvl1="false" lvl2="false" lvl3="false" lvl4="false" lvl5="false" x="0" y="0" type="" />
 			</player>
 			<enemies>
-				<enemy name="Crow" x="50" y="51" w="32" h="26" texture="Assets/Textures/enemy/raven_idle.png" gravity="false" saved="false">
+				<enemy name="Crow" x="199" y="279" w="32" h="26" texture="Assets/Textures/enemy/raven_idle.png" gravity="false" saved="true">
 					<animations>
 						<idle loop="true" speed="0.05">
 							<frame x="0" y="0" w="32" h="32" />
@@ -166,7 +166,7 @@
 					</animations>
 				</enemy>
 			</enemies>
-			<checkpointbf x="-200" y="328" w="32" h="32" texture="Assets/Textures/Bonfire/Bonfire.png" taken1="false" taken2="false" taken3="false">
+			<checkpointbf x="-200" y="328" w="32" h="32" texture="Assets/Textures/Bonfire/Bonfire.png" taken1="false" taken2="false" taken3="true">
 				<animations>
 					<notTaken loop="true" speed="0.1">
 						<frame x="0" y="0" w="32" h="32" />

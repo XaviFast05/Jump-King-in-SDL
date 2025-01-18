@@ -53,6 +53,8 @@ public:
 
 	void HutaoAttack();
 
+	void unaliveHutao();
+
 	bool isBoss = false;
 
 	int lifes = 4;
@@ -78,6 +80,7 @@ private:
 	int chaseGroundedFxId;
 	int hutaoAttackFxId;
 	int hutaoHurtFxId;
+	int hutaoUnaliveFxId;
 	PhysBody* pbody;
 	Pathfinding* pathfinding;
 	Map* map;
