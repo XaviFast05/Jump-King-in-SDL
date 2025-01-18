@@ -29,23 +29,22 @@ GuiControlSlider::~GuiControlSlider()
 
 bool GuiControlSlider::Update(float dt)
 {
+    if (sliderCreated == false)
+    {
+        // Adjust the scale of the bounds to the screen size
+        int scale = Engine::GetInstance().window.get()->GetScale();
+        scaledBounds = { TempBounds.x * scale, TempBounds.y * scale, TempBounds.w * scale, TempBounds.h * scale };
+        sliderBar = { scaledBounds.x, scaledBounds.y + scaledBounds.h / 2 - 5, scaledBounds.w, 10 };
+        slider = { bounds.x + ((defaultValue - minValue) * bounds.w / (maxValue - minValue)) - 5, bounds.y, 10, bounds.h };
+        visualSlider = { scaledBounds.x + ((defaultValue - minValue) * scaledBounds.w / (maxValue - minValue)) - 5, scaledBounds.y, 10, scaledBounds.h };
+        currentValue = defaultValue;
+        pressedFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Menu/pressed.wav");
+        focusedFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Menu/focused.wav");
+        sliderCreated = true;
+    }
+
     if (state != GuiControlState::DISABLED)
     {
-        if (sliderCreated == false)
-        {
-            // Adjust the scale of the bounds to the screen size
-            int scale = Engine::GetInstance().window.get()->GetScale();
-            scaledBounds = { TempBounds.x * scale, TempBounds.y * scale, TempBounds.w * scale, TempBounds.h * scale };
-            sliderBar = { scaledBounds.x, scaledBounds.y + scaledBounds.h / 2 - 5, scaledBounds.w, 10 };
-            slider = { bounds.x + ((defaultValue - minValue) * bounds.w / (maxValue - minValue)) - 5, bounds.y, 10, bounds.h };
-            visualSlider = { scaledBounds.x + ((defaultValue - minValue) * scaledBounds.w / (maxValue - minValue)) - 5, scaledBounds.y, 10, scaledBounds.h };
-			currentValue = defaultValue;
-            pressedFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Menu/pressed.wav");
-            focusedFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Menu/focused.wav");
-			sliderCreated = true;
-        }
-
-        
         mousePos = Engine::GetInstance().input->GetMousePosition();
 
         if (mousePos.getX() > slider.x && mousePos.getX() < slider.x + slider.w && mousePos.getY() > slider.y && mousePos.getY() < slider.y + slider.h)
@@ -100,27 +99,27 @@ bool GuiControlSlider::Update(float dt)
 
             NotifyObserver();
         }
-        
+        Engine::GetInstance().render->DrawRectangle(sliderBar, 200, 200, 200, 255, true, false);
+
+        switch (state)
+        {
+        case GuiControlState::NORMAL:
+            Engine::GetInstance().render->DrawRectangle(visualSlider, 255, 255, 255, 255, true, false);
+            break;
+        case GuiControlState::FOCUSED:
+            Engine::GetInstance().render->DrawRectangle(visualSlider, 255, 255, 0, 255, true, false);
+            break;
+        case GuiControlState::PRESSED:
+            Engine::GetInstance().render->DrawRectangle(visualSlider, 0, 0, 0, 255, true, false);
+            break;
+        }
+
+        Engine::GetInstance().render->DrawText(text.c_str(), scaledBounds.x - 200, scaledBounds.y, scaledBounds.w, scaledBounds.h, white);
     }
 
     if (sliderUpdate == true)
     {
         visualSlider = { scaledBounds.x + ((currentValue - minValue) * scaledBounds.w / (maxValue - minValue)) - 5, scaledBounds.y, 10, scaledBounds.h };
-    }
-
-    Engine::GetInstance().render->DrawRectangle(sliderBar, 200, 200, 200, 255, true, false);
-
-    switch (state)
-    {
-    case GuiControlState::NORMAL:
-        Engine::GetInstance().render->DrawRectangle(visualSlider, 255, 255, 255, 255, true, false);
-        break;
-    case GuiControlState::FOCUSED:
-        Engine::GetInstance().render->DrawRectangle(visualSlider, 255, 255, 0, 255, true, false);
-        break;
-    case GuiControlState::PRESSED:
-        Engine::GetInstance().render->DrawRectangle(visualSlider, 0, 0, 0, 255, true, false);
-        break;
     }
 
     return false;

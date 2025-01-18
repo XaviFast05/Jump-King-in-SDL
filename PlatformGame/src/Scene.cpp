@@ -54,16 +54,18 @@ bool Scene::Awake()
 	SDL_Rect btPos3 = { 200 , 150 , 50, 20 };
 	SDL_Rect btPos4 = { 200 , 175 , 50, 20 };
 	SDL_Rect btPos5 = { 200 , 200 , 50, 20 };
-	SDL_Rect btPos6 = { 200 , 225 , 50, 20 };
-	SDL_Rect btPos7 = { 200 , 250 , 50, 20 };
+	SDL_Rect btPos6 = { 200 , 150 , 100, 20 };
+	SDL_Rect btPos7 = { 200 , 175 , 100, 20 };
+	SDL_Rect btPos8 = { 200 , 200 , 50, 20 };
 
 	guiBt = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "PLAY", btPos, this);
 	guiContinue = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "CONTINUE", btPos2, this);
 	guiConfig = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "CONFIG", btPos3, this);
 	guiCredits = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "CREDITS", btPos4, this);
 	guiExit = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "EXIT", btPos5, this);
-	guiMusicSlider = (GuiControlSlider*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::SLIDER, 6, "MUSIC", btPos6, this, { 0, 128, 128 });
-	guiFxSlider = (GuiControlSlider*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::SLIDER, 7, "FX", btPos7, this, { 0, 128, 128 });
+	guiMusicSlider = (GuiControlSlider*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::SLIDER, 6, "Music Volume", btPos6, this, { 0, 128, 128 });
+	guiFxSlider = (GuiControlSlider*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::SLIDER, 7, "FX Volume", btPos7, this, { 0, 128, 128 });
+	guiBack = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "BACK", btPos8, this);
 
 	return ret;
 }
@@ -121,13 +123,15 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	ButtonManager();
+
 	volumeMusic = guiMusicSlider->GetVolume();
 	Engine::GetInstance().audio->MusicVolume(volumeMusic);
 	volumeFx = guiFxSlider->GetVolume();
 	Engine::GetInstance().audio->FxVolume(volumeFx);
 	if (active)
 	{	
-		ButtonManager();
+
 		// Set music
 		if (playerInvincible == true)
 		{
@@ -863,6 +867,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		Engine::GetInstance().entityManager->active = true;
 		Engine::GetInstance().map->active = true;
 		Engine::GetInstance().scene->active = true;
+
 	}
 	if (control->id == 2)
 	{
@@ -870,6 +875,15 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		Engine::GetInstance().entityManager->active = true;
 		Engine::GetInstance().map->active = true;
 		Engine::GetInstance().scene->active = true;
+
+	}
+	if (control->id == 3)
+	{
+		configMenu = true;
+	}
+	if (control->id == 8)
+	{
+		configMenu = false;
 	}
 	return true;
 }
@@ -883,14 +897,34 @@ void Scene::ButtonManager()
 		guiConfig->state = GuiControlState::DISABLED;
 		guiCredits->state = GuiControlState::DISABLED;
 		guiExit->state = GuiControlState::DISABLED;
+		guiMusicSlider->state = GuiControlState::DISABLED;
+		guiFxSlider->state = GuiControlState::DISABLED;
+		guiBack->state = GuiControlState::DISABLED;
 	}
 	else if (!active)
 	{
-		guiBt->state = GuiControlState::NORMAL;
-		guiContinue->state = GuiControlState::NORMAL;
-		guiConfig->state = GuiControlState::NORMAL;
-		guiCredits->state = GuiControlState::NORMAL;
-		guiExit->state = GuiControlState::NORMAL;
+		if (configMenu == false)
+		{
+			guiBt->state = GuiControlState::NORMAL;
+			guiContinue->state = GuiControlState::NORMAL;
+			guiConfig->state = GuiControlState::NORMAL;
+			guiCredits->state = GuiControlState::NORMAL;
+			guiExit->state = GuiControlState::NORMAL;
+			guiMusicSlider->state = GuiControlState::DISABLED;
+			guiFxSlider->state = GuiControlState::DISABLED;
+			guiBack->state = GuiControlState::DISABLED;
+		}
+		else if (configMenu == true)
+		{
+			guiBt->state = GuiControlState::DISABLED;
+			guiContinue->state = GuiControlState::DISABLED;
+			guiConfig->state = GuiControlState::DISABLED;
+			guiCredits->state = GuiControlState::DISABLED;
+			guiExit->state = GuiControlState::DISABLED;
+			guiMusicSlider->state = GuiControlState::NORMAL;
+			guiFxSlider->state = GuiControlState::NORMAL;
+			guiBack->state = GuiControlState::NORMAL;
+		}
 
 	}
 }

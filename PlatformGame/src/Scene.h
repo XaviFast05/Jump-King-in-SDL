@@ -71,7 +71,7 @@ private:
 	bool CTVisible = false;
 	std::string tilePosDebug = "[0,0]";
 	SDL_Texture* CTtexture = nullptr;
-	bool once = false;
+	bool configMenu = false;
 	int menu_introMS;
 	int invincibilityMS;
 	int coinFxId;
@@ -80,6 +80,7 @@ private:
 	int volumeFx;
 	int x = 0;
 	int y = 0;
+	
 
 	// Declare a Player attribute
 	Player* player;
@@ -103,6 +104,7 @@ private:
 	GuiControlButton* guiExit;
 	GuiControlSlider* guiMusicSlider;
 	GuiControlSlider* guiFxSlider;
+	GuiControlButton* guiBack;
 
 	
 	Timer playerInvencibility;

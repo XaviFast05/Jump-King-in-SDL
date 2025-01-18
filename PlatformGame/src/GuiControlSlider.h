@@ -37,6 +37,8 @@ private:
     SDL_Rect slider;
     SDL_Rect visualSlider;
 
+    SDL_Color white = { 255, 255, 255, 255 };
+
     //Slider FX
     int focusedFxId;
     int pressedFxId;
