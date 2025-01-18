@@ -29,8 +29,6 @@ private:
     bool focused = false;
     bool pressed = false;
 
-    Vector2D mousePos;
-
 	SDL_Rect TempBounds;
     SDL_Rect scaledBounds;
     SDL_Rect sliderBar;

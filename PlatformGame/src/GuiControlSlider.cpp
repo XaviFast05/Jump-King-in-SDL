@@ -45,7 +45,7 @@ bool GuiControlSlider::Update(float dt)
 
     if (state != GuiControlState::DISABLED)
     {
-        mousePos = Engine::GetInstance().input->GetMousePosition();
+        Vector2D mousePos = Engine::GetInstance().input->GetMousePosition();
 
         if (mousePos.getX() > slider.x && mousePos.getX() < slider.x + slider.w && mousePos.getY() > slider.y && mousePos.getY() < slider.y + slider.h)
         {
@@ -117,6 +117,7 @@ bool GuiControlSlider::Update(float dt)
         Engine::GetInstance().render->DrawText(text.c_str(), scaledBounds.x - 200, scaledBounds.y, scaledBounds.w, scaledBounds.h, white);
     }
 
+	// Update the visual slider position
     if (sliderUpdate == true)
     {
         visualSlider = { scaledBounds.x + ((currentValue - minValue) * scaledBounds.w / (maxValue - minValue)) - 5, scaledBounds.y, 10, scaledBounds.h };

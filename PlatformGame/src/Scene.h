@@ -6,8 +6,10 @@
 #include "Item.h"
 #include "CheckPointBF.h"
 #include <vector>
+
 #include "GuiControlButton.h"
 #include "GuiControlSlider.h"
+#include "GuiControlCheck.h"
 
 struct SDL_Texture;
 class Timer;
@@ -105,8 +107,11 @@ private:
 	GuiControlSlider* guiMusicSlider;
 	GuiControlSlider* guiFxSlider;
 	GuiControlButton* guiBack;
+	GuiControlCheck* guiCheckScreen;
 
 	
 	Timer playerInvencibility;
 	bool playerInvincible;
+
+	bool exitGame = false;	
 };

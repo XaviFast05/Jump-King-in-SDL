@@ -28,10 +28,10 @@ bool Window::Awake()
 	{
 		// Create window
 		Uint32 flags = SDL_WINDOW_SHOWN;
-		bool fullscreen = configParameters.child("fullscreen").attribute("value").as_bool();
-		bool borderless = configParameters.child("borderless").attribute("value").as_bool();
-		bool resizable = configParameters.child("resizable").attribute("value").as_bool();
-		bool fullscreen_window = configParameters.child("fullscreen_window").attribute("value").as_bool();
+		fullscreen = configParameters.child("fullscreen").attribute("value").as_bool();
+		borderless = configParameters.child("borderless").attribute("value").as_bool();
+		resizable = configParameters.child("resizable").attribute("value").as_bool();
+		fullscreen_window = configParameters.child("fullscreen_window").attribute("value").as_bool();
 
 		//TODO Get the values from the config file
 		width = configParameters.child("resolution").attribute("width").as_int();
@@ -86,4 +86,14 @@ void Window::GetWindowSize(int& width, int& height) const
 int Window::GetScale() const
 {
 	return scale;
+}
+
+void Window::ToggleFullscreen()
+{
+	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+}
+
+void Window::UnToggleFullscreen()
+{
+	SDL_SetWindowFullscreen(window, 0);
 }

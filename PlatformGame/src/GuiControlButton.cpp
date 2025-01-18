@@ -36,8 +36,6 @@ bool GuiControlButton::Update(float dt)
 
 		// Adjust the scale of the bounds to the screen size
 		int scale = Engine::GetInstance().window.get()->GetScale();
-		mousePos.setX(mousePos.getX() + Engine::GetInstance().render->camera.x);
-		mousePos.setY(mousePos.getY() + Engine::GetInstance().render->camera.y);
 		SDL_Rect scaledBounds = { bounds.x * scale, bounds.y * scale, bounds.w * scale, bounds.h * scale };
 
 		//If the position of the mouse if inside the bounds of the button 

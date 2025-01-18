@@ -57,6 +57,7 @@ bool Scene::Awake()
 	SDL_Rect btPos6 = { 200 , 150 , 100, 20 };
 	SDL_Rect btPos7 = { 200 , 175 , 100, 20 };
 	SDL_Rect btPos8 = { 200 , 200 , 50, 20 };
+	SDL_Rect btPos9 = { 200 , 125 , 50, 20 };
 
 	guiBt = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "PLAY", btPos, this);
 	guiContinue = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "CONTINUE", btPos2, this);
@@ -66,6 +67,7 @@ bool Scene::Awake()
 	guiMusicSlider = (GuiControlSlider*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::SLIDER, 6, "Music Volume", btPos6, this, { 0, 128, 128 });
 	guiFxSlider = (GuiControlSlider*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::SLIDER, 7, "FX Volume", btPos7, this, { 0, 128, 128 });
 	guiBack = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "BACK", btPos8, this);
+	guiCheckScreen = (GuiControlCheck*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 9, "FULLSCREEN", btPos9, this);
 
 	return ret;
 }
@@ -259,7 +261,7 @@ bool Scene::Update(float dt)
 				}
 			}
 		}
-
+		
 		if (itemList.size() > 0 && player->takeItem == true)
 		{
 			//SONIDO PILLAR ITEM ABAJO, DEPENDIENDO DEL TIPO
@@ -351,6 +353,12 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
+
+	if (exitGame == true)
+	{
+		printf("Exit Game\n");
+		ret = false;
+	}
 
 	if(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
@@ -859,6 +867,9 @@ void Scene::changeLevel(int level, bool upordown)
 
 bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 {
+	pugi::xml_document loadFile;
+	pugi::xml_parse_result result = loadFile.load_file("config.xml");
+	pugi::xml_node sceneNode = loadFile.child("config").child("window");
 	// L15: DONE 5: Implement the OnGuiMouseClickEvent method
 	LOG("Press Gui Control: %d", control->id);
 	if (control->id == 1)
@@ -881,9 +892,26 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		configMenu = true;
 	}
+	if (control->id == 5)
+	{
+		exitGame = true;
+	}
 	if (control->id == 8)
 	{
 		configMenu = false;
+	}
+	if (control->id == 9)
+	{
+		bool fullscreen = guiCheckScreen->isChecked();
+		if (fullscreen == true)
+		{
+			loadFile.child("fullscreen").attribute("value") = true;
+			loadFile.save_file("config.xml");
+		}
+		else
+		{
+			Engine::GetInstance().window->UnToggleFullscreen();
+		}
 	}
 	return true;
 }
@@ -900,6 +928,7 @@ void Scene::ButtonManager()
 		guiMusicSlider->state = GuiControlState::DISABLED;
 		guiFxSlider->state = GuiControlState::DISABLED;
 		guiBack->state = GuiControlState::DISABLED;
+		guiCheckScreen->state = GuiControlState::DISABLED;
 	}
 	else if (!active)
 	{
@@ -913,6 +942,7 @@ void Scene::ButtonManager()
 			guiMusicSlider->state = GuiControlState::DISABLED;
 			guiFxSlider->state = GuiControlState::DISABLED;
 			guiBack->state = GuiControlState::DISABLED;
+			guiCheckScreen->state = GuiControlState::DISABLED;
 		}
 		else if (configMenu == true)
 		{
@@ -924,6 +954,7 @@ void Scene::ButtonManager()
 			guiMusicSlider->state = GuiControlState::NORMAL;
 			guiFxSlider->state = GuiControlState::NORMAL;
 			guiBack->state = GuiControlState::NORMAL;
+			guiCheckScreen->state = GuiControlState::NORMAL;
 		}
 
 	}
