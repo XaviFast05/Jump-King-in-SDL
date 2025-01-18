@@ -54,12 +54,16 @@ bool Scene::Awake()
 	SDL_Rect btPos3 = { 200 , 150 , 50, 20 };
 	SDL_Rect btPos4 = { 200 , 175 , 50, 20 };
 	SDL_Rect btPos5 = { 200 , 200 , 50, 20 };
+	SDL_Rect btPos6 = { 200 , 225 , 50, 20 };
+	SDL_Rect btPos7 = { 200 , 250 , 50, 20 };
 
 	guiBt = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "PLAY", btPos, this);
 	guiContinue = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "CONTINUE", btPos2, this);
 	guiConfig = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "CONFIG", btPos3, this);
 	guiCredits = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "CREDITS", btPos4, this);
 	guiExit = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "EXIT", btPos5, this);
+	guiMusicSlider = (GuiControlSlider*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::SLIDER, 6, "MUSIC", btPos6, this, { 0, 128, 128 });
+	guiFxSlider = (GuiControlSlider*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::SLIDER, 7, "FX", btPos7, this, { 0, 128, 128 });
 
 	return ret;
 }
@@ -117,7 +121,10 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-
+	volumeMusic = guiMusicSlider->GetVolume();
+	Engine::GetInstance().audio->MusicVolume(volumeMusic);
+	volumeFx = guiFxSlider->GetVolume();
+	Engine::GetInstance().audio->FxVolume(volumeFx);
 	if (active)
 	{	
 		ButtonManager();
@@ -884,5 +891,6 @@ void Scene::ButtonManager()
 		guiConfig->state = GuiControlState::NORMAL;
 		guiCredits->state = GuiControlState::NORMAL;
 		guiExit->state = GuiControlState::NORMAL;
+
 	}
 }

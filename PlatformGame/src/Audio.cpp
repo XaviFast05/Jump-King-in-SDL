@@ -169,3 +169,23 @@ bool Audio::PlayFx(int id, int repeat)
 
 	return ret;
 }
+
+void Audio::MusicVolume(int volume)
+{
+	if (!active)
+		return;
+
+	volume = std::max(0, std::min(volume, 100));
+
+	Mix_VolumeMusic(volume * MIX_MAX_VOLUME / 100);
+}
+
+void Audio::FxVolume(int volume)
+{
+	if (!active)
+		return;
+
+	volume = std::max(0, std::min(volume, 100));
+
+	Mix_Volume(-1, volume * MIX_MAX_VOLUME / 100);
+}

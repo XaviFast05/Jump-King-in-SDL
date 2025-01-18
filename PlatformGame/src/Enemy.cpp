@@ -133,7 +133,7 @@ bool Enemy::Update(float dt)
 		}
 		else
 		{
-			//XAVI animacions del jefe en ataque
+			
 			if (bossTimer.ReadSec() < 2)
 			{
 				//IDLE

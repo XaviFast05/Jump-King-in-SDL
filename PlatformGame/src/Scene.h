@@ -7,6 +7,7 @@
 #include "CheckPointBF.h"
 #include <vector>
 #include "GuiControlButton.h"
+#include "GuiControlSlider.h"
 
 struct SDL_Texture;
 class Timer;
@@ -75,6 +76,8 @@ private:
 	int invincibilityMS;
 	int coinFxId;
 	int oneUpId;
+	int volumeMusic;
+	int volumeFx;
 	int x = 0;
 	int y = 0;
 
@@ -98,6 +101,8 @@ private:
 	GuiControlButton* guiConfig;
 	GuiControlButton* guiCredits;
 	GuiControlButton* guiExit;
+	GuiControlSlider* guiMusicSlider;
+	GuiControlSlider* guiFxSlider;
 
 	
 	Timer playerInvencibility;
