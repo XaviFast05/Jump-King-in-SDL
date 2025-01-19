@@ -28,6 +28,7 @@ bool GuiControlCheck::Update(float dt)
     {
         pressedFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Menu/pressed.wav");
         focusedFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Menu/focused.wav");
+		texture = Engine::GetInstance().textures->Load("Assets/Textures/checkmark.png");
         checkCreated = true;
     }
 
@@ -80,7 +81,8 @@ bool GuiControlCheck::Update(float dt)
             Engine::GetInstance().render->DrawRectangle(scaledBounds, 200, 200, 200, 255, true, false);
             break;
         case GuiControlState::NORMAL:
-            Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 255, 255, 255, true, false);
+			Engine::GetInstance().render->DrawTexture(texture, scaledBounds.x, scaledBounds.y);
+
             break;
         case GuiControlState::FOCUSED:
             Engine::GetInstance().render->DrawRectangle(scaledBounds, 0, 0, 255, 255, true, false);
@@ -89,6 +91,8 @@ bool GuiControlCheck::Update(float dt)
             Engine::GetInstance().render->DrawRectangle(scaledBounds, 0, 255, 0, 255, true, false);
             break;
         }
+
+        Engine::GetInstance().render->DrawText(text.c_str(), scaledBounds.x - 200, scaledBounds.y , scaledBounds.w +50, scaledBounds.h , white);
 
         if (inCheck)
         {

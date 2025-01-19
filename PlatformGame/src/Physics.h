@@ -85,10 +85,10 @@ public:
 	void DeletePhysBody(PhysBody* pbody);
 	bool IsPendingToDelete(PhysBody* physBody);
 
-private:
-
 	// Debug mode
 	bool debug;
+
+private:
 
 	// Box2D World
 	b2World* world;

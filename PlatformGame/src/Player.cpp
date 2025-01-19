@@ -79,215 +79,236 @@ bool Player::Update(float dt)
 {
 	// L08 TODO 5: Add physics to the player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, pbody->body->GetLinearVelocity().y);
+	Vector2D playerCurrentPos = GetPosition();
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	if (paused == true)
 	{
-		debug_ = !debug_;
-		levelsFallen = 0;
+		b2Vec2 velocityStop = b2Vec2(0, 0);
+		pbody->body->SetLinearVelocity(velocityStop);
+
+		b2Transform pbodyPos = pbody->body->GetTransform();
+
+		position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
+		Engine::GetInstance().render.get()->DrawTexture(texture, (float)position.getX(), (float)position.getY(), &currentAnimation->GetCurrentFrame(), hflip);
+		currentAnimation->Update();
+
+		b2Vec2 pos = b2Vec2(PIXEL_TO_METERS(position.getX()) + 0.3, PIXEL_TO_METERS(position.getY()) + 0.52);
+		pbodyBody->body->SetTransform(pos, 0);
+		SetPosition(playerCurrentPos);
 	}
-
-	if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) || (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN))
+	else
 	{
-		isSplatted = false;
-		currentAnimation = &idle;
-		levelsFallen = 0;
-	}
-	
-	if (debug_)
-	{
-		velocity.y = pbody->body->GetLinearVelocity().y;
-
-		if (velocity.y < 0)
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		{
-			velocity.y = 0;
+			debug_ = !debug_;
+			levelsFallen = 0;
 		}
 
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			velocity.y = -0.4 * 16;
-		}
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			velocity.y = 0.4 * 16;
-		}
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			velocity.x = -0.4 * 16;
-		}
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			velocity.x = 0.4 * 16;
-		}
-	}
-
-	if (!debug_ || !isDead)
-	{
-
-		if (velocity.x == 0 && (currentAnimation != &splatted or currentAnimation != &splattedInv))
+		if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) || (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN))
 		{
-
-			if (invincible == true)
-			{
-				currentAnimation = &idleInv;
-			}
-			else if (invincible == false)
-			{
-				currentAnimation = &idle;
-			}
-			running = false;
-
-		}
-
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F4) == KEY_DOWN and (isJumping != true or isFalling != true))
-		{
-			if (isJumping == false)
-			{
-				Die();
-			}
-		}
-
-		// Move left
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			flipSprite = true;
 			isSplatted = false;
-			velocity.x = -0.2 * 16;
-			running = true;
-			if (flipSprite == true && hflip == SDL_FLIP_NONE) {
-				hflip = SDL_FLIP_HORIZONTAL;
-			}
-			isDead = false;
+			currentAnimation = &idle;
+			levelsFallen = 0;
 		}
 
-		// Move right
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			flipSprite = false;
-			isSplatted = false;
-			velocity.x = 0.2 * 16;
-			running = true;
-			if (flipSprite == false && hflip == SDL_FLIP_HORIZONTAL) {
-				hflip = SDL_FLIP_NONE;
-			}
-			isDead = false;
-		}
-
-		if (isJumping == true) 
-		{
-			if (invincible == true)
-			{
-				currentAnimation = &jumpingInv;
-			}
-			else if (invincible == false)
-			{
-				currentAnimation = &jumping;
-			}
-		}
-
-		if (running == true && currentAnimation != &jumping )
-		{
-			if (invincible == false)
-			{
-				currentAnimation = &move;
-			}
-		}
-
-		if (running == true && currentAnimation != &jumpingInv)
-		{
-			if (invincible == true)
-			{
-				currentAnimation = &moveInv;
-			}
-		}
-
-		//Jump
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN and not isJumping and not isFalling) 
-		{
-			// Apply an initial upward force
- 			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-			isSplatted = false;
-			Engine::GetInstance().audio.get()->PlayFx(jumpFxId);
-			isJumping = true;
-			isDead = false;
-		}
-
-		if (isJumping == true)
+		if (debug_)
 		{
 			velocity.y = pbody->body->GetLinearVelocity().y;
-		}
 
-		if (x == 0 && currentAnimation == &idle && isFalling != true)
-		{
-			Engine::GetInstance().audio.get()->PlayFx(landFxId);
-			x = 1;
-		}
-
-		if (x == 0 && currentAnimation == &move && isFalling != true)
-		{
-			Engine::GetInstance().audio.get()->PlayFx(landFxId);
-			x = 1;
-		}
-
-		if (x == 0 && currentAnimation == &idleInv && isFalling != true)
-		{
-			Engine::GetInstance().audio.get()->PlayFx(landFxId);
-			x = 1;
-		}
-
-		if (x == 0 && currentAnimation == &moveInv && isFalling != true)
-		{
-			Engine::GetInstance().audio.get()->PlayFx(landFxId);
-			x = 1;
-		}
-
-		if (velocity.y > 1)
-		{
-			isFalling = true;
-		}
-
-		if (isFalling == true) {
-			if (invincible == true)
+			if (velocity.y < 0)
 			{
-				currentAnimation = &fallingInv;
+				velocity.y = 0;
 			}
-			else if (invincible == false)
-			{
-				currentAnimation = &falling;
-			}
-			x = 0;
-		}
 
-		if (isSplatted == true)
-		{
-			if (invincible == true)
-			{
-				currentAnimation = &splattedInv;
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+				velocity.y = -0.4 * 16;
 			}
-			else if (invincible == false)
-			{
-				currentAnimation = &splatted;
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+				velocity.y = 0.4 * 16;
+			}
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+				velocity.x = -0.4 * 16;
+			}
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+				velocity.x = 0.4 * 16;
 			}
 		}
+
+		if (!debug_ || !isDead)
+		{
+
+			if (velocity.x == 0 && (currentAnimation != &splatted or currentAnimation != &splattedInv))
+			{
+
+				if (invincible == true)
+				{
+					currentAnimation = &idleInv;
+				}
+				else if (invincible == false)
+				{
+					currentAnimation = &idle;
+				}
+				running = false;
+
+			}
+
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F4) == KEY_DOWN and (isJumping != true or isFalling != true))
+			{
+				if (isJumping == false)
+				{
+					Die();
+				}
+			}
+
+			// Move left
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+				flipSprite = true;
+				isSplatted = false;
+				velocity.x = -0.2 * 16;
+				running = true;
+				if (flipSprite == true && hflip == SDL_FLIP_NONE) {
+					hflip = SDL_FLIP_HORIZONTAL;
+				}
+				isDead = false;
+			}
+
+			// Move right
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+				flipSprite = false;
+				isSplatted = false;
+				velocity.x = 0.2 * 16;
+				running = true;
+				if (flipSprite == false && hflip == SDL_FLIP_HORIZONTAL) {
+					hflip = SDL_FLIP_NONE;
+				}
+				isDead = false;
+			}
+
+			if (isJumping == true)
+			{
+				if (invincible == true)
+				{
+					currentAnimation = &jumpingInv;
+				}
+				else if (invincible == false)
+				{
+					currentAnimation = &jumping;
+				}
+			}
+
+			if (running == true && currentAnimation != &jumping)
+			{
+				if (invincible == false)
+				{
+					currentAnimation = &move;
+				}
+			}
+
+			if (running == true && currentAnimation != &jumpingInv)
+			{
+				if (invincible == true)
+				{
+					currentAnimation = &moveInv;
+				}
+			}
+
+			//Jump
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN and not isJumping and not isFalling)
+			{
+				// Apply an initial upward force
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+				isSplatted = false;
+				Engine::GetInstance().audio.get()->PlayFx(jumpFxId);
+				isJumping = true;
+				isDead = false;
+			}
+
+			if (isJumping == true)
+			{
+				velocity.y = pbody->body->GetLinearVelocity().y;
+			}
+
+			if (x == 0 && currentAnimation == &idle && isFalling != true)
+			{
+				Engine::GetInstance().audio.get()->PlayFx(landFxId);
+				x = 1;
+			}
+
+			if (x == 0 && currentAnimation == &move && isFalling != true)
+			{
+				Engine::GetInstance().audio.get()->PlayFx(landFxId);
+				x = 1;
+			}
+
+			if (x == 0 && currentAnimation == &idleInv && isFalling != true)
+			{
+				Engine::GetInstance().audio.get()->PlayFx(landFxId);
+				x = 1;
+			}
+
+			if (x == 0 && currentAnimation == &moveInv && isFalling != true)
+			{
+				Engine::GetInstance().audio.get()->PlayFx(landFxId);
+				x = 1;
+			}
+
+			if (velocity.y > 1)
+			{
+				isFalling = true;
+			}
+
+			if (isFalling == true) {
+				if (invincible == true)
+				{
+					currentAnimation = &fallingInv;
+				}
+				else if (invincible == false)
+				{
+					currentAnimation = &falling;
+				}
+				x = 0;
+			}
+
+			if (isSplatted == true)
+			{
+				if (invincible == true)
+				{
+					currentAnimation = &splattedInv;
+				}
+				else if (invincible == false)
+				{
+					currentAnimation = &splatted;
+				}
+			}
+		}
+		// Apply the velocity to the player
+		pbody->body->SetLinearVelocity(velocity);
+
+		b2Transform pbodyPos = pbody->body->GetTransform();
+
+		position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
+
+		float y = METERS_TO_PIXELS(pbodyPos.p.y) - texH - 0.5 / 2;
+		position.setY(y + 12);
+
+		if (position.getY() < -20 and currentLevel != maxLevel)
+		{
+			ascend(true);
+		}
+
+		if (position.getY() > 370 and currentLevel != 1)
+		{
+			ascend(false);
+		}
+
+		Engine::GetInstance().render.get()->DrawTexture(texture, (float)position.getX(), (float)position.getY(), &currentAnimation->GetCurrentFrame(), hflip);
+		currentAnimation->Update();
+
+		b2Vec2 pos = b2Vec2(PIXEL_TO_METERS(position.getX()) + 0.3, PIXEL_TO_METERS(position.getY()) + 0.52);
+		pbodyBody->body->SetTransform(pos, 0);
 	}
-	// Apply the velocity to the player
-	pbody->body->SetLinearVelocity(velocity);
 
-	b2Transform pbodyPos = pbody->body->GetTransform();
-	
-	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 
-	float y = METERS_TO_PIXELS(pbodyPos.p.y) - texH - 0.5 / 2;
-	position.setY(y + 12);
-
-	if (position.getY() < -20 and currentLevel != maxLevel)
-	{
-		ascend(true);
-	}
-
-	if (position.getY() > 370 and currentLevel != 1)
-	{
-		ascend(false);
-	}
-
-	Engine::GetInstance().render.get()->DrawTexture(texture, (float)position.getX(), (float)position.getY(), &currentAnimation->GetCurrentFrame(), hflip);
-	currentAnimation->Update();
-
-	b2Vec2 pos = b2Vec2(PIXEL_TO_METERS(position.getX()) + 0.3, PIXEL_TO_METERS(position.getY()) + 0.52);
-	pbodyBody->body->SetTransform(pos, 0);
 
 	return true;
 }

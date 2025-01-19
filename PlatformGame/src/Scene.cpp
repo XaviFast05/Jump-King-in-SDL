@@ -67,7 +67,10 @@ bool Scene::Awake()
 	guiMusicSlider = (GuiControlSlider*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::SLIDER, 6, "Music Volume", btPos6, this, { 0, 128, 128 });
 	guiFxSlider = (GuiControlSlider*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::SLIDER, 7, "FX Volume", btPos7, this, { 0, 128, 128 });
 	guiBack = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "BACK", btPos8, this);
-	guiCheckScreen = (GuiControlCheck*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 9, "FULLSCREEN", btPos9, this);
+	guiCheckScreen = (GuiControlCheck*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 9, "Fullscreen", btPos9, this);
+	guiResume = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, "RESUME", btPos2, this);
+	guiBackToTitle = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "BACK TO TITLE", btPos4, this);
+
 
 	return ret;
 }
@@ -112,6 +115,7 @@ bool Scene::Start()
 	// Create FX
 	coinFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Items/plink.wav");
 	oneUpId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Items/1up.wav");
+	pauseFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Menu/menu_open.wav");
 
 	return true;
 }
@@ -133,23 +137,57 @@ bool Scene::Update(float dt)
 	Engine::GetInstance().audio->FxVolume(volumeFx);
 	if (active)
 	{	
-
 		// Set music
 		if (playerInvincible == true)
 		{
 			if (x == 0)
 			{
-				invincibilityMS = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_loop.wav", 0);
-				x = 1;
+				Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_loop.wav", 0);
+				finalBossMusic = false;
 				y = 0;
+				menuMusic = false;
+				lvl6_11Music = false;
+				x = 1;
 			}
 		}
-		else if (y == 0)
+		else if (player->currentLevel <= 5 && player->currentLevel >= 1)
 		{
-			menu_introMS = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
-			y = 1;
-			x = 0;
+			if (y == 0)
+			{
+				Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/lvl_1-5_music.wav", 0);
+				x = 0;
+				menuMusic = false;
+				lvl6_11Music = false;
+				finalBossMusic = false;
+				y = 1;
+			}
+
 		}
+		else if (player->currentLevel <= 11 && player->currentLevel >= 6)
+		{
+			if (lvl6_11Music == false)
+			{
+				lvl6_11MS = Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/lvl_6-11_music.wav", 0);
+				finalBossMusic = false;
+				x = 0;
+				y = 0;
+				menuMusic = false;
+				lvl6_11Music = true;
+			}
+		}
+		else if (player->currentLevel == 12)
+		{
+			if (finalBossMusic == false)
+			{
+				Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/final_boss.wav", 0);
+				x = 0;
+				y = 0;
+				menuMusic = false;
+				lvl6_11Music = false;
+				finalBossMusic = true;
+			}
+		}
+
 		//L03 TODO 3: Make the camera movement independent of framerate
 		float camSpeed = 1;
 
@@ -334,22 +372,18 @@ bool Scene::Update(float dt)
 			player->Loading = false;
 		}
 
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
-		{
-			guiBt->state = GuiControlState::NORMAL;
-			guiContinue->state = GuiControlState::NORMAL;
-			guiConfig->state = GuiControlState::NORMAL;
-			guiCredits->state = GuiControlState::NORMAL;
-			guiExit->state = GuiControlState::NORMAL;
-			Engine::GetInstance().entityManager->active = false;
-			Engine::GetInstance().map->active = false;
-			Engine::GetInstance().scene->active = false;
-		}
-
 	}
 	else if (!active)
 	{
-
+		if (menuMusic == false)
+		{
+			Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
+			x = 0;
+			y = 0;
+			lvl6_11Music = false;
+			finalBossMusic = false;
+			menuMusic = true;
+		}
 	}
 
 	return true;
@@ -362,201 +396,210 @@ bool Scene::PostUpdate()
 
 	if (exitGame == true)
 	{
-		printf("Exit Game\n");
 		ret = false;
 	}
-
-	if(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	if (active)
 	{
-		player->isDead = false;
-		LoadState();
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
-		player->isDead = false;
-
-		player->isFalling = false;
-		player->isJumping = false;
-		player->pbody->body->SetLinearVelocity(b2Vec2_zero);
-
-		SpawnPoint();
-		SaveState();
-		checkpoint->CheckTaken = false;
-		checkpoint2->CheckTaken = false;
-		checkpoint3->CheckTaken = false;
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		player->isDead = false;
-
-		player->isFalling = false;
-		player->isJumping = false;
-		player->pbody->body->SetLinearVelocity(b2Vec2_zero);
-
-		SpawnPointLvl2();
-		SaveState();
-		checkpoint->CheckTaken = false;
-		checkpoint2->CheckTaken = false;
-		checkpoint3->CheckTaken = false;
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && player->isDead == false)
-	{
-		SaveState();
-	}	
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_DOWN and checkpoint->onPlayer == true)
-	{
-		Vector2D newPos = Vector2D(0, 0);
-		if (checkpoint2->CheckTaken)
+		if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN))
 		{
-			newPos = Vector2D(332, 309);
+			player->paused = !player->paused;
+			for (int i = 0; i < enemyList.size(); i++)
+			{
+				enemyList[i]->paused = !enemyList[i]->paused;
+			}
+			Engine::GetInstance().audio->PlayFx(pauseFxId);
+		}
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		{
+			player->isDead = false;
+			LoadState();
+		}
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		{
+			player->isDead = false;
+
+			player->isFalling = false;
+			player->isJumping = false;
+			player->pbody->body->SetLinearVelocity(b2Vec2_zero);
+
+			SpawnPoint();
+			SaveState();
+			checkpoint->CheckTaken = false;
+			checkpoint2->CheckTaken = false;
+			checkpoint3->CheckTaken = false;
+		}
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			player->isDead = false;
+
+			player->isFalling = false;
+			player->isJumping = false;
+			player->pbody->body->SetLinearVelocity(b2Vec2_zero);
+
+			SpawnPointLvl2();
+			SaveState();
+			checkpoint->CheckTaken = false;
+			checkpoint2->CheckTaken = false;
+			checkpoint3->CheckTaken = false;
+		}
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && player->isDead == false)
+		{
+			SaveState();
+		}
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_DOWN and checkpoint->onPlayer == true)
+		{
+			Vector2D newPos = Vector2D(0, 0);
+			if (checkpoint2->CheckTaken)
+			{
+				newPos = Vector2D(332, 309);
+				player->SetPosition(newPos);
+				changeLevel(7, true);
+			}
+			else if (checkpoint3->CheckTaken)
+			{
+				newPos = Vector2D(435, 309);
+				player->SetPosition(newPos);
+				changeLevel(11, true);
+			}
+		}
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_DOWN and checkpoint2->onPlayer == true)
+		{
+			Vector2D newPos = Vector2D(0, 0);
+			if (checkpoint3->CheckTaken)
+			{
+				newPos = Vector2D(435, 309);
+				player->SetPosition(newPos);
+				changeLevel(11, true);
+			}
+		}
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN and checkpoint2->onPlayer == true)
+		{
+			Vector2D newPos = Vector2D(0, 0);
+			if (checkpoint->CheckTaken)
+			{
+				newPos = Vector2D(51, 207);
+				player->SetPosition(newPos);
+				changeLevel(4, true);
+			}
+		}
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN and checkpoint3->onPlayer == true)
+		{
+			Vector2D newPos = Vector2D(0, 0);
+			if (checkpoint2->CheckTaken)
+			{
+				newPos = Vector2D(332, 309);
+				player->SetPosition(newPos);
+				changeLevel(7, true);
+			}
+			else if (checkpoint->CheckTaken)
+			{
+				newPos = Vector2D(51, 207);
+				player->SetPosition(newPos);
+				changeLevel(4, true);
+			}
+		}
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && player->isDead == false)
+		{
+			if (enemyList.size() > 0)
+			{
+				changeLevel(player->currentLevel, true);
+			}
+			else
+			{
+				changeLevel(player->currentLevel, false);
+			}
+
+			Vector2D newPos = Vector2D(0, 0);
+
+			player->isFalling = false;
+			player->isJumping = false;
+			player->pbody->body->SetLinearVelocity(b2Vec2_zero);
+
+			switch (player->currentLevel)
+			{
+			case 1:
+				newPos = Vector2D(251, 329);
+				break;
+			case 2:
+				newPos = Vector2D(331, 269);
+				break;
+			case 3:
+				newPos = Vector2D(221, 289);
+				break;
+			case 4:
+				newPos = Vector2D(134, 309);
+				break;
+			case 5:
+				newPos = Vector2D(134, 289);
+				break;
+			case 6:
+				newPos = Vector2D(260, 309);
+				break;
+			case 7:
+				newPos = Vector2D(270, 309);
+				break;
+			case 8:
+				newPos = Vector2D(323, 269);
+				break;
+			case 9:
+				newPos = Vector2D(241, 309);
+				break;
+			case 10:
+				newPos = Vector2D(229, 329);
+				break;
+			case 11:
+				newPos = Vector2D(434, 309);
+				break;
+			case 12:
+				newPos = Vector2D(240, 329);
+				break;
+			default:
+				break;
+			}
+
 			player->SetPosition(newPos);
-			changeLevel(7, true);
-		}
-		else if (checkpoint3->CheckTaken)
-		{
-			newPos = Vector2D(435, 309);
-			player->SetPosition(newPos);
-			changeLevel(11, true);
-		}
-	}	
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_DOWN and checkpoint2->onPlayer == true)
-	{
-		Vector2D newPos = Vector2D(0, 0);
-		if (checkpoint3->CheckTaken)
-		{
-			newPos = Vector2D(435, 309);
-			player->SetPosition(newPos);
-			changeLevel(11, true);
-		}
-	}
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN and checkpoint2->onPlayer == true)
-	{
-		Vector2D newPos = Vector2D(0, 0);
-		if (checkpoint->CheckTaken)
-		{
-			newPos = Vector2D(51, 207);
-			player->SetPosition(newPos);
-			changeLevel(4, true);
-		}
-	}
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN and checkpoint3->onPlayer == true)
-	{
-		Vector2D newPos = Vector2D(0, 0);
-		if (checkpoint2->CheckTaken)
-		{
-			newPos = Vector2D(332, 309);
-			player->SetPosition(newPos);
-			changeLevel(7, true);
-		}
-		else if (checkpoint->CheckTaken)
-		{
-			newPos = Vector2D(51, 207);
-			player->SetPosition(newPos);
-			changeLevel(4, true);
-		}
-	}
-	
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && player->isDead == false)
-	{
-		if (enemyList.size() > 0)
-		{
-			changeLevel(player->currentLevel, true);
-		}
-		else
-		{
-			changeLevel(player->currentLevel, false);
 		}
 
-		Vector2D newPos = Vector2D(0, 0);
-		
-		player->isFalling = false;
-		player->isJumping = false;
-		player->pbody->body->SetLinearVelocity(b2Vec2_zero);
+		Vector2D newCheck = Vector2D(-50, 0);
+		checkpoint->SetPosition(newCheck);
+		checkpoint2->SetPosition(newCheck);
+		checkpoint3->SetPosition(newCheck);
 
 		switch (player->currentLevel)
 		{
-		case 1:
-			newPos = Vector2D(251, 329);
-			break;
-		case 2:
-			newPos = Vector2D(331, 269);
-			break;
-		case 3:
-			newPos = Vector2D(221, 289);
-			break;
 		case 4:
-			newPos = Vector2D(134, 309);
-			break;
-		case 5:
-			newPos = Vector2D(134, 289);
-			break;
-		case 6:
-			newPos = Vector2D(260, 309);
+			newCheck = Vector2D(51, 207);
+			checkpoint->SetPosition(newCheck);
 			break;
 		case 7:
-			newPos = Vector2D(270, 309);
-			break;
-		case 8:
-			newPos = Vector2D(323, 269);
-			break;
-		case 9:
-			newPos = Vector2D(241, 309);
-			break;
-		case 10:
-			newPos = Vector2D(229, 329);
+			newCheck = Vector2D(332, 309);
+			checkpoint2->SetPosition(newCheck);
 			break;
 		case 11:
-			newPos = Vector2D(434, 309);
-			break;
-		case 12:
-			newPos = Vector2D(240, 329);
-			break;
+			newCheck = Vector2D(435, 309);
+			checkpoint3->SetPosition(newCheck);
 		default:
 			break;
 		}
 
-		player->SetPosition(newPos);
+		if (CTVisible && CTtexture != nullptr)
+		{
+			int WT, HG;
+			Engine::GetInstance().textures->GetSize(CTtexture, WT, HG);
+			int windowWT, windowHG;
+			Engine::GetInstance().window->GetWindowSize(windowWT, windowHG);
+
+			SDL_Rect Juan = { windowWT - WT - 100, 0, WT * 1.5, HG * 1.5f };
+			SDL_RenderCopy(Engine::GetInstance().render->renderer, CTtexture, nullptr, &Juan);
+		}
 	}
-
-	Vector2D newCheck = Vector2D(-50, 0);
-	checkpoint->SetPosition(newCheck);
-	checkpoint2->SetPosition(newCheck);
-	checkpoint3->SetPosition(newCheck);
-
-	switch (player->currentLevel)
-	{
-	case 4:
-		newCheck = Vector2D(51, 207);
-		checkpoint->SetPosition(newCheck);
-		break;
-	case 7:
-		newCheck = Vector2D(332, 309);
-		checkpoint2->SetPosition(newCheck);
-		break;
-	case 11:
-		newCheck = Vector2D(435, 309);
-		checkpoint3->SetPosition(newCheck);
-	default:
-		break;
-	}
-
-	if (CTVisible && CTtexture != nullptr)
-	{
-		int WT, HG;
-		Engine::GetInstance().textures->GetSize(CTtexture, WT, HG);
-		int windowWT, windowHG;
-		Engine::GetInstance().window->GetWindowSize(windowWT, windowHG);
-
-		SDL_Rect Juan = { windowWT - WT - 100, 0, WT * 1.5, HG * 1.5f };
-		SDL_RenderCopy(Engine::GetInstance().render->renderer, CTtexture, nullptr, &Juan);
-	}
+	
 
 	return ret;
 }
@@ -979,11 +1022,15 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	pugi::xml_document loadFile;
 	pugi::xml_parse_result result = loadFile.load_file("config.xml");
 	pugi::xml_node sceneNode = loadFile.child("config").child("window");
+	loadFile.child("fullscreen").attribute("value") = true;
+	loadFile.save_file("config.xml");
 	// L15: DONE 5: Implement the OnGuiMouseClickEvent method
 	LOG("Press Gui Control: %d", control->id);
 	if (control->id == 1)
 	{
 		SpawnPoint();
+		player->paused = false;
+		player->currentAnimation = &player->idle;
 		Engine::GetInstance().entityManager->active = true;
 		Engine::GetInstance().map->active = true;
 		Engine::GetInstance().scene->active = true;
@@ -992,6 +1039,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	if (control->id == 2)
 	{
 		LoadState();
+		player->paused = false;
+		player->currentAnimation = &player->idle;
 		Engine::GetInstance().entityManager->active = true;
 		Engine::GetInstance().map->active = true;
 		Engine::GetInstance().scene->active = true;
@@ -1014,13 +1063,43 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		bool fullscreen = guiCheckScreen->isChecked();
 		if (fullscreen == true)
 		{
-			loadFile.child("fullscreen").attribute("value") = true;
-			loadFile.save_file("config.xml");
+			// Load the config.xml file
+			pugi::xml_document configFile;
+			pugi::xml_parse_result result = configFile.load_file("config.xml");
+
+			// Set the fullscreen attribute to true
+			configFile.child("config").child("window").child("fullscreen").attribute("value").set_value(true);
+
+			// Save the changes to the config.xml file
+			configFile.save_file("config.xml");
+
+			// Apply fullscreen mode
+			Engine::GetInstance().window->ToggleFullscreen();
+			
 		}
 		else
 		{
+			// Load the config.xml file
+			pugi::xml_document configFile;
+			pugi::xml_parse_result result = configFile.load_file("config.xml");
+
+			// Set the fullscreen attribute to true
+			configFile.child("config").child("window").child("fullscreen").attribute("value").set_value(false);
+
+			// Save the changes to the config.xml file
+			configFile.save_file("config.xml");
 			Engine::GetInstance().window->UnToggleFullscreen();
 		}
+	}
+	if (control->id == 10)
+	{
+		player->paused = false;
+	}
+	if (control->id == 11)
+	{
+		Engine::GetInstance().entityManager->active = false;
+		Engine::GetInstance().map->active = false;
+		Engine::GetInstance().scene->active = false;
 	}
 	return true;
 }
@@ -1029,15 +1108,53 @@ void Scene::ButtonManager()
 {
 	if (active)
 	{
-		guiBt->state = GuiControlState::DISABLED;
-		guiContinue->state = GuiControlState::DISABLED;
-		guiConfig->state = GuiControlState::DISABLED;
-		guiCredits->state = GuiControlState::DISABLED;
-		guiExit->state = GuiControlState::DISABLED;
-		guiMusicSlider->state = GuiControlState::DISABLED;
-		guiFxSlider->state = GuiControlState::DISABLED;
-		guiBack->state = GuiControlState::DISABLED;
-		guiCheckScreen->state = GuiControlState::DISABLED;
+
+		if (player->paused)
+		{
+			if (configMenu == false)
+			{
+				guiBt->state = GuiControlState::DISABLED;
+				guiContinue->state = GuiControlState::DISABLED;
+				guiConfig->state = GuiControlState::NORMAL;
+				guiCredits->state = GuiControlState::DISABLED;
+				guiExit->state = GuiControlState::NORMAL;
+				guiMusicSlider->state = GuiControlState::DISABLED;
+				guiFxSlider->state = GuiControlState::DISABLED;
+				guiBack->state = GuiControlState::DISABLED;
+				guiCheckScreen->state = GuiControlState::DISABLED;
+				guiResume->state = GuiControlState::NORMAL;
+				guiBackToTitle->state = GuiControlState::NORMAL;
+			}
+			else if (configMenu == true)
+			{
+				guiBt->state = GuiControlState::DISABLED;
+				guiContinue->state = GuiControlState::DISABLED;
+				guiConfig->state = GuiControlState::DISABLED;
+				guiCredits->state = GuiControlState::DISABLED;
+				guiExit->state = GuiControlState::DISABLED;
+				guiMusicSlider->state = GuiControlState::NORMAL;
+				guiFxSlider->state = GuiControlState::NORMAL;
+				guiBack->state = GuiControlState::NORMAL;
+				guiCheckScreen->state = GuiControlState::NORMAL;
+				guiResume->state = GuiControlState::DISABLED;
+				guiBackToTitle->state = GuiControlState::DISABLED;
+			}
+		}
+		else
+		{
+			
+			guiBt->state = GuiControlState::DISABLED;
+			guiContinue->state = GuiControlState::DISABLED;
+			guiConfig->state = GuiControlState::DISABLED;
+			guiCredits->state = GuiControlState::DISABLED;
+			guiExit->state = GuiControlState::DISABLED;
+			guiMusicSlider->state = GuiControlState::DISABLED;
+			guiFxSlider->state = GuiControlState::DISABLED;
+			guiBack->state = GuiControlState::DISABLED;
+			guiCheckScreen->state = GuiControlState::DISABLED;
+			guiResume->state = GuiControlState::DISABLED;
+			guiBackToTitle->state = GuiControlState::DISABLED;
+		}
 	}
 	else if (!active)
 	{
@@ -1052,6 +1169,8 @@ void Scene::ButtonManager()
 			guiFxSlider->state = GuiControlState::DISABLED;
 			guiBack->state = GuiControlState::DISABLED;
 			guiCheckScreen->state = GuiControlState::DISABLED;
+			guiResume->state = GuiControlState::DISABLED;
+			guiBackToTitle->state = GuiControlState::DISABLED;
 		}
 		else if (configMenu == true)
 		{
@@ -1064,6 +1183,8 @@ void Scene::ButtonManager()
 			guiFxSlider->state = GuiControlState::NORMAL;
 			guiBack->state = GuiControlState::NORMAL;
 			guiCheckScreen->state = GuiControlState::NORMAL;
+			guiResume->state = GuiControlState::DISABLED;
+			guiBackToTitle->state = GuiControlState::DISABLED;
 		}
 
 	}

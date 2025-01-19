@@ -86,14 +86,11 @@ bool GuiControlButton::Update(float dt)
 		case GuiControlState::FOCUSED:
 
 			Engine::GetInstance().render->DrawText((std::string("> ") + text + " <").c_str(), scaledBounds.x, scaledBounds.y, scaledBounds.w, scaledBounds.h, white);
-
 			break;
 		case GuiControlState::PRESSED:
 			Engine::GetInstance().render->DrawText((std::string("> ") + text + " <").c_str(), scaledBounds.x, scaledBounds.y, scaledBounds.w, scaledBounds.h, yellow);
 			break;
 		}
-
-		
 	}
 
 	return false;

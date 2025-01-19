@@ -90,7 +90,7 @@ int Window::GetScale() const
 
 void Window::ToggleFullscreen()
 {
-	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 }
 
 void Window::UnToggleFullscreen()

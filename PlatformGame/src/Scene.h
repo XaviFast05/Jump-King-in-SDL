@@ -76,12 +76,19 @@ private:
 	bool configMenu = false;
 	int menu_introMS;
 	int invincibilityMS;
+	int final_bossMS;
+	int lvl1_5MS;
+	int lvl6_11MS;
 	int coinFxId;
 	int oneUpId;
+	int pauseFxId;
 	int volumeMusic;
 	int volumeFx;
 	int x = 0;
 	int y = 0;
+	bool menuMusic = false;
+	bool lvl6_11Music = false;
+	bool finalBossMusic = false;
 	
 
 	// Declare a Player attribute
@@ -108,6 +115,8 @@ private:
 	GuiControlSlider* guiFxSlider;
 	GuiControlButton* guiBack;
 	GuiControlCheck* guiCheckScreen;
+	GuiControlButton* guiResume;
+	GuiControlButton* guiBackToTitle;
 
 	
 	Timer playerInvencibility;

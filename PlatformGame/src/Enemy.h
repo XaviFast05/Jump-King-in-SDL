@@ -8,6 +8,7 @@
 #include "Timer.h"
 
 struct SDL_Texture;
+class Physics;
 
 class Enemy : public Entity
 {
@@ -63,6 +64,8 @@ public:
 
 	bool side = false;
 
+	bool paused = false;
+
 private:
 	
 	SDL_Texture* texture;
@@ -84,6 +87,7 @@ private:
 	PhysBody* pbody;
 	Pathfinding* pathfinding;
 	Map* map;
+	Physics* physics;
 	bool DrawingPath = false;
 	bool hasStarted = false;
 	bool IsSearching = false;
