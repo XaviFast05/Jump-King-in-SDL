@@ -59,7 +59,10 @@ public:
 	// Handles multiple Gui Event methods
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
+	// Handles when the Gui buttons are shown
 	void ButtonManager();
+
+	void FadeInOut(SDL_Renderer* renderer, int duration, bool fadeIn);
 
 public:
 	// Get tilePosDebug value
@@ -70,6 +73,9 @@ public:
 
 private:
 	SDL_Texture* bg;
+	SDL_Texture* menuBg;
+	SDL_Texture* configBg;
+	SDL_Texture* title;
 	bool CTVisible = false;
 	std::string tilePosDebug = "[0,0]";
 	SDL_Texture* CTtexture = nullptr;
@@ -123,4 +129,13 @@ private:
 	bool playerInvincible;
 
 	bool exitGame = false;	
+
+	bool canContinue = false;
+
+	bool fading;
+	bool fadeIn;
+	bool fadeOut;
+	float alpha;
+	float fadeSpeed;
+
 };

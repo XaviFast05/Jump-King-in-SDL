@@ -15,11 +15,7 @@ GuiControlCheck::GuiControlCheck(int id, SDL_Rect bounds, const char* text)
 GuiControlCheck::~GuiControlCheck()
 {
     // Cleanup resources if necessary
-    if (texture)
-    {
-        SDL_DestroyTexture(texture);
-        texture = nullptr;
-    }
+    
 }
 
 bool GuiControlCheck::Update(float dt)
@@ -28,7 +24,12 @@ bool GuiControlCheck::Update(float dt)
     {
         pressedFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Menu/pressed.wav");
         focusedFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Menu/focused.wav");
-		texture = Engine::GetInstance().textures->Load("Assets/Textures/checkmark.png");
+        NoCheckNormal = Engine::GetInstance().textures->Load("Assets/Textures/menu/NoCheckNormal.png");
+        NoCheckHover = Engine::GetInstance().textures->Load("Assets/Textures/menu/NoCheckHover.png");
+        NoCheckClick = Engine::GetInstance().textures->Load("Assets/Textures/menu/NoCheckClicked.png");
+        CheckNormal = Engine::GetInstance().textures->Load("Assets/Textures/menu/CheckNormal.png");
+        CheckHover = Engine::GetInstance().textures->Load("Assets/Textures/menu/CheckHover.png");
+        CheckClick = Engine::GetInstance().textures->Load("Assets/Textures/menu/CheckClicked.png");
         checkCreated = true;
     }
 
@@ -81,24 +82,41 @@ bool GuiControlCheck::Update(float dt)
             Engine::GetInstance().render->DrawRectangle(scaledBounds, 200, 200, 200, 255, true, false);
             break;
         case GuiControlState::NORMAL:
-			Engine::GetInstance().render->DrawTexture(texture, scaledBounds.x, scaledBounds.y);
+			if (inCheck == true)
+			{
+                Engine::GetInstance().render->DrawTexture(CheckNormal, bounds.x + 25, bounds.y - 5);
+			}
+			else
+			{
+                Engine::GetInstance().render->DrawTexture(NoCheckNormal, bounds.x + 25, bounds.y - 5);
+			}
 
             break;
         case GuiControlState::FOCUSED:
-            Engine::GetInstance().render->DrawRectangle(scaledBounds, 0, 0, 255, 255, true, false);
+            if (inCheck == true)
+            {
+                Engine::GetInstance().render->DrawTexture(CheckHover, bounds.x + 10, bounds.y - 5);
+            }
+            else
+            {
+                Engine::GetInstance().render->DrawTexture(NoCheckHover, bounds.x + 10, bounds.y - 5);
+            }
             break;
         case GuiControlState::PRESSED:
-            Engine::GetInstance().render->DrawRectangle(scaledBounds, 0, 255, 0, 255, true, false);
+            if (inCheck == true)
+            {
+                Engine::GetInstance().render->DrawTexture(CheckClick, bounds.x + 10, bounds.y - 5);
+            }
+            else
+            {
+                Engine::GetInstance().render->DrawTexture(NoCheckClick, bounds.x + 10, bounds.y - 5);
+            }
             break;
         }
 
-        Engine::GetInstance().render->DrawText(text.c_str(), scaledBounds.x - 200, scaledBounds.y , scaledBounds.w +50, scaledBounds.h , white);
+        Engine::GetInstance().render->DrawText(text.c_str(), scaledBounds.x - 200, scaledBounds.y , scaledBounds.w , scaledBounds.h , white);
 
-        if (inCheck)
-        {
-            SDL_Rect checkmark = { scaledBounds.x + 5, scaledBounds.y + 5, scaledBounds.w - 10, scaledBounds.h - 10 };
-            Engine::GetInstance().render->DrawRectangle(checkmark, 0, 255, 0, 255, true, false);
-        }
+
 
     }
 

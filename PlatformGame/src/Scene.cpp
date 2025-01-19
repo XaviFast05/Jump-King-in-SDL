@@ -16,6 +16,7 @@
 #include "CheckPointBF.h"
 #include "GuiControl.h"
 #include "GuiManager.h"
+#include <functional>
 
 Scene::Scene() : Module()
 {
@@ -49,15 +50,16 @@ bool Scene::Awake()
 	int scale = Engine::GetInstance().window.get()->GetScale();
 
 	//Create the buttons
-	SDL_Rect btPos = { 200 , 100 , 50, 20 };
-	SDL_Rect btPos2 = { 200 , 125 , 50, 20 };
-	SDL_Rect btPos3 = { 200 , 150 , 50, 20 };
-	SDL_Rect btPos4 = { 200 , 175 , 50, 20 };
-	SDL_Rect btPos5 = { 200 , 200 , 50, 20 };
-	SDL_Rect btPos6 = { 200 , 150 , 100, 20 };
-	SDL_Rect btPos7 = { 200 , 175 , 100, 20 };
-	SDL_Rect btPos8 = { 200 , 200 , 50, 20 };
-	SDL_Rect btPos9 = { 200 , 125 , 50, 20 };
+	SDL_Rect btPos = { 75 , 150 , 50, 20 };
+	SDL_Rect btPos2 = { 75 , 175 , 50, 20 };
+	SDL_Rect btPos3 = { 75 , 200 , 50, 20 };
+	SDL_Rect btPos4 = { 75 , 225 , 50, 20 };
+	SDL_Rect btPos5 = { 75 , 250 , 50, 20 };
+	SDL_Rect btPos6 = { 125 , 175 , 100, 20 };
+	SDL_Rect btPos7 = { 125 , 200 , 100, 20 };
+	SDL_Rect btPos8 = { 75 , 225 , 50, 20 };
+	SDL_Rect btPos9 = { 125 , 150 , 100, 20 };
+	SDL_Rect btPos10 = { 65 , 225 , 70, 20 };
 
 	guiBt = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "PLAY", btPos, this);
 	guiContinue = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "CONTINUE", btPos2, this);
@@ -69,7 +71,7 @@ bool Scene::Awake()
 	guiBack = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "BACK", btPos8, this);
 	guiCheckScreen = (GuiControlCheck*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 9, "Fullscreen", btPos9, this);
 	guiResume = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, "RESUME", btPos2, this);
-	guiBackToTitle = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "BACK TO TITLE", btPos4, this);
+	guiBackToTitle = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "BACK TO TITLE", btPos10, this);
 
 
 	return ret;
@@ -80,6 +82,9 @@ bool Scene::Start()
 {
 	Engine::GetInstance().audio->active = true;
 	CTtexture = Engine::GetInstance().textures->Load("Assets/Textures/CONTROLS.png");
+	menuBg = Engine::GetInstance().textures->Load("Assets/Textures/Menu/menuBg.png");
+	configBg = Engine::GetInstance().textures->Load("Assets/Textures/Menu/configBg.png");
+	title = Engine::GetInstance().textures->Load("Assets/Textures/Menu/Title.png");
 
 	pugi::xml_document loadFile;
 	pugi::xml_parse_result result = loadFile.load_file("config.xml");
@@ -117,6 +122,8 @@ bool Scene::Start()
 	oneUpId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Items/1up.wav");
 	pauseFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Menu/menu_open.wav");
 
+	
+
 	return true;
 }
 
@@ -137,6 +144,7 @@ bool Scene::Update(float dt)
 	Engine::GetInstance().audio->FxVolume(volumeFx);
 	if (active)
 	{	
+
 		// Set music
 		if (playerInvincible == true)
 		{
@@ -308,21 +316,21 @@ bool Scene::Update(float dt)
 		
 		if (itemList.size() > 0 && player->takeItem == true)
 		{
-			//SONIDO PILLAR ITEM ABAJO, DEPENDIENDO DEL TIPO
+
 			switch (itemList[0]->type)
 			{
 			case 1:
-				//monedas
+				// Coins
 				player->addCoins(5);
 				Engine::GetInstance().audio->PlayFx(coinFxId);
 				break;
 			case 2:
-				//poder invencible
+				// Invencibility
 				playerInvencibility.Start();
 				playerInvincible = true;
 				break;
 			case 3:
-				//vida
+				// Life
 				Engine::GetInstance().audio->PlayFx(oneUpId);
 				player->lifes++;
 				break;
@@ -372,9 +380,26 @@ bool Scene::Update(float dt)
 			player->Loading = false;
 		}
 
+		if (configMenu == true)
+		{
+			Engine::GetInstance().render.get()->DrawTexture(configBg, 9, 130);
+		}
+		else if (player->paused == true)
+		{
+			Engine::GetInstance().render.get()->DrawTexture(menuBg, 57, 160);
+		}
 	}
 	else if (!active)
 	{
+		Engine::GetInstance().render.get()->DrawTexture(title, 0, 0);
+		if (configMenu == true)
+		{
+			Engine::GetInstance().render.get()->DrawTexture(configBg, 9, 130);
+		}
+		else
+		{
+			Engine::GetInstance().render.get()->DrawTexture(menuBg, 57, 147);
+		}
 		if (menuMusic == false)
 		{
 			Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
@@ -406,6 +431,10 @@ bool Scene::PostUpdate()
 			for (int i = 0; i < enemyList.size(); i++)
 			{
 				enemyList[i]->paused = !enemyList[i]->paused;
+			}
+			if (configMenu == true)
+			{
+				configMenu = false;
 			}
 			Engine::GetInstance().audio->PlayFx(pauseFxId);
 		}
@@ -608,11 +637,26 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	//SDL_DestroyTexture(bg);
+
 	if (CTtexture != nullptr)
 	{
 		Engine::GetInstance().textures->UnLoad(CTtexture);
 		CTtexture = nullptr;
+	}
+	if (menuBg != nullptr)
+	{
+		Engine::GetInstance().textures->UnLoad(menuBg);
+		menuBg = nullptr;
+	}
+	if (configBg != nullptr)
+	{
+		Engine::GetInstance().textures->UnLoad(configBg);
+		configBg = nullptr;
+	}
+	if (title != nullptr)
+	{
+		Engine::GetInstance().textures->UnLoad(title);
+		title = nullptr;
 	}
 
 	return true;
@@ -1028,20 +1072,26 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	LOG("Press Gui Control: %d", control->id);
 	if (control->id == 1)
 	{
+		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
+
 		SpawnPoint();
 		player->paused = false;
 		for (int i = 0; i < enemyList.size(); i++)
 		{
-			enemyList[i]->paused = false;
+				enemyList[i]->paused = false;
 		}
 		player->currentAnimation = &player->idle;
 		Engine::GetInstance().entityManager->active = true;
 		Engine::GetInstance().map->active = true;
 		Engine::GetInstance().scene->active = true;
 
+		FadeInOut(Engine::GetInstance().render->renderer, 2000, false);
+		
+
 	}
 	if (control->id == 2)
 	{
+		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 		LoadState();
 		player->paused = false;
 		for (int i = 0; i < enemyList.size(); i++)
@@ -1052,6 +1102,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		Engine::GetInstance().entityManager->active = true;
 		Engine::GetInstance().map->active = true;
 		Engine::GetInstance().scene->active = true;
+		FadeInOut(Engine::GetInstance().render->renderer, 2000, false);
 
 	}
 	if (control->id == 3)
@@ -1060,6 +1111,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 5)
 	{
+		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 		exitGame = true;
 	}
 	if (control->id == 8)
@@ -1105,9 +1157,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 11)
 	{
+		FadeInOut(Engine::GetInstance().render->renderer, 1000, true);
 		Engine::GetInstance().entityManager->active = false;
 		Engine::GetInstance().map->active = false;
 		Engine::GetInstance().scene->active = false;
+		FadeInOut(Engine::GetInstance().render->renderer, 2000, false);
 	}
 	return true;
 }
@@ -1195,5 +1249,40 @@ void Scene::ButtonManager()
 			guiBackToTitle->state = GuiControlState::DISABLED;
 		}
 
+	}
+}
+
+void Scene::FadeInOut(SDL_Renderer* renderer, int duration, bool fadeIn) {
+	// Obtener el tiempo actual
+	Uint32 startTime = SDL_GetTicks();
+
+	while (SDL_GetTicks() - startTime < duration) {
+		// Calcular el alpha (transparencia) actual
+		float alpha = 0.f;
+		if (fadeIn == true) 
+		{
+			alpha = (float)(SDL_GetTicks() - startTime) / duration;
+		}
+		else if (fadeIn == false)
+		{
+			alpha = 1.0f - (float)(SDL_GetTicks() - startTime) / duration;
+		}
+
+		// Asegurarse de que el alpha esté entre 0 y 1
+		if (alpha < 0.0f) alpha = 0.0f;
+		if (alpha > 1.0f) alpha = 1.0f;
+
+		// Establecer el color de dibujo con el alpha actual
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, (Uint8)(alpha * 255));
+
+		// Dibujar un rectángulo que cubra toda la pantalla
+		SDL_Rect rect = { 0, 0, 960, 720 }; // Ajusta el tamaño a tu resolución
+		SDL_RenderFillRect(renderer, &rect);
+
+		// Actualizar la pantalla
+		SDL_RenderPresent(renderer);
+
+		// Pequeña pausa para no consumir demasiada CPU
+		SDL_Delay(16); // Aproximadamente 60 FPS
 	}
 }

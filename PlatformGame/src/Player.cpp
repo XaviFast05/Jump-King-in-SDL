@@ -65,12 +65,16 @@ bool Player::Start()
 	pbodyBody->ctype = ColliderType::PLAYERSENSOR;
 	pbody->ctype = ColliderType::PLAYER;
 
-	//initialize audio effect
+	// Initialize audio effect
 	jumpFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_jump.wav");
 	landFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_land.wav");
 	splatFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/King/Land/king_splat.wav");
 	killFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/bird_fly.wav");
 	killGroundedFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/Enemy/Old_Man_die.wav");
+
+	// Initialize UI textures
+	lifeIcon = Engine::GetInstance().textures.get()->Load("Assets/Textures/player/item3.png");
+	coinIcon = Engine::GetInstance().textures.get()->Load("Assets/Textures/player/item1.png");
 
 	return true;
 }
@@ -80,6 +84,8 @@ bool Player::Update(float dt)
 	// L08 TODO 5: Add physics to the player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, pbody->body->GetLinearVelocity().y);
 	Vector2D playerCurrentPos = GetPosition();
+
+	PlayerUI();
 
 	if (paused == true)
 	{
@@ -316,7 +322,21 @@ bool Player::Update(float dt)
 bool Player::CleanUp()
 {
 	LOG("Cleanup player");
-	Engine::GetInstance().textures.get()->UnLoad(texture);
+	if (texture != nullptr)
+	{
+		Engine::GetInstance().textures->UnLoad(texture);
+		texture = nullptr;
+	}
+	if (lifeIcon != nullptr)
+	{
+		Engine::GetInstance().textures.get()->UnLoad(lifeIcon);
+		lifeIcon = nullptr;
+	}
+	if (coinIcon != nullptr)
+	{
+		Engine::GetInstance().textures.get()->UnLoad(coinIcon);
+		coinIcon = nullptr;
+	}
 	return true;
 }
 
@@ -457,4 +477,18 @@ void Player::KillFX()
 void Player::KillGroundedFX()
 {
 	Engine::GetInstance().audio.get()->PlayFx(killGroundedFxId);
+}
+
+void Player::PlayerUI()
+{
+
+	// Coins
+	Engine::GetInstance().render.get()->DrawTexture(coinIcon, 0, 30, NULL, SDL_FLIP_NONE);
+	std::string coinsText = std::to_string(coins);
+	Engine::GetInstance().render.get()->DrawText(coinsText.c_str(), 55, 75, 30, 50, white);
+
+	// Lifes
+	Engine::GetInstance().render.get()->DrawTexture(lifeIcon, 0, 5, NULL, SDL_FLIP_NONE);
+	std::string lifesText = std::to_string(lifes);
+	Engine::GetInstance().render.get()->DrawText(lifesText.c_str(), 55, 15, 30, 50, white);
 }

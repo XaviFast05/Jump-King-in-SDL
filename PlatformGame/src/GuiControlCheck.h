@@ -33,6 +33,11 @@ private:
     int focusedFxId;
     int pressedFxId;
 
-    SDL_Texture* texture = nullptr;
+    SDL_Texture* NoCheckNormal = nullptr;
+    SDL_Texture* NoCheckHover = nullptr;
+    SDL_Texture* NoCheckClick = nullptr;
+    SDL_Texture* CheckNormal = nullptr;
+    SDL_Texture* CheckHover = nullptr;
+    SDL_Texture* CheckClick = nullptr;
 };
 

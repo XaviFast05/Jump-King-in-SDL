@@ -56,11 +56,15 @@ public:
 		lifes--;
 	}
 
+	void PlayerUI();
+
 public:
 
 	//Declare player parameters
 	float speed = 5.0f;
 	SDL_Texture* texture = NULL;
+	SDL_Texture* lifeIcon;
+	SDL_Texture* coinIcon;
 	int texW, texH;
 
 	//Audio fx
@@ -125,4 +129,6 @@ public:
 	void KillGroundedFX();
 
 	bool invincible = false;
+
+	SDL_Color white = { 255, 255, 255, 255 };
 };
