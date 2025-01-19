@@ -1253,11 +1253,11 @@ void Scene::ButtonManager()
 }
 
 void Scene::FadeInOut(SDL_Renderer* renderer, int duration, bool fadeIn) {
-	// Obtener el tiempo actual
+	// Get time
 	Uint32 startTime = SDL_GetTicks();
 
 	while (SDL_GetTicks() - startTime < duration) {
-		// Calcular el alpha (transparencia) actual
+		// Get transparent value
 		float alpha = 0.f;
 		if (fadeIn == true) 
 		{
@@ -1268,21 +1268,21 @@ void Scene::FadeInOut(SDL_Renderer* renderer, int duration, bool fadeIn) {
 			alpha = 1.0f - (float)(SDL_GetTicks() - startTime) / duration;
 		}
 
-		// Asegurarse de que el alpha esté entre 0 y 1
+		// Get sure alpha is between 0 and 1
 		if (alpha < 0.0f) alpha = 0.0f;
 		if (alpha > 1.0f) alpha = 1.0f;
 
-		// Establecer el color de dibujo con el alpha actual
+		// Set the the transparency to draw
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, (Uint8)(alpha * 255));
 
-		// Dibujar un rectángulo que cubra toda la pantalla
-		SDL_Rect rect = { 0, 0, 960, 720 }; // Ajusta el tamaño a tu resolución
+		// Get the whole screen
+		SDL_Rect rect = { 0, 0, 960, 720 }; 
 		SDL_RenderFillRect(renderer, &rect);
 
-		// Actualizar la pantalla
+		// Update the screen
 		SDL_RenderPresent(renderer);
 
-		// Pequeña pausa para no consumir demasiada CPU
-		SDL_Delay(16); // Aproximadamente 60 FPS
+		// Pause
+		SDL_Delay(16); 
 	}
 }
