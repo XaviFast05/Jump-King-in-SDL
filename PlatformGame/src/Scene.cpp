@@ -1030,6 +1030,10 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		SpawnPoint();
 		player->paused = false;
+		for (int i = 0; i < enemyList.size(); i++)
+		{
+			enemyList[i]->paused = false;
+		}
 		player->currentAnimation = &player->idle;
 		Engine::GetInstance().entityManager->active = true;
 		Engine::GetInstance().map->active = true;
@@ -1040,6 +1044,10 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		LoadState();
 		player->paused = false;
+		for (int i = 0; i < enemyList.size(); i++)
+		{
+			enemyList[i]->paused = false;
+		}
 		player->currentAnimation = &player->idle;
 		Engine::GetInstance().entityManager->active = true;
 		Engine::GetInstance().map->active = true;
