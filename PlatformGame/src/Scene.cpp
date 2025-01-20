@@ -428,7 +428,6 @@ bool Scene::Update(float dt)
 		{
 			Engine::GetInstance().render.get()->DrawTexture(endingImg, 0, 0);
 		}
-
 	}
 
 	return true;
@@ -1206,6 +1205,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		int seconds = configFile.child("config").child("scene").child("entities").child("player").attribute("seconds").as_int();
 		seconds += (int)playTime.ReadSec();
 		configFile.child("config").child("scene").child("entities").child("player").attribute("seconds").set_value(seconds);
+
+		if (ending)
+		{
+			configFile.child("config").child("scene").child("entities").child("player").attribute("played").set_value(false);
+		}
 
 		configFile.save_file("config.xml");
 		counting = false;
