@@ -85,6 +85,7 @@ bool Scene::Start()
 	menuBg = Engine::GetInstance().textures->Load("Assets/Textures/Menu/menuBg.png");
 	configBg = Engine::GetInstance().textures->Load("Assets/Textures/Menu/configBg.png");
 	title = Engine::GetInstance().textures->Load("Assets/Textures/Menu/Title.png");
+	endingImg = Engine::GetInstance().textures->Load("Assets/Textures/Menu/ending.png");
 
 	pugi::xml_document loadFile;
 	pugi::xml_parse_result result = loadFile.load_file("config.xml");
@@ -281,7 +282,16 @@ bool Scene::Update(float dt)
 					if (enemyList[0]->lifes == 0)
 					{
 						//xavifast aqui puedes empezar el timer de q se ponga la pantalla de credito
+						Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/ending.wav", 0);
 						enemyList[0]->unaliveHutao();
+
+						FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
+
+						Engine::GetInstance().entityManager->active = false;
+						Engine::GetInstance().map->active = false;
+						Engine::GetInstance().scene->active = false;
+						ending = true;
+						FadeInOut(Engine::GetInstance().render->renderer, 1000, false);
 					}
 					else
 					{
@@ -391,24 +401,32 @@ bool Scene::Update(float dt)
 	}
 	else if (!active)
 	{
-		Engine::GetInstance().render.get()->DrawTexture(title, 0, 0);
-		if (configMenu == true)
+		if (ending == false)
 		{
-			Engine::GetInstance().render.get()->DrawTexture(configBg, 9, 130);
+			Engine::GetInstance().render.get()->DrawTexture(title, 0, 0);
+			if (configMenu == true)
+			{
+				Engine::GetInstance().render.get()->DrawTexture(configBg, 9, 130);
+			}
+			else
+			{
+				Engine::GetInstance().render.get()->DrawTexture(menuBg, 57, 147);
+			}
+			if (menuMusic == false)
+			{
+				Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
+				x = 0;
+				y = 0;
+				lvl6_11Music = false;
+				finalBossMusic = false;
+				menuMusic = true;
+			}
 		}
-		else
+		else if (ending == true)
 		{
-			Engine::GetInstance().render.get()->DrawTexture(menuBg, 57, 147);
+			Engine::GetInstance().render.get()->DrawTexture(endingImg, 0, 0);
 		}
-		if (menuMusic == false)
-		{
-			Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
-			x = 0;
-			y = 0;
-			lvl6_11Music = false;
-			finalBossMusic = false;
-			menuMusic = true;
-		}
+
 	}
 
 	return true;
@@ -1072,6 +1090,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	LOG("Press Gui Control: %d", control->id);
 	if (control->id == 1)
 	{
+		Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/opening_theme.wav", 0);
+
 		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 
 		SpawnPoint();
@@ -1085,12 +1105,14 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		Engine::GetInstance().map->active = true;
 		Engine::GetInstance().scene->active = true;
 
-		FadeInOut(Engine::GetInstance().render->renderer, 2000, false);
+		FadeInOut(Engine::GetInstance().render->renderer, 1500, false);
 		
 
 	}
 	if (control->id == 2)
 	{
+		Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/opening_theme.wav", 0);
+
 		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 		LoadState();
 		player->paused = false;
@@ -1102,7 +1124,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		Engine::GetInstance().entityManager->active = true;
 		Engine::GetInstance().map->active = true;
 		Engine::GetInstance().scene->active = true;
-		FadeInOut(Engine::GetInstance().render->renderer, 2000, false);
+		FadeInOut(Engine::GetInstance().render->renderer, 1500, false);
 
 	}
 	if (control->id == 3)
@@ -1157,10 +1179,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 11)
 	{
-		FadeInOut(Engine::GetInstance().render->renderer, 1000, true);
+		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 		Engine::GetInstance().entityManager->active = false;
 		Engine::GetInstance().map->active = false;
 		Engine::GetInstance().scene->active = false;
+		ending = false;
 		FadeInOut(Engine::GetInstance().render->renderer, 2000, false);
 	}
 	return true;
@@ -1220,33 +1243,50 @@ void Scene::ButtonManager()
 	}
 	else if (!active)
 	{
-		if (configMenu == false)
+		if (ending == false)
 		{
-			guiBt->state = GuiControlState::NORMAL;
-			guiContinue->state = GuiControlState::NORMAL;
-			guiConfig->state = GuiControlState::NORMAL;
-			guiCredits->state = GuiControlState::NORMAL;
-			guiExit->state = GuiControlState::NORMAL;
-			guiMusicSlider->state = GuiControlState::DISABLED;
-			guiFxSlider->state = GuiControlState::DISABLED;
-			guiBack->state = GuiControlState::DISABLED;
-			guiCheckScreen->state = GuiControlState::DISABLED;
-			guiResume->state = GuiControlState::DISABLED;
-			guiBackToTitle->state = GuiControlState::DISABLED;
+			if (configMenu == false)
+			{
+				guiBt->state = GuiControlState::NORMAL;
+				guiContinue->state = GuiControlState::NORMAL;
+				guiConfig->state = GuiControlState::NORMAL;
+				guiCredits->state = GuiControlState::NORMAL;
+				guiExit->state = GuiControlState::NORMAL;
+				guiMusicSlider->state = GuiControlState::DISABLED;
+				guiFxSlider->state = GuiControlState::DISABLED;
+				guiBack->state = GuiControlState::DISABLED;
+				guiCheckScreen->state = GuiControlState::DISABLED;
+				guiResume->state = GuiControlState::DISABLED;
+				guiBackToTitle->state = GuiControlState::DISABLED;
+			}
+			else if (configMenu == true)
+			{
+				guiBt->state = GuiControlState::DISABLED;
+				guiContinue->state = GuiControlState::DISABLED;
+				guiConfig->state = GuiControlState::DISABLED;
+				guiCredits->state = GuiControlState::DISABLED;
+				guiExit->state = GuiControlState::DISABLED;
+				guiMusicSlider->state = GuiControlState::NORMAL;
+				guiFxSlider->state = GuiControlState::NORMAL;
+				guiBack->state = GuiControlState::NORMAL;
+				guiCheckScreen->state = GuiControlState::NORMAL;
+				guiResume->state = GuiControlState::DISABLED;
+				guiBackToTitle->state = GuiControlState::DISABLED;
+			}
 		}
-		else if (configMenu == true)
+		else if (ending == true)
 		{
 			guiBt->state = GuiControlState::DISABLED;
 			guiContinue->state = GuiControlState::DISABLED;
 			guiConfig->state = GuiControlState::DISABLED;
 			guiCredits->state = GuiControlState::DISABLED;
 			guiExit->state = GuiControlState::DISABLED;
-			guiMusicSlider->state = GuiControlState::NORMAL;
-			guiFxSlider->state = GuiControlState::NORMAL;
-			guiBack->state = GuiControlState::NORMAL;
-			guiCheckScreen->state = GuiControlState::NORMAL;
+			guiMusicSlider->state = GuiControlState::DISABLED;
+			guiFxSlider->state = GuiControlState::DISABLED;
+			guiBack->state = GuiControlState::DISABLED;
+			guiCheckScreen->state = GuiControlState::DISABLED;
 			guiResume->state = GuiControlState::DISABLED;
-			guiBackToTitle->state = GuiControlState::DISABLED;
+			guiBackToTitle->state = GuiControlState::NORMAL;
 		}
 
 	}

@@ -76,6 +76,7 @@ private:
 	SDL_Texture* menuBg;
 	SDL_Texture* configBg;
 	SDL_Texture* title;
+	SDL_Texture* endingImg;
 	bool CTVisible = false;
 	std::string tilePosDebug = "[0,0]";
 	SDL_Texture* CTtexture = nullptr;
@@ -138,4 +139,5 @@ private:
 	float alpha;
 	float fadeSpeed;
 
+	bool ending = false;
 };
