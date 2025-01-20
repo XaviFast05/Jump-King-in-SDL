@@ -140,4 +140,12 @@ private:
 	float fadeSpeed;
 
 	bool ending = false;
+
+	Timer playTime;
+	int sceneSeconds = 0;
+	int initialSeconds = 0;
+	bool counting = false;
+
+	int secondsOnScreen;
+	int minutesOnScreen;
 };

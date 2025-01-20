@@ -103,6 +103,8 @@ bool Scene::Start()
 	player->coins = sceneNode.child("entities").child("player").attribute("coins").as_int();
 	player->lifes = sceneNode.child("entities").child("player").attribute("lifes").as_int();
 
+	initialSeconds = sceneNode.child("entities").child("player").attribute("seconds").as_int();
+
 	//enemies
 	if (enemyList.size() > 0)
 	{
@@ -122,8 +124,6 @@ bool Scene::Start()
 	coinFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Items/plink.wav");
 	oneUpId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Items/1up.wav");
 	pauseFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Menu/menu_open.wav");
-
-	
 
 	return true;
 }
@@ -145,7 +145,9 @@ bool Scene::Update(float dt)
 	Engine::GetInstance().audio->FxVolume(volumeFx);
 	if (active)
 	{	
-
+		sceneSeconds = initialSeconds + (int)playTime.ReadSec();
+		minutesOnScreen = (int)(sceneSeconds / 60);
+		secondsOnScreen = (int)(sceneSeconds - 60 * minutesOnScreen);
 		// Set music
 		if (playerInvincible == true)
 		{
@@ -752,6 +754,7 @@ void Scene::SaveState() {
 
 	sceneNode.child("entities").child("player").attribute("lifes").set_value(player->lifes);
 	sceneNode.child("entities").child("player").attribute("coins").set_value(player->coins);
+	sceneNode.child("entities").child("player").attribute("played").set_value(true);
 
 	if (enemyList.size() > 0)
 	{
@@ -813,12 +816,14 @@ void Scene::SpawnPoint()
 	player->invincible = false;
 	playerInvincible = false;
 
+	sceneNode.child("entities").child("player").attribute("played").set_value(false);
+	sceneNode.child("entities").child("player").attribute("seconds").set_value(0);
+
 	sceneNode.child("entities").child("player").child("items").attribute("lvl1").set_value(false);
 	sceneNode.child("entities").child("player").child("items").attribute("lvl2").set_value(false);
 	sceneNode.child("entities").child("player").child("items").attribute("lvl3").set_value(false);
 	sceneNode.child("entities").child("player").child("items").attribute("lvl4").set_value(false);
 	sceneNode.child("entities").child("player").child("items").attribute("lvl5").set_value(false);
-	loadFile.save_file("config.xml");
 	takenItems.clear();
 
 	sceneNode.child("entities").child("checkpointbf").attribute("taken1").set_value(false);
@@ -829,6 +834,7 @@ void Scene::SpawnPoint()
 	checkpoint2->CheckTaken = false;
 	checkpoint3->CheckTaken = false;
 
+	loadFile.save_file("config.xml");
 	changeLevel(1, true);
 }
 
@@ -860,7 +866,6 @@ void Scene::SpawnPointLvl2()
 	sceneNode.child("entities").child("player").child("items").attribute("lvl3").set_value(false);
 	sceneNode.child("entities").child("player").child("items").attribute("lvl4").set_value(false);
 	sceneNode.child("entities").child("player").child("items").attribute("lvl5").set_value(false);
-	loadFile.save_file("config.xml");
 	takenItems.clear();
 
 	sceneNode.child("entities").child("checkpointbf").attribute("taken1").set_value(false);
@@ -871,6 +876,7 @@ void Scene::SpawnPointLvl2()
 	checkpoint2->CheckTaken = false;
 	checkpoint3->CheckTaken = false;
 
+	loadFile.save_file("config.xml");
 	changeLevel(2, true);
 }
 
@@ -1095,6 +1101,9 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 
 		SpawnPoint();
+		playTime.Start();
+		counting = true;
+
 		player->paused = false;
 		for (int i = 0; i < enemyList.size(); i++)
 		{
@@ -1106,8 +1115,6 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		Engine::GetInstance().scene->active = true;
 
 		FadeInOut(Engine::GetInstance().render->renderer, 1500, false);
-		
-
 	}
 	if (control->id == 2)
 	{
@@ -1115,6 +1122,9 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 
 		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 		LoadState();
+		playTime.Start();
+		counting = true;
+
 		player->paused = false;
 		for (int i = 0; i < enemyList.size(); i++)
 		{
@@ -1133,6 +1143,17 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 5)
 	{
+		if (counting)
+		{
+			pugi::xml_document configFile;
+			pugi::xml_parse_result result = configFile.load_file("config.xml");
+
+			int seconds = configFile.child("config").child("scene").child("entities").child("player").attribute("seconds").as_int();
+			seconds += (int)playTime.ReadSec();
+			configFile.child("config").child("scene").child("entities").child("player").attribute("seconds").set_value(seconds);
+
+			configFile.save_file("config.xml");
+		}
 		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 		exitGame = true;
 	}
@@ -1179,6 +1200,16 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 11)
 	{
+		pugi::xml_document configFile;
+		pugi::xml_parse_result result = configFile.load_file("config.xml");
+
+		int seconds = configFile.child("config").child("scene").child("entities").child("player").attribute("seconds").as_int();
+		seconds += (int)playTime.ReadSec();
+		configFile.child("config").child("scene").child("entities").child("player").attribute("seconds").set_value(seconds);
+
+		configFile.save_file("config.xml");
+		counting = false;
+
 		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 		Engine::GetInstance().entityManager->active = false;
 		Engine::GetInstance().map->active = false;
@@ -1193,7 +1224,6 @@ void Scene::ButtonManager()
 {
 	if (active)
 	{
-
 		if (player->paused)
 		{
 			if (configMenu == false)
@@ -1227,7 +1257,6 @@ void Scene::ButtonManager()
 		}
 		else
 		{
-			
 			guiBt->state = GuiControlState::DISABLED;
 			guiContinue->state = GuiControlState::DISABLED;
 			guiConfig->state = GuiControlState::DISABLED;
@@ -1288,7 +1317,6 @@ void Scene::ButtonManager()
 			guiResume->state = GuiControlState::DISABLED;
 			guiBackToTitle->state = GuiControlState::NORMAL;
 		}
-
 	}
 }
 
