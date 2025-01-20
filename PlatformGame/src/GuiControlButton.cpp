@@ -10,6 +10,8 @@ GuiControlButton::GuiControlButton(int id, SDL_Rect bounds, const char* text) : 
 	this->bounds = bounds;
 	this->text = text;
 
+
+
 	canClick = true;
 	drawBasic = false;
 }
@@ -27,8 +29,8 @@ bool GuiControlButton::Update(float dt)
 		focusedFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Menu/focused.wav");
 		chargeSounds = true;
 	}
-	
-	if (state != GuiControlState::DISABLED)
+
+	if (state != GuiControlState::DISABLED && state != GuiControlState::DEACTIVATED)
 	{
 
 		// L16: TODO 3: Update the state of the GUiButton according to the mouse position
@@ -91,6 +93,12 @@ bool GuiControlButton::Update(float dt)
 			Engine::GetInstance().render->DrawText((std::string("> ") + text + " <").c_str(), scaledBounds.x, scaledBounds.y, scaledBounds.w, scaledBounds.h, yellow);
 			break;
 		}
+	}
+	else if (state == GuiControlState::DEACTIVATED)
+	{
+		int scale = Engine::GetInstance().window.get()->GetScale();
+		SDL_Rect scaledBounds = { bounds.x * scale, bounds.y * scale, bounds.w * scale, bounds.h * scale };
+		Engine::GetInstance().render->DrawText(text.c_str(), scaledBounds.x, scaledBounds.y, scaledBounds.w, scaledBounds.h, grey);
 	}
 
 	return false;

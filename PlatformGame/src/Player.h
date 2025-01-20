@@ -131,4 +131,6 @@ public:
 	bool invincible = false;
 
 	SDL_Color white = { 255, 255, 255, 255 };
+
+	Scene* scene;
 };

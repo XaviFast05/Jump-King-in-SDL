@@ -145,9 +145,7 @@ bool Scene::Update(float dt)
 	Engine::GetInstance().audio->FxVolume(volumeFx);
 	if (active)
 	{	
-		sceneSeconds = initialSeconds + (int)playTime.ReadSec();
-		minutesOnScreen = (int)(sceneSeconds / 60);
-		secondsOnScreen = (int)(sceneSeconds - 60 * minutesOnScreen);
+		
 		// Set music
 		if (playerInvincible == true)
 		{
@@ -444,6 +442,7 @@ bool Scene::PostUpdate()
 	}
 	if (active)
 	{
+		ShowTime();
 		if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN))
 		{
 			player->paused = !player->paused;
@@ -646,6 +645,10 @@ bool Scene::PostUpdate()
 			SDL_Rect Juan = { windowWT - WT - 100, 0, WT * 1.5, HG * 1.5f };
 			SDL_RenderCopy(Engine::GetInstance().render->renderer, CTtexture, nullptr, &Juan);
 		}
+	}
+	else if (!active)
+	{
+		ShowTime();
 	}
 	
 
@@ -1226,6 +1229,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 
 void Scene::ButtonManager()
 {
+	pugi::xml_document configFile;
+	pugi::xml_parse_result result = configFile.load_file("config.xml");
 	if (active)
 	{
 		if (player->paused)
@@ -1281,7 +1286,14 @@ void Scene::ButtonManager()
 			if (configMenu == false)
 			{
 				guiBt->state = GuiControlState::NORMAL;
-				guiContinue->state = GuiControlState::NORMAL;
+				if (configFile.child("config").child("scene").child("entities").child("player").attribute("played").as_bool())
+				{
+					guiContinue->state = GuiControlState::NORMAL;
+				}
+				else if (!configFile.child("config").child("scene").child("entities").child("player").attribute("played").as_bool())
+				{
+					guiContinue->state = GuiControlState::DEACTIVATED;
+				}
 				guiConfig->state = GuiControlState::NORMAL;
 				guiCredits->state = GuiControlState::NORMAL;
 				guiExit->state = GuiControlState::NORMAL;
@@ -1357,4 +1369,42 @@ void Scene::FadeInOut(SDL_Renderer* renderer, int duration, bool fadeIn) {
 		// Pause
 		SDL_Delay(16); 
 	}
+}
+
+void Scene::ShowTime()
+{
+	
+	sceneSeconds = initialSeconds + (int)playTime.ReadSec();
+	if (ending == false)
+	{
+		sceneFinalSeconds = sceneSeconds;
+	}
+	
+	minutesOnScreen = (int)(sceneSeconds / 60);
+	secondsOnScreen = (int)(sceneSeconds - 60 * minutesOnScreen);
+
+	if (ending == false)
+	{
+		// Formatear el texto para mostrar el tiempo en el formato "MM:SS"
+		std::string minutesText = (minutesOnScreen < 10 ? "0" : "") + std::to_string(minutesOnScreen);
+		std::string secondsText = (secondsOnScreen < 10 ? "0" : "") + std::to_string(secondsOnScreen);
+		std::string timeText = "Time: " + minutesText + ":" + secondsText;
+
+		// Dibujar el texto en la pantalla
+		SDL_Color white = { 255, 255, 255, 255 };
+		Engine::GetInstance().render->DrawText(timeText.c_str(), 800, 20, 150, 40, white);
+	}
+	else if (ending == true)
+	{
+		int finalMinutesOnScreen = (int)(sceneFinalSeconds / 60);
+		int finalSecondsOnScreen = (int)(sceneFinalSeconds - 60 * finalMinutesOnScreen);
+
+		std::string finalMinutesText = (finalMinutesOnScreen < 10 ? "0" : "") + std::to_string(finalMinutesOnScreen);
+		std::string finalSecondsText = (finalSecondsOnScreen < 10 ? "0" : "") + std::to_string(finalSecondsOnScreen);
+		std::string timeText = "Time: " + finalMinutesText + ":" + finalSecondsText;
+
+		SDL_Color white = { 255, 255, 255, 255 };
+		Engine::GetInstance().render->DrawText(timeText.c_str(), 800, 20, 150, 40, white);
+	}
+	
 }

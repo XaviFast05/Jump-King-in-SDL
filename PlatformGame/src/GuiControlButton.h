@@ -31,6 +31,5 @@ private:
 	//button FX
 	int focusedFxId;
 	int pressedFxId;
-};
 
-#pragma once
+};

@@ -64,6 +64,8 @@ public:
 
 	void FadeInOut(SDL_Renderer* renderer, int duration, bool fadeIn);
 
+	void ShowTime();
+
 public:
 	// Get tilePosDebug value
 	std::string GetTilePosDebug() {
@@ -148,4 +150,5 @@ private:
 
 	int secondsOnScreen;
 	int minutesOnScreen;
+	int sceneFinalSeconds;
 };

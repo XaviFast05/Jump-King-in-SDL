@@ -86,6 +86,7 @@ bool Player::Update(float dt)
 	Vector2D playerCurrentPos = GetPosition();
 
 	PlayerUI();
+	
 
 	if (paused == true)
 	{
