@@ -81,6 +81,7 @@ private:
 	SDL_Texture* endingImg;
 	SDL_Texture* lifeIcon;
 	SDL_Texture* coinIcon;
+	SDL_Texture* endingBg;
 	bool CTVisible = false;
 	std::string tilePosDebug = "[0,0]";
 	SDL_Texture* CTtexture = nullptr;

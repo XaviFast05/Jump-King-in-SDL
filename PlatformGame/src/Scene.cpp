@@ -86,6 +86,7 @@ bool Scene::Start()
 	configBg = Engine::GetInstance().textures->Load("Assets/Textures/Menu/configBg.png");
 	title = Engine::GetInstance().textures->Load("Assets/Textures/Menu/Title.png");
 	endingImg = Engine::GetInstance().textures->Load("Assets/Textures/Menu/ending.png");
+	endingBg = Engine::GetInstance().textures->Load("Assets/Textures/Menu/endingBg.png");
 
 	// Initialize UI textures
 	lifeIcon = Engine::GetInstance().textures.get()->Load("Assets/Textures/player/item3.png");
@@ -431,6 +432,7 @@ bool Scene::Update(float dt)
 		else if (ending == true)
 		{
 			Engine::GetInstance().render.get()->DrawTexture(endingImg, 0, 0);
+			Engine::GetInstance().render.get()->DrawTexture(endingBg, 50, 210);
 		}
 	}
 
@@ -1447,7 +1449,7 @@ void Scene::DrawUI()
 		std::string timeText = "Time: " + finalMinutesText + ":" + finalSecondsText;
 
 		
-		Engine::GetInstance().render->DrawText(timeText.c_str(), 800, 20, 150, 40, white);
+		Engine::GetInstance().render->DrawText(timeText.c_str(), 285, 450, 150, 40, white);
 	}
 
 	// Coins
@@ -1466,7 +1468,7 @@ void Scene::DrawUI()
 	}
 	else if (ending == true)
 	{
-		Engine::GetInstance().render.get()->DrawTexture(coinIcon, 50, 50, NULL, SDL_FLIP_NONE);
-		Engine::GetInstance().render.get()->DrawText(coinsText.c_str(), 300, 300, 30, 50, white);
+		Engine::GetInstance().render.get()->DrawTexture(coinIcon, 212, 215, NULL, SDL_FLIP_NONE);
+		Engine::GetInstance().render.get()->DrawText(coinsText.c_str(), 478, 445, 30, 50, white);
 	}
 }
