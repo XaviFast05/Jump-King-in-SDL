@@ -494,10 +494,12 @@ bool Scene::PostUpdate()
 			{
 				enemyList[i]->paused = !enemyList[i]->paused;
 			}
+
 			if (configMenu == true)
 			{
 				configMenu = false;
 			}
+
 			Engine::GetInstance().audio->PlayFx(pauseFxId);
 		}
 
@@ -1284,6 +1286,10 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	if (control->id == 10)
 	{
 		player->paused = false;
+		for (int i = 0; i < enemyList.size(); i++)
+		{
+			enemyList[i]->paused = !enemyList[i]->paused;
+		}
 	}
 	if (control->id == 11)
 	{
