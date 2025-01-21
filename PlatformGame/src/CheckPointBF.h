@@ -38,16 +38,16 @@ public:
 
 public:
 
-	//Declare player parameters
+	//Declare CheckPoint parameters
 	SDL_Texture* texture = NULL;
+	SDL_Texture* fastTravel;
 	int texW, texH;
 
 	//Audio fx
 	int jumpFxId;
 
-	// L08 TODO 5: Add physics to the player - declare a Physics body
+	// L08 TODO 5: Add physics to the Checkpoint - declare a Physics body
 	PhysBody* pbody;
-	PhysBody* pbodyBody;
 
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;

@@ -82,6 +82,10 @@ private:
 	SDL_Texture* lifeIcon;
 	SDL_Texture* coinIcon;
 	SDL_Texture* endingBg;
+	SDL_Texture* credits;
+	SDL_Texture* fastTravel;
+	SDL_Texture* die;
+	bool ifCredits = false;
 	bool CTVisible = false;
 	std::string tilePosDebug = "[0,0]";
 	SDL_Texture* CTtexture = nullptr;
@@ -101,6 +105,7 @@ private:
 	bool menuMusic = false;
 	bool lvl6_11Music = false;
 	bool finalBossMusic = false;
+	bool dieMusic = false;
 	
 
 	// Declare a Player attribute
@@ -145,6 +150,7 @@ private:
 	float fadeSpeed;
 
 	bool ending = false;
+	bool dead = false;
 
 	Timer playTime;
 	int sceneSeconds = 0;

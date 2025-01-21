@@ -87,6 +87,9 @@ bool Scene::Start()
 	title = Engine::GetInstance().textures->Load("Assets/Textures/Menu/Title.png");
 	endingImg = Engine::GetInstance().textures->Load("Assets/Textures/Menu/ending.png");
 	endingBg = Engine::GetInstance().textures->Load("Assets/Textures/Menu/endingBg.png");
+	credits = Engine::GetInstance().textures->Load("Assets/Textures/Menu/credits.png");
+	fastTravel = Engine::GetInstance().textures.get()->Load("Assets/Textures/Menu/fastTravel.png");
+	die = Engine::GetInstance().textures.get()->Load("Assets/Textures/Menu/died.png");
 
 	// Initialize UI textures
 	lifeIcon = Engine::GetInstance().textures.get()->Load("Assets/Textures/player/item3.png");
@@ -240,6 +243,7 @@ bool Scene::Update(float dt)
 				pugi::xml_document loadFile;
 				pugi::xml_parse_result result = loadFile.load_file("config.xml");
 
+
 				player->Die();
 				player->checkDeath = false;
 
@@ -255,11 +259,22 @@ bool Scene::Update(float dt)
 					player->isJumping = false;
 					player->pbody->body->SetLinearVelocity(b2Vec2_zero);
 
+					Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/die.wav", 0);
+					loadFile.child("config").child("scene").child("entities").child("player").attribute("played").set_value(false);
+					loadFile.save_file("config.xml");
+
+					FadeInOut(Engine::GetInstance().render->renderer, 3000, true);
+
+					player->currentAnimation = &player->idle;
 					SpawnPoint();
 					playTime.Start();
 					initialSeconds = 0;
 					SaveState();
 					checkpoint->CheckTaken = false;
+					dead = true;
+					Engine::GetInstance().entityManager->active = false;
+					Engine::GetInstance().map->active = false;
+					Engine::GetInstance().scene->active = false;
 				}
 			}
 			else
@@ -288,7 +303,6 @@ bool Scene::Update(float dt)
 					enemyList[0]->lifes -= 1;
 					if (enemyList[0]->lifes == 0)
 					{
-						//xavifast aqui puedes empezar el timer de q se ponga la pantalla de credito
 						Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/ending.wav", 0);
 						enemyList[0]->unaliveHutao();
 
@@ -408,12 +422,16 @@ bool Scene::Update(float dt)
 	}
 	else if (!active)
 	{
-		if (ending == false)
+		if (ending == false && dead == false)
 		{
 			Engine::GetInstance().render.get()->DrawTexture(title, 0, 0);
 			if (configMenu == true)
 			{
 				Engine::GetInstance().render.get()->DrawTexture(configBg, 9, 130);
+			}
+			else if (ifCredits == true)
+			{
+				Engine::GetInstance().render.get()->DrawTexture(credits, 0, 0);
 			}
 			else
 			{
@@ -433,6 +451,15 @@ bool Scene::Update(float dt)
 		{
 			Engine::GetInstance().render.get()->DrawTexture(endingImg, 0, 0);
 			Engine::GetInstance().render.get()->DrawTexture(endingBg, 50, 210);
+		}
+		else if (dead == true)
+		{
+			if (dieMusic == false)
+			{
+				Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/died.wav", 0);
+				dieMusic = true;
+			}
+			Engine::GetInstance().render.get()->DrawTexture(die, 0, 0);
 		}
 	}
 
@@ -515,6 +542,10 @@ bool Scene::PostUpdate()
 			SaveState();
 		}
 
+		if (checkpoint->onPlayer == true || checkpoint2->onPlayer == true || checkpoint3->onPlayer == true)
+		{
+			Engine::GetInstance().render.get()->DrawTexture(fastTravel, 0, 0, nullptr);
+		}
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_DOWN and checkpoint->onPlayer == true)
 		{
 			
@@ -1154,10 +1185,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		{
 				enemyList[i]->paused = false;
 		}
-		player->currentAnimation = &player->idle;
 		Engine::GetInstance().entityManager->active = true;
 		Engine::GetInstance().map->active = true;
 		Engine::GetInstance().scene->active = true;
+
+		player->currentAnimation = &player->idle;
 
 		FadeInOut(Engine::GetInstance().render->renderer, 1500, false);
 	}
@@ -1180,16 +1212,20 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			enemyList[i]->paused = false;
 		}
-		player->currentAnimation = &player->idle;
 		Engine::GetInstance().entityManager->active = true;
 		Engine::GetInstance().map->active = true;
 		Engine::GetInstance().scene->active = true;
+		player->currentAnimation = &player->idle;
 		FadeInOut(Engine::GetInstance().render->renderer, 1500, false);
 
 	}
 	if (control->id == 3)
 	{
 		configMenu = true;
+	}
+	if (control->id == 4)
+	{
+		ifCredits = true;
 	}
 	if (control->id == 5)
 	{
@@ -1210,6 +1246,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	if (control->id == 8)
 	{
 		configMenu = false;
+		ifCredits = false;
 	}
 	if (control->id == 9)
 	{
@@ -1257,7 +1294,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		seconds += (int)playTime.ReadSec();
 		configFile.child("config").child("scene").child("entities").child("player").attribute("seconds").set_value(seconds);
 
-		if (ending)
+		if (ending || dead)
 		{
 			configFile.child("config").child("scene").child("entities").child("player").attribute("played").set_value(false);
 		}
@@ -1270,7 +1307,10 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		Engine::GetInstance().map->active = false;
 		Engine::GetInstance().scene->active = false;
 		ending = false;
+		dead = false;
+		dieMusic = false;
 		FadeInOut(Engine::GetInstance().render->renderer, 2000, false);
+
 	}
 	return true;
 }
@@ -1311,6 +1351,7 @@ void Scene::ButtonManager()
 				guiResume->state = GuiControlState::DISABLED;
 				guiBackToTitle->state = GuiControlState::DISABLED;
 			}
+			
 		}
 		else
 		{
@@ -1329,9 +1370,37 @@ void Scene::ButtonManager()
 	}
 	else if (!active)
 	{
-		if (ending == false)
+		if (ending == false && dead == false)
 		{
-			if (configMenu == false)
+			if (configMenu == true)
+			{
+				guiBt->state = GuiControlState::DISABLED;
+				guiContinue->state = GuiControlState::DISABLED;
+				guiConfig->state = GuiControlState::DISABLED;
+				guiCredits->state = GuiControlState::DISABLED;
+				guiExit->state = GuiControlState::DISABLED;
+				guiMusicSlider->state = GuiControlState::NORMAL;
+				guiFxSlider->state = GuiControlState::NORMAL;
+				guiBack->state = GuiControlState::NORMAL;
+				guiCheckScreen->state = GuiControlState::NORMAL;
+				guiResume->state = GuiControlState::DISABLED;
+				guiBackToTitle->state = GuiControlState::DISABLED;
+			}
+			else if (ifCredits == true)
+			{
+				guiBt->state = GuiControlState::DISABLED;
+				guiContinue->state = GuiControlState::DISABLED;
+				guiConfig->state = GuiControlState::DISABLED;
+				guiCredits->state = GuiControlState::DISABLED;
+				guiExit->state = GuiControlState::DISABLED;
+				guiMusicSlider->state = GuiControlState::DISABLED;
+				guiFxSlider->state = GuiControlState::DISABLED;
+				guiBack->state = GuiControlState::NORMAL;
+				guiCheckScreen->state = GuiControlState::DISABLED;
+				guiResume->state = GuiControlState::DISABLED;
+				guiBackToTitle->state = GuiControlState::DISABLED;
+			}
+			else
 			{
 				guiBt->state = GuiControlState::NORMAL;
 				if (configFile.child("config").child("scene").child("entities").child("player").attribute("played").as_bool())
@@ -1352,22 +1421,22 @@ void Scene::ButtonManager()
 				guiResume->state = GuiControlState::DISABLED;
 				guiBackToTitle->state = GuiControlState::DISABLED;
 			}
-			else if (configMenu == true)
-			{
-				guiBt->state = GuiControlState::DISABLED;
-				guiContinue->state = GuiControlState::DISABLED;
-				guiConfig->state = GuiControlState::DISABLED;
-				guiCredits->state = GuiControlState::DISABLED;
-				guiExit->state = GuiControlState::DISABLED;
-				guiMusicSlider->state = GuiControlState::NORMAL;
-				guiFxSlider->state = GuiControlState::NORMAL;
-				guiBack->state = GuiControlState::NORMAL;
-				guiCheckScreen->state = GuiControlState::NORMAL;
-				guiResume->state = GuiControlState::DISABLED;
-				guiBackToTitle->state = GuiControlState::DISABLED;
-			}
 		}
 		else if (ending == true)
+		{
+			guiBt->state = GuiControlState::DISABLED;
+			guiContinue->state = GuiControlState::DISABLED;
+			guiConfig->state = GuiControlState::DISABLED;
+			guiCredits->state = GuiControlState::DISABLED;
+			guiExit->state = GuiControlState::DISABLED;
+			guiMusicSlider->state = GuiControlState::DISABLED;
+			guiFxSlider->state = GuiControlState::DISABLED;
+			guiBack->state = GuiControlState::DISABLED;
+			guiCheckScreen->state = GuiControlState::DISABLED;
+			guiResume->state = GuiControlState::DISABLED;
+			guiBackToTitle->state = GuiControlState::NORMAL;
+		}
+		else if (dead == true)
 		{
 			guiBt->state = GuiControlState::DISABLED;
 			guiContinue->state = GuiControlState::DISABLED;
