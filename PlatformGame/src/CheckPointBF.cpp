@@ -91,6 +91,7 @@ void CheckPointBF::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLAYERSENSOR:
 		LOG("CheckPoint taken - SaveState");
 		currentAnimation = &taken;
+		// xavifast aquí poner la textura
 		if (!CheckTaken)
 		{
 			Engine::GetInstance().audio.get()->PlayFx(CheckPointTakenFxId);

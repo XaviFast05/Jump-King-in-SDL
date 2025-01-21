@@ -64,7 +64,7 @@ public:
 
 	void FadeInOut(SDL_Renderer* renderer, int duration, bool fadeIn);
 
-	void ShowTime();
+	void DrawUI();
 
 public:
 	// Get tilePosDebug value
@@ -79,6 +79,8 @@ private:
 	SDL_Texture* configBg;
 	SDL_Texture* title;
 	SDL_Texture* endingImg;
+	SDL_Texture* lifeIcon;
+	SDL_Texture* coinIcon;
 	bool CTVisible = false;
 	std::string tilePosDebug = "[0,0]";
 	SDL_Texture* CTtexture = nullptr;
@@ -152,4 +154,7 @@ private:
 	int secondsOnScreen;
 	int minutesOnScreen;
 	int sceneFinalSeconds;
+
+	bool fixFade = false;
+	SDL_Color white = { 255, 255, 255, 255 };
 };

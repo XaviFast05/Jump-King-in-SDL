@@ -87,6 +87,10 @@ bool Scene::Start()
 	title = Engine::GetInstance().textures->Load("Assets/Textures/Menu/Title.png");
 	endingImg = Engine::GetInstance().textures->Load("Assets/Textures/Menu/ending.png");
 
+	// Initialize UI textures
+	lifeIcon = Engine::GetInstance().textures.get()->Load("Assets/Textures/player/item3.png");
+	coinIcon = Engine::GetInstance().textures.get()->Load("Assets/Textures/player/item1.png");
+
 	pugi::xml_document loadFile;
 	pugi::xml_parse_result result = loadFile.load_file("config.xml");
 
@@ -122,6 +126,8 @@ bool Scene::Start()
 	coinFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Items/plink.wav");
 	oneUpId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Items/1up.wav");
 	pauseFxId = Engine::GetInstance().audio->LoadFx("Assets/Audio/Fx/Menu/menu_open.wav");
+
+	configMenu = true;
 
 	return true;
 }
@@ -425,7 +431,6 @@ bool Scene::Update(float dt)
 		else if (ending == true)
 		{
 			Engine::GetInstance().render.get()->DrawTexture(endingImg, 0, 0);
-			ShowTime();
 		}
 	}
 
@@ -437,6 +442,12 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
+	if (fixFade == false)
+	{
+		configMenu = false;
+		fixFade = true;
+	}
+
 	if (exitGame == true)
 	{
 		ret = false;
@@ -445,7 +456,7 @@ bool Scene::PostUpdate()
 	{
 		if (counting)
 		{
-			ShowTime();
+			DrawUI();
 		}
 		if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN))
 		{
@@ -504,6 +515,7 @@ bool Scene::PostUpdate()
 
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_DOWN and checkpoint->onPlayer == true)
 		{
+			
 			Vector2D newPos = Vector2D(0, 0);
 			if (checkpoint2->CheckTaken)
 			{
@@ -650,6 +662,13 @@ bool Scene::PostUpdate()
 			SDL_RenderCopy(Engine::GetInstance().render->renderer, CTtexture, nullptr, &Juan);
 		}
 	}
+	else if (!active)
+	{
+		if (ending == true)
+		{
+			DrawUI();
+		}
+	}
 
 	return ret;
 }
@@ -678,6 +697,21 @@ bool Scene::CleanUp()
 	{
 		Engine::GetInstance().textures->UnLoad(title);
 		title = nullptr;
+	}
+	if (lifeIcon != nullptr)
+	{
+		Engine::GetInstance().textures.get()->UnLoad(lifeIcon);
+		lifeIcon = nullptr;
+	}
+	if (coinIcon != nullptr)
+	{
+		Engine::GetInstance().textures.get()->UnLoad(coinIcon);
+		coinIcon = nullptr;
+	}
+	if (endingImg != nullptr)
+	{
+		Engine::GetInstance().textures->UnLoad(endingImg);
+		endingImg = nullptr;
 	}
 
 	return true;
@@ -1383,7 +1417,7 @@ void Scene::FadeInOut(SDL_Renderer* renderer, int duration, bool fadeIn) {
 	}
 }
 
-void Scene::ShowTime()
+void Scene::DrawUI()
 {
 	sceneSeconds = initialSeconds + (int)playTime.ReadSec();
 	if (ending == false)
@@ -1396,13 +1430,11 @@ void Scene::ShowTime()
 
 	if (ending == false)
 	{
-		// Formatear el texto para mostrar el tiempo en el formato "MM:SS"
+		// Show time in "MM:SS"
 		std::string minutesText = (minutesOnScreen < 10 ? "0" : "") + std::to_string(minutesOnScreen);
 		std::string secondsText = (secondsOnScreen < 10 ? "0" : "") + std::to_string(secondsOnScreen);
 		std::string timeText = "Time: " + minutesText + ":" + secondsText;
 
-		// Dibujar el texto en la pantalla
-		SDL_Color white = { 255, 255, 255, 255 };
 		Engine::GetInstance().render->DrawText(timeText.c_str(), 800, 20, 150, 40, white);
 	}
 	else if (ending == true)
@@ -1414,7 +1446,27 @@ void Scene::ShowTime()
 		std::string finalSecondsText = (finalSecondsOnScreen < 10 ? "0" : "") + std::to_string(finalSecondsOnScreen);
 		std::string timeText = "Time: " + finalMinutesText + ":" + finalSecondsText;
 
-		SDL_Color white = { 255, 255, 255, 255 };
+		
 		Engine::GetInstance().render->DrawText(timeText.c_str(), 800, 20, 150, 40, white);
+	}
+
+	// Coins
+	std::string coinsText = std::to_string(player->coins);
+
+	// Lifes
+	std::string lifesText = std::to_string(player->lifes);
+
+	if (ending == false)
+	{
+		Engine::GetInstance().render.get()->DrawTexture(coinIcon, 0, 30, NULL, SDL_FLIP_NONE);
+		Engine::GetInstance().render.get()->DrawText(coinsText.c_str(), 55, 75, 30, 50, white);
+
+		Engine::GetInstance().render.get()->DrawTexture(lifeIcon, 0, 5, NULL, SDL_FLIP_NONE);
+		Engine::GetInstance().render.get()->DrawText(lifesText.c_str(), 55, 15, 30, 50, white);
+	}
+	else if (ending == true)
+	{
+		Engine::GetInstance().render.get()->DrawTexture(coinIcon, 50, 50, NULL, SDL_FLIP_NONE);
+		Engine::GetInstance().render.get()->DrawText(coinsText.c_str(), 300, 300, 30, 50, white);
 	}
 }
