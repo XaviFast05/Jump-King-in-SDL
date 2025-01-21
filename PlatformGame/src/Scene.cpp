@@ -103,8 +103,6 @@ bool Scene::Start()
 	player->coins = sceneNode.child("entities").child("player").attribute("coins").as_int();
 	player->lifes = sceneNode.child("entities").child("player").attribute("lifes").as_int();
 
-	initialSeconds = sceneNode.child("entities").child("player").attribute("seconds").as_int();
-
 	//enemies
 	if (enemyList.size() > 0)
 	{
@@ -145,7 +143,6 @@ bool Scene::Update(float dt)
 	Engine::GetInstance().audio->FxVolume(volumeFx);
 	if (active)
 	{	
-		
 		// Set music
 		if (playerInvincible == true)
 		{
@@ -159,6 +156,7 @@ bool Scene::Update(float dt)
 				x = 1;
 			}
 		}
+
 		else if (player->currentLevel <= 5 && player->currentLevel >= 1)
 		{
 			if (y == 0)
@@ -251,6 +249,8 @@ bool Scene::Update(float dt)
 					player->pbody->body->SetLinearVelocity(b2Vec2_zero);
 
 					SpawnPoint();
+					playTime.Start();
+					initialSeconds = 0;
 					SaveState();
 					checkpoint->CheckTaken = false;
 				}
@@ -425,6 +425,7 @@ bool Scene::Update(float dt)
 		else if (ending == true)
 		{
 			Engine::GetInstance().render.get()->DrawTexture(endingImg, 0, 0);
+			ShowTime();
 		}
 	}
 
@@ -442,7 +443,10 @@ bool Scene::PostUpdate()
 	}
 	if (active)
 	{
-		ShowTime();
+		if (counting)
+		{
+			ShowTime();
+		}
 		if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN))
 		{
 			player->paused = !player->paused;
@@ -646,11 +650,6 @@ bool Scene::PostUpdate()
 			SDL_RenderCopy(Engine::GetInstance().render->renderer, CTtexture, nullptr, &Juan);
 		}
 	}
-	else if (!active)
-	{
-		ShowTime();
-	}
-	
 
 	return ret;
 }
@@ -756,7 +755,11 @@ void Scene::SaveState() {
 
 	sceneNode.child("entities").child("player").attribute("lifes").set_value(player->lifes);
 	sceneNode.child("entities").child("player").attribute("coins").set_value(player->coins);
-	sceneNode.child("entities").child("player").attribute("played").set_value(true);
+
+	if (canSave)
+	{
+		sceneNode.child("entities").child("player").attribute("played").set_value(true);
+	}
 
 	if (enemyList.size() > 0)
 	{
@@ -835,8 +838,8 @@ void Scene::SpawnPoint()
 	checkpoint->CheckTaken = false;
 	checkpoint2->CheckTaken = false;
 	checkpoint3->CheckTaken = false;
-
 	loadFile.save_file("config.xml");
+
 	changeLevel(1, true);
 }
 
@@ -1103,7 +1106,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 
 		SpawnPoint();
+		canSave = false;
+		SaveState();
+		canSave = true;
 		playTime.Start();
+		initialSeconds = 0;
 		counting = true;
 
 		player->paused = false;
@@ -1124,6 +1131,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 
 		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 		LoadState();
+
+		pugi::xml_document configFile;
+		pugi::xml_parse_result result = configFile.load_file("config.xml");
+
+		initialSeconds = configFile.child("config").child("scene").child("entities").child("player").attribute("seconds").as_int();
 		playTime.Start();
 		counting = true;
 
@@ -1373,7 +1385,6 @@ void Scene::FadeInOut(SDL_Renderer* renderer, int duration, bool fadeIn) {
 
 void Scene::ShowTime()
 {
-	
 	sceneSeconds = initialSeconds + (int)playTime.ReadSec();
 	if (ending == false)
 	{
@@ -1406,5 +1417,4 @@ void Scene::ShowTime()
 		SDL_Color white = { 255, 255, 255, 255 };
 		Engine::GetInstance().render->DrawText(timeText.c_str(), 800, 20, 150, 40, white);
 	}
-	
 }

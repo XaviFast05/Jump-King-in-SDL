@@ -147,6 +147,7 @@ private:
 	int sceneSeconds = 0;
 	int initialSeconds = 0;
 	bool counting = false;
+	bool canSave = true;
 
 	int secondsOnScreen;
 	int minutesOnScreen;
