@@ -260,8 +260,6 @@ bool Scene::Update(float dt)
 					player->pbody->body->SetLinearVelocity(b2Vec2_zero);
 
 					Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/die.wav", 0);
-					loadFile.child("config").child("scene").child("entities").child("player").attribute("played").set_value(false);
-					loadFile.save_file("config.xml");
 
 					FadeInOut(Engine::GetInstance().render->renderer, 3000, true);
 
@@ -272,6 +270,8 @@ bool Scene::Update(float dt)
 					SaveState();
 					checkpoint->CheckTaken = false;
 					dead = true;
+					loadFile.child("config").child("scene").child("entities").child("player").attribute("played").set_value(false);
+					loadFile.save_file("config.xml");
 					Engine::GetInstance().entityManager->active = false;
 					Engine::GetInstance().map->active = false;
 					Engine::GetInstance().scene->active = false;

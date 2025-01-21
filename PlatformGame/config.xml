@@ -17,7 +17,7 @@
 	<scene>
 		<map path="Assets/Maps/" name="MapTemplate.tmx" />
 		<entities>
-			<player x="251" y="329" w="300" h="32" level="1" texture="Assets/Textures/player/JumpKingSpriteSheet.png" coins="0" lifes="3" seconds="28" played="false">
+			<player x="215" y="64" w="300" h="32" level="2" texture="Assets/Textures/player/JumpKingSpriteSheet.png" coins="0" lifes="0" seconds="0" played="false">
 				<animations>
 					<idle loop="true" speed="0.05">
 						<frame x="32" y="64" w="32" h="32" />
@@ -77,7 +77,7 @@
 				<items lvl1="false" lvl2="false" lvl3="false" lvl4="false" lvl5="false" x="0" y="0" type="" />
 			</player>
 			<enemies>
-				<enemy name="Crow" x="212" y="116" w="32" h="26" texture="Assets/Textures/enemy/enemies.png" gravity="false" saved="false">
+				<enemy name="Crow" x="99" y="61" w="32" h="26" texture="Assets/Textures/enemy/enemies.png" gravity="false" saved="true">
 					<animations>
 						<idle loop="true" speed="0.05">
 							<frame x="0" y="0" w="32" h="32" />
