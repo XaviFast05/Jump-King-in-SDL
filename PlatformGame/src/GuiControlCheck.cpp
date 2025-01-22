@@ -84,11 +84,22 @@ bool GuiControlCheck::Update(float dt)
         case GuiControlState::NORMAL:
 			if (inCheck == true)
 			{
+                
                 Engine::GetInstance().render->DrawTexture(CheckNormal, bounds.x + 25, bounds.y - 5);
+
+                if (showBounds == true)
+                {
+                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255, true, false);
+                }
 			}
 			else
 			{
                 Engine::GetInstance().render->DrawTexture(NoCheckNormal, bounds.x + 25, bounds.y - 5);
+                Engine::GetInstance().render->DrawRectangle(scaledBounds, 200, 200, 200, 255, true, false);
+                if (showBounds == true)
+                {
+                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255, true, false);
+                }
 			}
 
             break;
@@ -96,20 +107,36 @@ bool GuiControlCheck::Update(float dt)
             if (inCheck == true)
             {
                 Engine::GetInstance().render->DrawTexture(CheckHover, bounds.x + 10, bounds.y - 5);
+                if (showBounds == true)
+                {
+                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255, true, false);
+                }
             }
             else
             {
                 Engine::GetInstance().render->DrawTexture(NoCheckHover, bounds.x + 10, bounds.y - 5);
+                if (showBounds == true)
+                {
+                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255, true, false);
+                }
             }
             break;
         case GuiControlState::PRESSED:
             if (inCheck == true)
             {
                 Engine::GetInstance().render->DrawTexture(CheckClick, bounds.x + 10, bounds.y - 5);
+                if (showBounds == true)
+                {
+                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255, true, false);
+                }
             }
             else
             {
                 Engine::GetInstance().render->DrawTexture(NoCheckClick, bounds.x + 10, bounds.y - 5);
+                if (showBounds == true)
+                {
+                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255, true, false);
+                }
             }
             break;
         }

@@ -87,4 +87,6 @@ public:
 	SDL_Rect section;       // Texture atlas base section
 
 	Module* observer;        // Observer 
+
+	bool showBounds = false;
 };

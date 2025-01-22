@@ -274,12 +274,6 @@ bool Enemy::Update(float dt)
 		Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame(), hflip);
 		currentAnimation->Update();
 	}
-	
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-	{
-		DrawingPath = !DrawingPath;
-	}
 
 	// Draw pathfinding 
 	if (DrawingPath) pathfinding->DrawPath();

@@ -66,6 +66,8 @@ public:
 
 	bool paused = false;
 
+	bool DrawingPath = false;
+
 private:
 	
 	SDL_Texture* texture;
@@ -88,7 +90,7 @@ private:
 	Pathfinding* pathfinding;
 	Map* map;
 	Physics* physics;
-	bool DrawingPath = false;
+
 	bool hasStarted = false;
 	bool IsSearching = false;
 	int x = 0;

@@ -90,6 +90,7 @@ bool Scene::Start()
 	credits = Engine::GetInstance().textures->Load("Assets/Textures/Menu/credits.png");
 	fastTravel = Engine::GetInstance().textures.get()->Load("Assets/Textures/Menu/fastTravel.png");
 	die = Engine::GetInstance().textures.get()->Load("Assets/Textures/Menu/died.png");
+	introBg = Engine::GetInstance().textures.get()->Load("Assets/Textures/Menu/introBg.png");
 
 	// Initialize UI textures
 	lifeIcon = Engine::GetInstance().textures.get()->Load("Assets/Textures/player/item3.png");
@@ -424,27 +425,41 @@ bool Scene::Update(float dt)
 	{
 		if (ending == false && dead == false)
 		{
-			Engine::GetInstance().render.get()->DrawTexture(title, 0, 0);
-			if (configMenu == true)
+			if (isIntro == true)
 			{
-				Engine::GetInstance().render.get()->DrawTexture(configBg, 9, 130);
+
+				Engine::GetInstance().render.get()->DrawTexture(CTtexture, 0, 0);
+
+				if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN))
+				{
+					FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
+					isIntro = false;
+				}
 			}
-			else if (ifCredits == true)
+			else if (isIntro == false)
 			{
-				Engine::GetInstance().render.get()->DrawTexture(credits, 0, 0);
-			}
-			else
-			{
-				Engine::GetInstance().render.get()->DrawTexture(menuBg, 57, 147);
-			}
-			if (menuMusic == false)
-			{
-				Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
-				x = 0;
-				y = 0;
-				lvl6_11Music = false;
-				finalBossMusic = false;
-				menuMusic = true;
+				Engine::GetInstance().render.get()->DrawTexture(title, 0, 0);
+				if (configMenu == true)
+				{
+					Engine::GetInstance().render.get()->DrawTexture(configBg, 9, 130);
+				}
+				else if (ifCredits == true)
+				{
+					Engine::GetInstance().render.get()->DrawTexture(credits, 0, 0);
+				}
+				else
+				{
+					Engine::GetInstance().render.get()->DrawTexture(menuBg, 57, 147);
+				}
+				if (menuMusic == false)
+				{
+					Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/menu_intro.wav", 0);
+					x = 0;
+					y = 0;
+					lvl6_11Music = false;
+					finalBossMusic = false;
+					menuMusic = true;
+				}
 			}
 		}
 		else if (ending == true)
@@ -483,6 +498,17 @@ bool Scene::PostUpdate()
 	}
 	if (active)
 	{
+
+		// Activate or deactivate debug mode
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+		{
+			for (int i = 0; i < enemyList.size(); i++)
+			{
+				enemyList[i]->DrawingPath = !enemyList[i]->DrawingPath;
+			}
+			physics->debug = !physics->debug;
+		}
+
 		if (counting)
 		{
 			DrawUI();
@@ -1378,54 +1404,86 @@ void Scene::ButtonManager()
 	{
 		if (ending == false && dead == false)
 		{
-			if (configMenu == true)
+			if (isIntro == true)
 			{
 				guiBt->state = GuiControlState::DISABLED;
 				guiContinue->state = GuiControlState::DISABLED;
 				guiConfig->state = GuiControlState::DISABLED;
 				guiCredits->state = GuiControlState::DISABLED;
 				guiExit->state = GuiControlState::DISABLED;
-				guiMusicSlider->state = GuiControlState::NORMAL;
-				guiFxSlider->state = GuiControlState::NORMAL;
-				guiBack->state = GuiControlState::NORMAL;
-				guiCheckScreen->state = GuiControlState::NORMAL;
-				guiResume->state = GuiControlState::DISABLED;
-				guiBackToTitle->state = GuiControlState::DISABLED;
-			}
-			else if (ifCredits == true)
-			{
-				guiBt->state = GuiControlState::DISABLED;
-				guiContinue->state = GuiControlState::DISABLED;
-				guiConfig->state = GuiControlState::DISABLED;
-				guiCredits->state = GuiControlState::DISABLED;
-				guiExit->state = GuiControlState::DISABLED;
-				guiMusicSlider->state = GuiControlState::DISABLED;
-				guiFxSlider->state = GuiControlState::DISABLED;
-				guiBack->state = GuiControlState::NORMAL;
-				guiCheckScreen->state = GuiControlState::DISABLED;
-				guiResume->state = GuiControlState::DISABLED;
-				guiBackToTitle->state = GuiControlState::DISABLED;
-			}
-			else
-			{
-				guiBt->state = GuiControlState::NORMAL;
-				if (configFile.child("config").child("scene").child("entities").child("player").attribute("played").as_bool())
-				{
-					guiContinue->state = GuiControlState::NORMAL;
-				}
-				else if (!configFile.child("config").child("scene").child("entities").child("player").attribute("played").as_bool())
-				{
-					guiContinue->state = GuiControlState::DEACTIVATED;
-				}
-				guiConfig->state = GuiControlState::NORMAL;
-				guiCredits->state = GuiControlState::NORMAL;
-				guiExit->state = GuiControlState::NORMAL;
 				guiMusicSlider->state = GuiControlState::DISABLED;
 				guiFxSlider->state = GuiControlState::DISABLED;
 				guiBack->state = GuiControlState::DISABLED;
 				guiCheckScreen->state = GuiControlState::DISABLED;
 				guiResume->state = GuiControlState::DISABLED;
 				guiBackToTitle->state = GuiControlState::DISABLED;
+
+				if (configMenu == true)
+				{
+					guiBt->state = GuiControlState::DISABLED;
+					guiContinue->state = GuiControlState::DISABLED;
+					guiConfig->state = GuiControlState::DISABLED;
+					guiCredits->state = GuiControlState::DISABLED;
+					guiExit->state = GuiControlState::DISABLED;
+					guiMusicSlider->state = GuiControlState::NORMAL;
+					guiFxSlider->state = GuiControlState::NORMAL;
+					guiBack->state = GuiControlState::NORMAL;
+					guiCheckScreen->state = GuiControlState::NORMAL;
+					guiResume->state = GuiControlState::DISABLED;
+					guiBackToTitle->state = GuiControlState::DISABLED;
+				}
+			}
+			else if (isIntro == false)
+			{
+				if (configMenu == true)
+				{
+					guiBt->state = GuiControlState::DISABLED;
+					guiContinue->state = GuiControlState::DISABLED;
+					guiConfig->state = GuiControlState::DISABLED;
+					guiCredits->state = GuiControlState::DISABLED;
+					guiExit->state = GuiControlState::DISABLED;
+					guiMusicSlider->state = GuiControlState::NORMAL;
+					guiFxSlider->state = GuiControlState::NORMAL;
+					guiBack->state = GuiControlState::NORMAL;
+					guiCheckScreen->state = GuiControlState::NORMAL;
+					guiResume->state = GuiControlState::DISABLED;
+					guiBackToTitle->state = GuiControlState::DISABLED;
+				}
+				else if (ifCredits == true)
+				{
+					guiBt->state = GuiControlState::DISABLED;
+					guiContinue->state = GuiControlState::DISABLED;
+					guiConfig->state = GuiControlState::DISABLED;
+					guiCredits->state = GuiControlState::DISABLED;
+					guiExit->state = GuiControlState::DISABLED;
+					guiMusicSlider->state = GuiControlState::DISABLED;
+					guiFxSlider->state = GuiControlState::DISABLED;
+					guiBack->state = GuiControlState::NORMAL;
+					guiCheckScreen->state = GuiControlState::DISABLED;
+					guiResume->state = GuiControlState::DISABLED;
+					guiBackToTitle->state = GuiControlState::DISABLED;
+				}
+				else
+				{
+					guiBt->state = GuiControlState::NORMAL;
+					if (configFile.child("config").child("scene").child("entities").child("player").attribute("played").as_bool())
+					{
+						guiContinue->state = GuiControlState::NORMAL;
+					}
+					else if (!configFile.child("config").child("scene").child("entities").child("player").attribute("played").as_bool())
+					{
+						guiContinue->state = GuiControlState::DEACTIVATED;
+					}
+					guiConfig->state = GuiControlState::NORMAL;
+					guiCredits->state = GuiControlState::NORMAL;
+					guiExit->state = GuiControlState::NORMAL;
+					guiMusicSlider->state = GuiControlState::DISABLED;
+					guiFxSlider->state = GuiControlState::DISABLED;
+					guiBack->state = GuiControlState::DISABLED;
+					guiCheckScreen->state = GuiControlState::DISABLED;
+					guiResume->state = GuiControlState::DISABLED;
+					guiBackToTitle->state = GuiControlState::DISABLED;
+				}
 			}
 		}
 		else if (ending == true)

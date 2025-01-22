@@ -105,12 +105,24 @@ bool GuiControlSlider::Update(float dt)
         {
         case GuiControlState::NORMAL:
             Engine::GetInstance().render->DrawRectangle(visualSlider, 255, 255, 255, 255, true, false);
+            if (showBounds == true)
+            {
+                Engine::GetInstance().render->DrawRectangle(visualSlider, 255, 0, 0, 255, true, false);
+            }
             break;
         case GuiControlState::FOCUSED:
             Engine::GetInstance().render->DrawRectangle(visualSlider, 255, 255, 0, 255, true, false);
+            if (showBounds == true)
+            {
+                Engine::GetInstance().render->DrawRectangle(visualSlider, 255, 0, 0, 255, true, false);
+            }
             break;
         case GuiControlState::PRESSED:
             Engine::GetInstance().render->DrawRectangle(visualSlider, 0, 0, 0, 255, true, false);
+            if (showBounds == true)
+            {
+                Engine::GetInstance().render->DrawRectangle(visualSlider, 255, 0, 0, 255, true, false);
+            }
             break;
         }
 
@@ -122,6 +134,8 @@ bool GuiControlSlider::Update(float dt)
     {
         visualSlider = { scaledBounds.x + ((currentValue - minValue) * scaledBounds.w / (maxValue - minValue)) - 5, scaledBounds.y, 10, scaledBounds.h };
     }
+
+
 
     return false;
 }

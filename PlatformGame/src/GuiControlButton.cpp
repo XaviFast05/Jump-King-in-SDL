@@ -84,15 +84,35 @@ bool GuiControlButton::Update(float dt)
 		{
 		case GuiControlState::NORMAL:
 			Engine::GetInstance().render->DrawText(text.c_str(), scaledBounds.x, scaledBounds.y, scaledBounds.w, scaledBounds.h, white);
+			if (showBounds == true)
+			{
+				Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255);
+			}
 			break;
 		case GuiControlState::FOCUSED:
-
 			Engine::GetInstance().render->DrawText((std::string("> ") + text + " <").c_str(), scaledBounds.x, scaledBounds.y, scaledBounds.w, scaledBounds.h, white);
+			if (showBounds == true)
+			{
+				Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255);
+			}
 			break;
 		case GuiControlState::PRESSED:
 			Engine::GetInstance().render->DrawText((std::string("> ") + text + " <").c_str(), scaledBounds.x, scaledBounds.y, scaledBounds.w, scaledBounds.h, yellow);
+			if (showBounds == true)
+			{
+				Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255);
+			}
 			break;
 		}
+
+		if (state == GuiControlState::PRESSED || state == GuiControlState::FOCUSED || state == GuiControlState::NORMAL)
+		{
+			if (Engine::GetInstance().input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+			{
+				showBounds = !showBounds;
+			}
+		}
+	
 	}
 	else if (state == GuiControlState::DEACTIVATED)
 	{

@@ -85,6 +85,7 @@ private:
 	SDL_Texture* credits;
 	SDL_Texture* fastTravel;
 	SDL_Texture* die;
+	SDL_Texture* introBg;
 	bool ifCredits = false;
 	bool CTVisible = false;
 	std::string tilePosDebug = "[0,0]";
@@ -116,6 +117,7 @@ private:
 	CheckPointBF* checkpoint2;
 	CheckPointBF* checkpoint3;
 	Timer* timer;
+	Physics* physics;
 	std::vector<Enemy*> enemyList;
 	std::vector<Item*> itemList;
 	std::vector<int> takenItems;
@@ -158,10 +160,13 @@ private:
 	bool counting = false;
 	bool canSave = true;
 
+
 	int secondsOnScreen;
 	int minutesOnScreen;
 	int sceneFinalSeconds;
 
 	bool fixFade = false;
 	SDL_Color white = { 255, 255, 255, 255 };
+
+	bool isIntro = true;
 };
