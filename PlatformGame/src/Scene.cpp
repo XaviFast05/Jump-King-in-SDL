@@ -502,11 +502,14 @@ bool Scene::PostUpdate()
 		// Activate or deactivate debug mode
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		{
-			for (int i = 0; i < enemyList.size(); i++)
+			if (physics->debug == false)
 			{
-				enemyList[i]->DrawingPath = !enemyList[i]->DrawingPath;
+				for (int i = 0; i < enemyList.size(); i++)
+				{
+					enemyList[i]->DrawingPath = !enemyList[i]->DrawingPath;
+
+				}
 			}
-			physics->debug = !physics->debug;
 		}
 
 		if (counting)
@@ -1198,6 +1201,19 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/opening_theme.wav", 0);
 
+
+		guiBt->showBounds = false;
+		guiConfig->showBounds = false;
+		guiCredits->showBounds = false;
+		guiExit->showBounds = false;
+		guiContinue->showBounds = false;
+		guiMusicSlider->showBounds = false;
+		guiFxSlider->showBounds = false;
+		guiCheckScreen->showBounds = false;
+		guiBackToTitle->showBounds = false;
+		guiResume->showBounds = false;
+		guiBack->showBounds = false;
+
 		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 
 		SpawnPoint();
@@ -1225,6 +1241,19 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/opening_theme.wav", 0);
 
+
+		guiBt->showBounds = false;
+		guiConfig->showBounds = false;
+		guiCredits->showBounds = false;
+		guiExit->showBounds = false;
+		guiContinue->showBounds = false;
+		guiMusicSlider->showBounds = false;
+		guiFxSlider->showBounds = false;
+		guiCheckScreen->showBounds = false;
+		guiBackToTitle->showBounds = false;
+		guiResume->showBounds = false;
+		guiBack->showBounds = false;
+
 		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 		LoadState();
 
@@ -1249,10 +1278,34 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 3)
 	{
+
+		guiBt->showBounds = false;
+		guiConfig->showBounds = false;
+		guiCredits->showBounds = false;
+		guiExit->showBounds = false;
+		guiContinue->showBounds = false;
+		guiMusicSlider->showBounds = false;
+		guiFxSlider->showBounds = false;
+		guiCheckScreen->showBounds = false;
+		guiBackToTitle->showBounds = false;
+		guiResume->showBounds = false;
+		guiBack->showBounds = false;
 		configMenu = true;
 	}
 	if (control->id == 4)
 	{
+
+		guiBt->showBounds = false;
+		guiConfig->showBounds = false;
+		guiCredits->showBounds = false;
+		guiExit->showBounds = false;
+		guiContinue->showBounds = false;
+		guiMusicSlider->showBounds = false;
+		guiFxSlider->showBounds = false;
+		guiCheckScreen->showBounds = false;
+		guiBackToTitle->showBounds = false;
+		guiResume->showBounds = false;
+		guiBack->showBounds = false;
 		ifCredits = true;
 	}
 	if (control->id == 5)
@@ -1273,6 +1326,18 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 8)
 	{
+
+		guiBt->showBounds = false;
+		guiConfig->showBounds = false;
+		guiCredits->showBounds = false;
+		guiExit->showBounds = false;
+		guiContinue->showBounds = false;
+		guiMusicSlider->showBounds = false;
+		guiFxSlider->showBounds = false;
+		guiCheckScreen->showBounds = false;
+		guiBackToTitle->showBounds = false;
+		guiResume->showBounds = false;
+		guiBack->showBounds = false;
 		configMenu = false;
 		ifCredits = false;
 	}
@@ -1311,10 +1376,23 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	if (control->id == 10)
 	{
+
+		guiBt->showBounds = false;
+		guiConfig->showBounds = false;
+		guiCredits->showBounds = false;
+		guiExit->showBounds = false;
+		guiContinue->showBounds = false;
+		guiMusicSlider->showBounds = false;
+		guiFxSlider->showBounds = false;
+		guiCheckScreen->showBounds = false;
+		guiBackToTitle->showBounds = false;
+		guiResume->showBounds = false;
+		guiBack->showBounds = false;
+
 		player->paused = false;
 		for (int i = 0; i < enemyList.size(); i++)
 		{
-			enemyList[i]->paused = !enemyList[i]->paused;
+			enemyList[i]->paused = false;
 		}
 	}
 	if (control->id == 11)
@@ -1333,6 +1411,18 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 
 		configFile.save_file("config.xml");
 		counting = false;
+
+		guiBt->showBounds = false;
+		guiConfig->showBounds = false;
+		guiCredits->showBounds = false;
+		guiExit->showBounds = false;
+		guiContinue->showBounds = false;
+		guiMusicSlider->showBounds = false;
+		guiFxSlider->showBounds = false;
+		guiCheckScreen->showBounds = false;
+		guiBackToTitle->showBounds = false;
+		guiResume->showBounds = false;
+		guiBack->showBounds = false;
 
 		FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 		Engine::GetInstance().entityManager->active = false;

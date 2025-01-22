@@ -79,7 +79,7 @@ bool GuiControlCheck::Update(float dt)
         switch (state)
         {
         case GuiControlState::DISABLED:
-            Engine::GetInstance().render->DrawRectangle(scaledBounds, 200, 200, 200, 255, true, false);
+            Engine::GetInstance().render->DrawRectangle(scaledBounds, 200, 200, 200, 128, true, false);
             break;
         case GuiControlState::NORMAL:
 			if (inCheck == true)
@@ -89,16 +89,15 @@ bool GuiControlCheck::Update(float dt)
 
                 if (showBounds == true)
                 {
-                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255, true, false);
+                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 128, true, false);
                 }
 			}
 			else
 			{
                 Engine::GetInstance().render->DrawTexture(NoCheckNormal, bounds.x + 25, bounds.y - 5);
-                Engine::GetInstance().render->DrawRectangle(scaledBounds, 200, 200, 200, 255, true, false);
                 if (showBounds == true)
                 {
-                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255, true, false);
+                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 128, true, false);
                 }
 			}
 
@@ -109,7 +108,7 @@ bool GuiControlCheck::Update(float dt)
                 Engine::GetInstance().render->DrawTexture(CheckHover, bounds.x + 10, bounds.y - 5);
                 if (showBounds == true)
                 {
-                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255, true, false);
+                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 128, true, false);
                 }
             }
             else
@@ -117,7 +116,7 @@ bool GuiControlCheck::Update(float dt)
                 Engine::GetInstance().render->DrawTexture(NoCheckHover, bounds.x + 10, bounds.y - 5);
                 if (showBounds == true)
                 {
-                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255, true, false);
+                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 128, true, false);
                 }
             }
             break;
@@ -127,7 +126,7 @@ bool GuiControlCheck::Update(float dt)
                 Engine::GetInstance().render->DrawTexture(CheckClick, bounds.x + 10, bounds.y - 5);
                 if (showBounds == true)
                 {
-                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255, true, false);
+                    Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 128, true, false);
                 }
             }
             else
@@ -143,7 +142,13 @@ bool GuiControlCheck::Update(float dt)
 
         Engine::GetInstance().render->DrawText(text.c_str(), scaledBounds.x - 200, scaledBounds.y , scaledBounds.w , scaledBounds.h , white);
 
-
+        if (state == GuiControlState::PRESSED || state == GuiControlState::FOCUSED || state == GuiControlState::NORMAL)
+        {
+            if (Engine::GetInstance().input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+            {
+                showBounds = !showBounds;
+            }
+        }
 
     }
 

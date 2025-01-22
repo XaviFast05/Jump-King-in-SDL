@@ -170,4 +170,6 @@ private:
 
 	bool isIntro = true;
 	Timer introTimer;
+
+	GuiControl* show;
 };

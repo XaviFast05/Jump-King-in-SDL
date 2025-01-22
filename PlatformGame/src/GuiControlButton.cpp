@@ -86,21 +86,21 @@ bool GuiControlButton::Update(float dt)
 			Engine::GetInstance().render->DrawText(text.c_str(), scaledBounds.x, scaledBounds.y, scaledBounds.w, scaledBounds.h, white);
 			if (showBounds == true)
 			{
-				Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255);
+				Engine::GetInstance().render->DrawRectangle(bounds, 255, 0, 0, 128);
 			}
 			break;
 		case GuiControlState::FOCUSED:
 			Engine::GetInstance().render->DrawText((std::string("> ") + text + " <").c_str(), scaledBounds.x, scaledBounds.y, scaledBounds.w, scaledBounds.h, white);
 			if (showBounds == true)
 			{
-				Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255);
+				Engine::GetInstance().render->DrawRectangle(bounds, 255, 0, 0, 128);
 			}
 			break;
 		case GuiControlState::PRESSED:
 			Engine::GetInstance().render->DrawText((std::string("> ") + text + " <").c_str(), scaledBounds.x, scaledBounds.y, scaledBounds.w, scaledBounds.h, yellow);
 			if (showBounds == true)
 			{
-				Engine::GetInstance().render->DrawRectangle(scaledBounds, 255, 0, 0, 255);
+				Engine::GetInstance().render->DrawRectangle(bounds, 255, 0, 0, 128);
 			}
 			break;
 		}
