@@ -49,6 +49,8 @@ bool Scene::Awake()
 	// L16: TODO 2: Instantiate a new GuiControlButton in the Scene
 	int scale = Engine::GetInstance().window.get()->GetScale();
 
+	introTimer.Start();
+
 	//Create the buttons
 	SDL_Rect btPos = { 75 , 150 , 50, 20 };
 	SDL_Rect btPos2 = { 75 , 175 , 50, 20 };
@@ -427,10 +429,9 @@ bool Scene::Update(float dt)
 		{
 			if (isIntro == true)
 			{
+				Engine::GetInstance().render.get()->DrawTexture(introBg, 0, 0);
 
-				Engine::GetInstance().render.get()->DrawTexture(CTtexture, 0, 0);
-
-				if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN))
+				if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) or introTimer.ReadSec() > 2)
 				{
 					FadeInOut(Engine::GetInstance().render->renderer, 2000, true);
 					isIntro = false;
@@ -498,7 +499,6 @@ bool Scene::PostUpdate()
 	}
 	if (active)
 	{
-
 		// Activate or deactivate debug mode
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		{

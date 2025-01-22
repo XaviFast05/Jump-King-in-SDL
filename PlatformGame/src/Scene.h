@@ -169,4 +169,5 @@ private:
 	SDL_Color white = { 255, 255, 255, 255 };
 
 	bool isIntro = true;
+	Timer introTimer;
 };

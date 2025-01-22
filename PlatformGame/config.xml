@@ -77,7 +77,7 @@
 				<items lvl1="false" lvl2="false" lvl3="false" lvl4="false" lvl5="false" x="0" y="0" type="" />
 			</player>
 			<enemies>
-				<enemy name="Crow" x="291" y="169" w="32" h="26" texture="Assets/Textures/enemy/enemies.png" gravity="false" saved="false">
+				<enemy name="Crow" x="291" y="69" w="32" h="26" texture="Assets/Textures/enemy/enemies.png" gravity="false" saved="false">
 					<animations>
 						<idle loop="true" speed="0.05">
 							<frame x="0" y="0" w="32" h="32" />
