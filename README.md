@@ -1,12 +1,19 @@
-# Jump King Recreation
+# Jump King Recreation 1.0
 
 This is a project made by Team Hutao, formed by Isaac Ramírez and Xavier Chaparro, with the objective of recreating the platformer video game Jump King in SDL2.
+
+Our team finnally reached the 1.0 release of the game, including plenty of new features, as a functionally playable loop with an ending.
+There is also a complet functional Start menu, with options to customice your experience.
+
+In the following text, we will explain all the aditions we managed to add in this project
+
+## ALPHA RELEASE ADITIONS
 
 In this first release of the game, our team has included the first 5 levels (not zones!) of the game, with a simple movement mechanic featuring a jump option, even though it isn't the original jump mechanic (we plan to add it in future releases). To complete the levels, you just need to do the same as in the original game: reach the top of the level, and it will automatically change to the next one.
 
 We also added some debug features for testing purposes and to help the player: {Show collisions, god mode, limit FPS (30 FPS), die}.
 
-## NEW ADITIONS
+## BETA RELEASE ADITIONS
 In this second release, we added a bunch of features to add new content not existent in the original game, which are:
 
 - ENEMIES
@@ -32,7 +39,7 @@ In this second release, we added a bunch of features to add new content not exis
   
   · God mode (F10) now makes the player invencible against enemies.
   
-  
+## 1.0 RELEASE ADITIONS
 
 # Controls:
 
