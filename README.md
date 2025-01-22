@@ -106,3 +106,5 @@ Save Game: F5
 Load Game: F6
 
 Show GUI bounds: F8
+
+Change between levels: Left and right arrows
